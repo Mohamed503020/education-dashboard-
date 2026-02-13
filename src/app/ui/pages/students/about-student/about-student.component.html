@@ -1,0 +1,406 @@
+<div class="about-student">
+  <!-- Header -->
+  <div class="about-student__header">
+    <div class="about-student__header-left">
+      <button class="back-btn" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+      </button>
+      <div class="about-student__title-section">
+        <h1 class="about-student__title">{{ 'aboutStudent.title' | translate }}</h1>
+        <nav class="about-student__breadcrumb">
+          <a routerLink="/dashboard">{{ 'nav.dashboard' | translate }}</a>
+          <span>/</span>
+          <a routerLink="/students/all">{{ 'nav.students' | translate }}</a>
+          <span>/</span>
+          <span>{{ getFullName() }}</span>
+        </nav>
+      </div>
+    </div>
+    <div class="about-student__header-actions">
+      <button class="btn btn--outline" (click)="printProfile()">
+        <span class="material-icons">print</span>
+        {{ 'aboutStudent.printProfile' | translate }}
+      </button>
+      <button class="btn btn--primary" (click)="editStudent()">
+        <span class="material-icons">edit</span>
+        {{ 'aboutStudent.editProfile' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="about-student__content">
+    <!-- Profile Card (Sidebar) -->
+    <aside class="profile-card">
+      <div class="profile-card__header">
+        <div class="profile-card__avatar">
+          <img [src]="student.profileImage" [alt]="getFullName()" (error)="onImageError($event)">
+          <span class="profile-card__status" [class]="getStatusClass()"></span>
+        </div>
+        <h2 class="profile-card__name">{{ getFullName() }}</h2>
+        <p class="profile-card__id">{{ student.studentId }}</p>
+        <span class="profile-card__department">{{ student.department }}</span>
+      </div>
+      
+      <div class="profile-card__stats">
+        <div class="stat-item">
+          <span class="stat-item__value">{{ student.cgpa }}</span>
+          <span class="stat-item__label">{{ 'aboutStudent.cgpa' | translate }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__value">{{ attendanceRate }}%</span>
+          <span class="stat-item__label">{{ 'aboutStudent.attendance' | translate }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__value">{{ student.semester }}</span>
+          <span class="stat-item__label">{{ 'aboutStudent.semester' | translate }}</span>
+        </div>
+      </div>
+
+      <div class="profile-card__info">
+        <div class="info-item">
+          <span class="material-icons">email</span>
+          <span>{{ student.email }}</span>
+        </div>
+        <div class="info-item">
+          <span class="material-icons">phone</span>
+          <span>{{ student.phone }}</span>
+        </div>
+        <div class="info-item">
+          <span class="material-icons">location_on</span>
+          <span>{{ student.city }}, {{ student.country }}</span>
+        </div>
+        <div class="info-item">
+          <span class="material-icons">cake</span>
+          <span>{{ student.dateOfBirth }} ({{ calculateAge() }} years)</span>
+        </div>
+      </div>
+
+      <div class="profile-card__fee-status" [class]="getFeeStatusClass()">
+        <span class="material-icons">account_balance_wallet</span>
+        <span>{{ 'aboutStudent.feeStatus' | translate }}: {{ student.feeStatus | titlecase }}</span>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Tabs -->
+      <div class="content-tabs">
+        <button 
+          class="content-tabs__tab" 
+          [class.content-tabs__tab--active]="activeTab() === 'overview'"
+          (click)="setActiveTab('overview')"
+        >
+          <span class="material-icons">person</span>
+          Overview
+        </button>
+        <button 
+          class="content-tabs__tab" 
+          [class.content-tabs__tab--active]="activeTab() === 'courses'"
+          (click)="setActiveTab('courses')"
+        >
+          <span class="material-icons">school</span>
+          {{ 'aboutStudent.enrolledCourses' | translate }} ({{ enrolledCourses.length }})
+        </button>
+        <button 
+          class="content-tabs__tab" 
+          [class.content-tabs__tab--active]="activeTab() === 'activity'"
+          (click)="setActiveTab('activity')"
+        >
+          <span class="material-icons">history</span>
+          {{ 'aboutStudent.recentActivity' | translate }}
+        </button>
+        <button 
+          class="content-tabs__tab" 
+          [class.content-tabs__tab--active]="activeTab() === 'documents'"
+          (click)="setActiveTab('documents')"
+        >
+          <span class="material-icons">folder</span>
+          Documents
+        </button>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Overview Tab -->
+        @if (activeTab() === 'overview') {
+          <div class="overview-grid">
+            <!-- Personal Information -->
+            <div class="info-card">
+              <h3 class="info-card__title">
+                <span class="material-icons">person</span>
+                {{ 'aboutStudent.personalInfo' | translate }}
+              </h3>
+              <div class="info-card__grid">
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.fullName' | translate }}</span>
+                  <span class="info-field__value">{{ getFullName() }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.dateOfBirth' | translate }}</span>
+                  <span class="info-field__value">{{ student.dateOfBirth }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.gender' | translate }}</span>
+                  <span class="info-field__value">{{ student.gender }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.bloodGroup' | translate }}</span>
+                  <span class="info-field__value">{{ student.bloodGroup }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.nationality' | translate }}</span>
+                  <span class="info-field__value">{{ student.nationality }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.religion' | translate }}</span>
+                  <span class="info-field__value">{{ student.religion }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="info-card">
+              <h3 class="info-card__title">
+                <span class="material-icons">contact_phone</span>
+                {{ 'aboutStudent.contactInfo' | translate }}
+              </h3>
+              <div class="info-card__grid">
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.email' | translate }}</span>
+                  <span class="info-field__value">{{ student.email }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.phone' | translate }}</span>
+                  <span class="info-field__value">{{ student.phone }}</span>
+                </div>
+                <div class="info-field info-field--full">
+                  <span class="info-field__label">{{ 'aboutStudent.address' | translate }}</span>
+                  <span class="info-field__value">{{ student.address }}, {{ student.city }}, {{ student.country }} {{ student.zipCode }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parent/Guardian Information -->
+            <div class="info-card">
+              <h3 class="info-card__title">
+                <span class="material-icons">family_restroom</span>
+                {{ 'aboutStudent.parentInfo' | translate }}
+              </h3>
+              <div class="info-card__grid">
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.fatherName' | translate }}</span>
+                  <span class="info-field__value">{{ student.fatherName }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.motherName' | translate }}</span>
+                  <span class="info-field__value">{{ student.motherName }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.guardianPhone' | translate }}</span>
+                  <span class="info-field__value">{{ student.guardianPhone }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.guardianEmail' | translate }}</span>
+                  <span class="info-field__value">{{ student.guardianEmail }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Academic Information -->
+            <div class="info-card">
+              <h3 class="info-card__title">
+                <span class="material-icons">school</span>
+                {{ 'aboutStudent.academicInfo' | translate }}
+              </h3>
+              <div class="info-card__grid">
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.studentId' | translate }}</span>
+                  <span class="info-field__value">{{ student.studentId }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.department' | translate }}</span>
+                  <span class="info-field__value">{{ student.department }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.batch' | translate }}</span>
+                  <span class="info-field__value">{{ student.batch }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.semester' | translate }}</span>
+                  <span class="info-field__value">{{ student.semester }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.enrollmentDate' | translate }}</span>
+                  <span class="info-field__value">{{ student.enrollmentDate }}</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.cgpa' | translate }}</span>
+                  <span class="info-field__value info-field__value--highlight">{{ student.cgpa }}/4.0</span>
+                </div>
+                <div class="info-field">
+                  <span class="info-field__label">{{ 'aboutStudent.totalCredits' | translate }}</span>
+                  <span class="info-field__value">{{ student.completedCredits }}/{{ student.totalCredits }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Performance Stats -->
+          <div class="performance-section">
+            <h3 class="performance-section__title">{{ 'aboutStudent.performance' | translate }}</h3>
+            <div class="performance-cards">
+              <div class="performance-card">
+                <div class="performance-card__icon performance-card__icon--attendance">
+                  <span class="material-icons">event_available</span>
+                </div>
+                <div class="performance-card__info">
+                  <span class="performance-card__value">{{ attendanceRate }}%</span>
+                  <span class="performance-card__label">{{ 'aboutStudent.attendance' | translate }}</span>
+                </div>
+                <div class="performance-card__progress">
+                  <div class="progress-ring" [style.--progress]="attendanceRate"></div>
+                </div>
+              </div>
+              <div class="performance-card">
+                <div class="performance-card__icon performance-card__icon--assignments">
+                  <span class="material-icons">assignment_turned_in</span>
+                </div>
+                <div class="performance-card__info">
+                  <span class="performance-card__value">{{ assignmentsCompleted }}/{{ totalAssignments }}</span>
+                  <span class="performance-card__label">Assignments Completed</span>
+                </div>
+                <div class="performance-card__progress">
+                  <div class="progress-ring" [style.--progress]="(assignmentsCompleted / totalAssignments) * 100"></div>
+                </div>
+              </div>
+              <div class="performance-card">
+                <div class="performance-card__icon performance-card__icon--courses">
+                  <span class="material-icons">menu_book</span>
+                </div>
+                <div class="performance-card__info">
+                  <span class="performance-card__value">{{ enrolledCourses.length }}</span>
+                  <span class="performance-card__label">{{ 'aboutStudent.ongoingCourses' | translate }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- Courses Tab -->
+        @if (activeTab() === 'courses') {
+          <div class="courses-section">
+            <div class="courses-grid">
+              @for (course of enrolledCourses; track course.id) {
+                <div class="course-card">
+                  <div class="course-card__header">
+                    <span class="course-card__code">{{ course.code }}</span>
+                    @if (course.grade) {
+                      <span class="course-card__grade">{{ course.grade }}</span>
+                    }
+                  </div>
+                  <h4 class="course-card__name">{{ course.name }}</h4>
+                  <p class="course-card__professor">
+                    <span class="material-icons">person</span>
+                    {{ course.professor }}
+                  </p>
+                  <div class="course-card__meta">
+                    <span class="course-card__credits">
+                      <span class="material-icons">school</span>
+                      {{ course.credits }} Credits
+                    </span>
+                  </div>
+                  <div class="course-card__progress">
+                    <div class="progress-bar">
+                      <div 
+                        class="progress-bar__fill" 
+                        [style.width.%]="course.progress"
+                        [style.background-color]="getProgressColor(course.progress)"
+                      ></div>
+                    </div>
+                    <span class="progress-text">{{ course.progress }}% Complete</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Activity Tab -->
+        @if (activeTab() === 'activity') {
+          <div class="activity-section">
+            <div class="activity-list">
+              @for (activity of recentActivity; track activity.id) {
+                <div class="activity-item" [class]="getActivityTypeClass(activity.type)">
+                  <div class="activity-item__icon">
+                    <span class="material-icons">{{ activity.icon }}</span>
+                  </div>
+                  <div class="activity-item__content">
+                    <h4 class="activity-item__title">{{ activity.title }}</h4>
+                    <p class="activity-item__description">{{ activity.description }}</p>
+                  </div>
+                  <span class="activity-item__date">{{ activity.date }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Documents Tab -->
+        @if (activeTab() === 'documents') {
+          <div class="documents-section">
+            <div class="documents-grid">
+              <div class="document-card">
+                <div class="document-card__icon">
+                  <span class="material-icons">description</span>
+                </div>
+                <div class="document-card__info">
+                  <h4>Admission Letter</h4>
+                  <p>PDF - 245 KB</p>
+                </div>
+                <button class="document-card__download">
+                  <span class="material-icons">download</span>
+                </button>
+              </div>
+              <div class="document-card">
+                <div class="document-card__icon">
+                  <span class="material-icons">badge</span>
+                </div>
+                <div class="document-card__info">
+                  <h4>ID Card</h4>
+                  <p>PDF - 128 KB</p>
+                </div>
+                <button class="document-card__download">
+                  <span class="material-icons">download</span>
+                </button>
+              </div>
+              <div class="document-card">
+                <div class="document-card__icon">
+                  <span class="material-icons">receipt_long</span>
+                </div>
+                <div class="document-card__info">
+                  <h4>Fee Receipt (2024)</h4>
+                  <p>PDF - 89 KB</p>
+                </div>
+                <button class="document-card__download">
+                  <span class="material-icons">download</span>
+                </button>
+              </div>
+              <div class="document-card">
+                <div class="document-card__icon">
+                  <span class="material-icons">grading</span>
+                </div>
+                <div class="document-card__info">
+                  <h4>Transcript</h4>
+                  <p>PDF - 312 KB</p>
+                </div>
+                <button class="document-card__download">
+                  <span class="material-icons">download</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </main>
+  </div>
+</div>

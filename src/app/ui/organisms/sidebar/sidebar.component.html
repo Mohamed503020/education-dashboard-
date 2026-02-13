@@ -7,7 +7,7 @@
   </div>
 
   <div class="sidebar__menu-label" *ngIf="!isCollapsed">
-    MAIN MENU
+    {{ 'nav.mainMenu' | translate }}
   </div>
 
   <nav class="sidebar__nav">
@@ -22,7 +22,7 @@
   <div class="sidebar__footer">
     <button class="sidebar__footer-btn">
       <span class="material-icons">headset_mic</span>
-      <span *ngIf="!isCollapsed">Support</span>
+      <span *ngIf="!isCollapsed">{{ 'nav.support' | translate }}</span>
     </button>
     <button class="sidebar__footer-btn">
       <span class="material-icons">shopping_cart</span>

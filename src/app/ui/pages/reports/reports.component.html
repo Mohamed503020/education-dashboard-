@@ -1,0 +1,315 @@
+<div class="reports">
+  <!-- Header -->
+  <div class="reports__header">
+    <div class="reports__title-section">
+      <h1 class="reports__title">{{ 'reports.title' | translate }}</h1>
+      <p class="reports__subtitle">{{ 'reports.subtitle' | translate }}</p>
+    </div>
+    <div class="reports__actions">
+      <div class="reports__period-selector">
+        <button 
+          class="period-btn" 
+          [class.period-btn--active]="selectedPeriod() === 'weekly'"
+          (click)="setPeriod('weekly')"
+        >
+          {{ 'common.weekly' | translate }}
+        </button>
+        <button 
+          class="period-btn" 
+          [class.period-btn--active]="selectedPeriod() === 'monthly'"
+          (click)="setPeriod('monthly')"
+        >
+          {{ 'common.monthly' | translate }}
+        </button>
+        <button 
+          class="period-btn" 
+          [class.period-btn--active]="selectedPeriod() === 'yearly'"
+          (click)="setPeriod('yearly')"
+        >
+          {{ 'common.yearly' | translate }}
+        </button>
+      </div>
+      <div class="reports__export-btns">
+        <button class="export-btn" (click)="exportReport('pdf')">
+          <span class="material-icons">picture_as_pdf</span>
+          PDF
+        </button>
+        <button class="export-btn" (click)="exportReport('excel')">
+          <span class="material-icons">table_chart</span>
+          Excel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="reports__summary">
+    @for (card of reportCards; track card.id) {
+      <div class="summary-card" [style.--card-color]="card.color">
+        <div class="summary-card__icon-wrapper">
+          <span class="material-icons">{{ card.icon }}</span>
+        </div>
+        <div class="summary-card__content">
+          <span class="summary-card__title">{{ card.title | translate }}</span>
+          <span class="summary-card__value">{{ card.value }}</span>
+        </div>
+        <div class="summary-card__trend" [class.summary-card__trend--up]="card.trend === 'up'" [class.summary-card__trend--down]="card.trend === 'down'">
+          <span class="material-icons">{{ card.trend === 'up' ? 'trending_up' : card.trend === 'down' ? 'trending_down' : 'trending_flat' }}</span>
+          <span>{{ card.change > 0 ? '+' : '' }}{{ card.change }}%</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Main Dashboard Grid -->
+  <div class="reports__grid">
+    <!-- Enrollment Trend Chart -->
+    <div class="chart-card chart-card--wide">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">
+          <span class="material-icons">show_chart</span>
+          {{ 'reports.enrollmentTrend' | translate }}
+        </h3>
+        <div class="chart-card__legend">
+          <span class="legend-item">
+            <span class="legend-dot" style="background: #6366f1;"></span>
+            {{ 'reports.enrollments' | translate }}
+          </span>
+        </div>
+      </div>
+      <div class="chart-card__body">
+        <div class="bar-chart">
+          @for (item of enrollmentTrend; track item.label) {
+            <div class="bar-chart__column">
+              <div class="bar-chart__bar-wrapper">
+                <div 
+                  class="bar-chart__bar" 
+                  [style.height.%]="getBarHeight(item.value, getMaxValue(enrollmentTrend))"
+                  [style.background]="item.color"
+                >
+                  <span class="bar-chart__value">{{ item.value }}</span>
+                </div>
+              </div>
+              <span class="bar-chart__label">{{ item.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Distribution Chart -->
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">
+          <span class="material-icons">pie_chart</span>
+          {{ 'reports.courseDistribution' | translate }}
+        </h3>
+      </div>
+      <div class="chart-card__body">
+        <div class="donut-chart">
+          <svg viewBox="0 0 100 100" class="donut-chart__svg">
+            @for (item of courseDistribution; track item.label; let i = $index) {
+              <circle 
+                class="donut-chart__segment"
+                cx="50" 
+                cy="50" 
+                r="40"
+                [style.stroke]="item.color"
+                [style.stroke-dasharray]="item.value * 2.51 + ' ' + (251.2 - item.value * 2.51)"
+                [style.stroke-dashoffset]="getStrokeDashoffset(i)"
+              />
+            }
+          </svg>
+          <div class="donut-chart__center">
+            <span class="donut-chart__total">{{ getTotalDistribution() }}%</span>
+            <span class="donut-chart__label">{{ 'reports.total' | translate }}</span>
+          </div>
+        </div>
+        <div class="donut-chart__legend">
+          @for (item of courseDistribution; track item.label) {
+            <div class="legend-row">
+              <span class="legend-dot" [style.background]="item.color"></span>
+              <span class="legend-label">{{ item.label }}</span>
+              <span class="legend-value">{{ item.value }}%</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activities -->
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">
+          <span class="material-icons">history</span>
+          {{ 'reports.recentActivity' | translate }}
+        </h3>
+        <button class="chart-card__action">
+          {{ 'common.view' | translate }}
+          <span class="material-icons">arrow_forward</span>
+        </button>
+      </div>
+      <div class="chart-card__body chart-card__body--scroll">
+        <div class="activity-list">
+          @for (activity of recentActivities; track activity.id) {
+            <div class="activity-item">
+              <div class="activity-item__icon" [style.background]="activity.color + '20'" [style.color]="activity.color">
+                <span class="material-icons">{{ activity.icon }}</span>
+              </div>
+              <div class="activity-item__content">
+                <h4 class="activity-item__title">{{ activity.title }}</h4>
+                <p class="activity-item__description">{{ activity.description }}</p>
+              </div>
+              <span class="activity-item__time">{{ activity.time }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Department Performance Table -->
+    <div class="chart-card chart-card--wide">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">
+          <span class="material-icons">leaderboard</span>
+          {{ 'reports.departmentPerformance' | translate }}
+        </h3>
+        <button class="chart-card__action">
+          {{ 'reports.viewAll' | translate }}
+          <span class="material-icons">arrow_forward</span>
+        </button>
+      </div>
+      <div class="chart-card__body">
+        <div class="performance-table">
+          <div class="performance-table__header">
+            <span>{{ 'reports.department' | translate }}</span>
+            <span>{{ 'reports.students' | translate }}</span>
+            <span>{{ 'reports.avgGrade' | translate }}</span>
+            <span>{{ 'reports.attendance' | translate }}</span>
+            <span>{{ 'reports.completion' | translate }}</span>
+          </div>
+          @for (dept of performanceData; track dept.department) {
+            <div class="performance-table__row">
+              <span class="performance-table__dept">{{ dept.department }}</span>
+              <span class="performance-table__students">
+                <span class="material-icons">people</span>
+                {{ dept.students | number }}
+              </span>
+              <span class="performance-table__grade">
+                <span class="grade-badge" [style.background]="getGradeColor(dept.avgGrade)">{{ dept.avgGrade.toFixed(2) }}</span>
+              </span>
+              <span class="performance-table__attendance">
+                <div class="progress-bar">
+                  <div class="progress-bar__fill" [style.width.%]="dept.attendance" [style.background]="getAttendanceColor(dept.attendance)"></div>
+                </div>
+                <span>{{ dept.attendance }}%</span>
+              </span>
+              <span class="performance-table__completion">
+                <div class="progress-bar">
+                  <div class="progress-bar__fill" [style.width.%]="dept.completion" [style.background]="'#6366f1'"></div>
+                </div>
+                <span>{{ dept.completion }}%</span>
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Courses -->
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">
+          <span class="material-icons">stars</span>
+          {{ 'reports.topCourses' | translate }}
+        </h3>
+      </div>
+      <div class="chart-card__body">
+        <div class="top-courses">
+          @for (course of topCourses; track course.name; let i = $index) {
+            <div class="top-course-item">
+              <div class="top-course-item__rank">{{ i + 1 }}</div>
+              <div class="top-course-item__info">
+                <h4 class="top-course-item__name">{{ course.name }}</h4>
+                <div class="top-course-item__stats">
+                  <span><span class="material-icons">people</span> {{ course.students }}</span>
+                  <span><span class="material-icons">star</span> {{ course.rating }}</span>
+                </div>
+              </div>
+              <div class="top-course-item__completion">
+                <div class="completion-ring">
+                  <svg viewBox="0 0 36 36">
+                    <path
+                      class="completion-ring__bg"
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      class="completion-ring__fill"
+                      [style.stroke-dasharray]="course.completion + ', 100'"
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                  </svg>
+                  <span class="completion-ring__value">{{ course.completion }}%</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">
+          <span class="material-icons">insights</span>
+          {{ 'reports.quickStats' | translate }}
+        </h3>
+      </div>
+      <div class="chart-card__body">
+        <div class="quick-stats">
+          <div class="quick-stat">
+            <div class="quick-stat__icon" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+              <span class="material-icons">assignment_turned_in</span>
+            </div>
+            <div class="quick-stat__info">
+              <span class="quick-stat__value">2,458</span>
+              <span class="quick-stat__label">{{ 'reports.coursesCompleted' | translate }}</span>
+            </div>
+          </div>
+          <div class="quick-stat">
+            <div class="quick-stat__icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+              <span class="material-icons">verified</span>
+            </div>
+            <div class="quick-stat__info">
+              <span class="quick-stat__value">1,892</span>
+              <span class="quick-stat__label">{{ 'reports.certificatesIssued' | translate }}</span>
+            </div>
+          </div>
+          <div class="quick-stat">
+            <div class="quick-stat__icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+              <span class="material-icons">schedule</span>
+            </div>
+            <div class="quick-stat__info">
+              <span class="quick-stat__value">15,420</span>
+              <span class="quick-stat__label">{{ 'reports.hoursLearned' | translate }}</span>
+            </div>
+          </div>
+          <div class="quick-stat">
+            <div class="quick-stat__icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+              <span class="material-icons">forum</span>
+            </div>
+            <div class="quick-stat__info">
+              <span class="quick-stat__value">8,745</span>
+              <span class="quick-stat__label">{{ 'reports.discussions' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -29,6 +29,10 @@ export const routes: Routes = [
       {
         path: 'edit/:id',
         loadComponent: () => import('./ui/pages/students/edit-student/edit-student.component').then(m => m.EditStudentComponent)
+      },
+      {
+        path: 'about/:id',
+        loadComponent: () => import('./ui/pages/students/about-student/about-student.component').then(m => m.AboutStudentComponent)
       }
     ]
   },
@@ -119,6 +123,10 @@ export const routes: Routes = [
   {
     path: 'event-management',
     loadComponent: () => import('./ui/pages/event-management/event-management.component').then(m => m.EventManagementComponent)
+  },
+  {
+    path: 'reports',
+    loadComponent: () => import('./ui/pages/reports/reports.component').then(m => m.ReportsComponent)
   },
   {
     path: '**',

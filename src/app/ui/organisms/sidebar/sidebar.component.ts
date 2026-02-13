@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SidebarService } from '../../../core/services/sidebar.service';
 import { SidebarItemComponent } from '../../molecules/sidebar-item/sidebar-item.component';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterModule, SidebarItemComponent],
+  imports: [CommonModule, RouterModule, SidebarItemComponent, TranslatePipe],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })

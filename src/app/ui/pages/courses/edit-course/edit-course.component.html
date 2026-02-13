@@ -1,13 +1,13 @@
 <div class="edit-course">
   <div class="edit-course__header">
     <div class="edit-course__title-section">
-      <h1 class="edit-course__title">{{ 'courses.edit' | translate }}</h1>
+      <h1 class="edit-course__title">{{ 'editCourse.title' | translate }}</h1>
       <nav class="edit-course__breadcrumb">
         <a routerLink="/dashboard">{{ 'nav.dashboard' | translate }}</a>
         <span>/</span>
         <a routerLink="/courses/all">{{ 'nav.courses' | translate }}</a>
         <span>/</span>
-        <span>{{ 'courses.edit' | translate }}</span>
+        <span>{{ 'editCourse.title' | translate }}</span>
       </nav>
     </div>
     <div class="edit-course__id-badge">
@@ -15,198 +15,516 @@
     </div>
   </div>
 
+  <!-- Section Tabs -->
+  <div class="section-tabs">
+    <button 
+      class="section-tabs__tab" 
+      [class.section-tabs__tab--active]="activeSection() === 'info'"
+      (click)="setActiveSection('info')"
+    >
+      <span class="material-icons">info</span>
+      {{ 'editCourse.courseInfo' | translate }}
+    </button>
+    <button 
+      class="section-tabs__tab" 
+      [class.section-tabs__tab--active]="activeSection() === 'lessons'"
+      (click)="setActiveSection('lessons')"
+    >
+      <span class="material-icons">menu_book</span>
+      {{ 'editCourse.lessonsTab' | translate }} ({{ lessons.length }})
+    </button>
+    <button 
+      class="section-tabs__tab" 
+      [class.section-tabs__tab--active]="activeSection() === 'videos'"
+      (click)="setActiveSection('videos')"
+    >
+      <span class="material-icons">play_circle</span>
+      {{ 'editCourse.videosTab' | translate }} ({{ videos.length }})
+    </button>
+    <button 
+      class="section-tabs__tab" 
+      [class.section-tabs__tab--active]="activeSection() === 'pdfs'"
+      (click)="setActiveSection('pdfs')"
+    >
+      <span class="material-icons">picture_as_pdf</span>
+      {{ 'editCourse.pdfsTab' | translate }} ({{ pdfs.length }})
+    </button>
+  </div>
+
   <div class="edit-course__form-container">
-    <form (ngSubmit)="onSubmit()" #courseForm="ngForm">
-      <!-- Basic Information -->
-      <div class="form-section">
-        <h3 class="form-section__title">
-          <span class="material-icons">info</span>
-          Basic Information
-        </h3>
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label" for="code">Course Code *</label>
-            <input
-              type="text"
-              id="code"
-              name="code"
-              class="form-input"
-              [(ngModel)]="course.code"
-              required
-              placeholder="e.g., CS101"
-            />
-          </div>
-          <div class="form-group form-group--wide">
-            <label class="form-label" for="name">Course Name *</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              class="form-input"
-              [(ngModel)]="course.name"
-              required
-              placeholder="Enter course name"
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="department">Department *</label>
-            <select
-              id="department"
-              name="department"
-              class="form-input"
-              [(ngModel)]="course.department"
-              required
-            >
-              <option value="">Select Department</option>
-              @for (dept of departments; track dept) {
-                <option [value]="dept">{{ dept }}</option>
-              }
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="credits">Credits *</label>
-            <input
-              type="number"
-              id="credits"
-              name="credits"
-              class="form-input"
-              [(ngModel)]="course.credits"
-              required
-              min="1"
-              max="6"
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="professor">Professor *</label>
-            <select
-              id="professor"
-              name="professor"
-              class="form-input"
-              [(ngModel)]="course.professor"
-              required
-            >
-              <option value="">Select Professor</option>
-              @for (prof of professors; track prof) {
-                <option [value]="prof">{{ prof }}</option>
-              }
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="maxStudents">Max Students</label>
-            <input
-              type="number"
-              id="maxStudents"
-              name="maxStudents"
-              class="form-input"
-              [(ngModel)]="course.maxStudents"
-              min="1"
-              max="500"
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Course Details -->
-      <div class="form-section">
-        <h3 class="form-section__title">
-          <span class="material-icons">description</span>
-          Course Details
-        </h3>
-        <div class="form-grid">
-          <div class="form-group form-group--full">
-            <label class="form-label" for="description">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              class="form-input form-input--textarea"
-              [(ngModel)]="course.description"
-              rows="4"
-              placeholder="Enter course description"
-            ></textarea>
-          </div>
-          <div class="form-group form-group--full">
-            <label class="form-label" for="prerequisites">Prerequisites</label>
-            <input
-              type="text"
-              id="prerequisites"
-              name="prerequisites"
-              class="form-input"
-              [(ngModel)]="course.prerequisites"
-              placeholder="e.g., CS100, MATH101"
-            />
+    <!-- Course Info Section -->
+    @if (activeSection() === 'info') {
+      <form (ngSubmit)="onSubmit()" #courseForm="ngForm">
+        <!-- Basic Information -->
+        <div class="form-section">
+          <h3 class="form-section__title">
+            <span class="material-icons">info</span>
+            Basic Information
+          </h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="code">Course Code *</label>
+              <input
+                type="text"
+                id="code"
+                name="code"
+                class="form-input"
+                [(ngModel)]="course.code"
+                required
+                placeholder="e.g., CS101"
+              />
+            </div>
+            <div class="form-group form-group--wide">
+              <label class="form-label" for="name">Course Name *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-input"
+                [(ngModel)]="course.name"
+                required
+                placeholder="Enter course name"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="department">Department *</label>
+              <select
+                id="department"
+                name="department"
+                class="form-input"
+                [(ngModel)]="course.department"
+                required
+              >
+                <option value="">Select Department</option>
+                @for (dept of departments; track dept) {
+                  <option [value]="dept">{{ dept }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="credits">Credits *</label>
+              <input
+                type="number"
+                id="credits"
+                name="credits"
+                class="form-input"
+                [(ngModel)]="course.credits"
+                required
+                min="1"
+                max="6"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="professor">Professor *</label>
+              <select
+                id="professor"
+                name="professor"
+                class="form-input"
+                [(ngModel)]="course.professor"
+                required
+              >
+                <option value="">Select Professor</option>
+                @for (prof of professors; track prof) {
+                  <option [value]="prof">{{ prof }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="maxStudents">Max Students</label>
+              <input
+                type="number"
+                id="maxStudents"
+                name="maxStudents"
+                class="form-input"
+                [(ngModel)]="course.maxStudents"
+                min="1"
+                max="500"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Schedule -->
-      <div class="form-section">
-        <h3 class="form-section__title">
-          <span class="material-icons">schedule</span>
-          Schedule
-        </h3>
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label" for="schedule">Class Schedule</label>
-            <input
-              type="text"
-              id="schedule"
-              name="schedule"
-              class="form-input"
-              [(ngModel)]="course.schedule"
-              placeholder="e.g., Mon/Wed 9:00-10:30"
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="startDate">Start Date</label>
-            <input
-              type="date"
-              id="startDate"
-              name="startDate"
-              class="form-input"
-              [(ngModel)]="course.startDate"
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="endDate">End Date</label>
-            <input
-              type="date"
-              id="endDate"
-              name="endDate"
-              class="form-input"
-              [(ngModel)]="course.endDate"
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="status">Status</label>
-            <select
-              id="status"
-              name="status"
-              class="form-input"
-              [(ngModel)]="course.status"
-            >
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="upcoming">Upcoming</option>
-            </select>
+        <!-- Course Details -->
+        <div class="form-section">
+          <h3 class="form-section__title">
+            <span class="material-icons">description</span>
+            Course Details
+          </h3>
+          <div class="form-grid">
+            <div class="form-group form-group--full">
+              <label class="form-label" for="description">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                class="form-input form-input--textarea"
+                [(ngModel)]="course.description"
+                rows="4"
+                placeholder="Enter course description"
+              ></textarea>
+            </div>
+            <div class="form-group form-group--full">
+              <label class="form-label" for="prerequisites">Prerequisites</label>
+              <input
+                type="text"
+                id="prerequisites"
+                name="prerequisites"
+                class="form-input"
+                [(ngModel)]="course.prerequisites"
+                placeholder="e.g., CS100, MATH101"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Form Actions -->
+        <!-- Schedule -->
+        <div class="form-section">
+          <h3 class="form-section__title">
+            <span class="material-icons">schedule</span>
+            Schedule
+          </h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="schedule">Class Schedule</label>
+              <input
+                type="text"
+                id="schedule"
+                name="schedule"
+                class="form-input"
+                [(ngModel)]="course.schedule"
+                placeholder="e.g., Mon/Wed 9:00-10:30"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="startDate">Start Date</label>
+              <input
+                type="date"
+                id="startDate"
+                name="startDate"
+                class="form-input"
+                [(ngModel)]="course.startDate"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="endDate">End Date</label>
+              <input
+                type="date"
+                id="endDate"
+                name="endDate"
+                class="form-input"
+                [(ngModel)]="course.endDate"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="status">Status</label>
+              <select
+                id="status"
+                name="status"
+                class="form-input"
+                [(ngModel)]="course.status"
+              >
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="upcoming">Upcoming</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn btn--outline" (click)="onCancel()">
+            <span class="material-icons">close</span>
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button type="button" class="btn btn--secondary" (click)="onReset()">
+            <span class="material-icons">refresh</span>
+            Reset
+          </button>
+          <button type="submit" class="btn btn--primary" [disabled]="!courseForm.valid">
+            <span class="material-icons">save</span>
+            {{ 'editCourse.saveChanges' | translate }}
+          </button>
+        </div>
+      </form>
+    }
+
+    <!-- Lessons Section -->
+    @if (activeSection() === 'lessons') {
+      <div class="content-section">
+        <!-- Add Lesson Form -->
+        <div class="add-form-card">
+          <h4 class="add-form-card__title">
+            <span class="material-icons">add_circle</span>
+            {{ 'editCourse.addLesson' | translate }}
+          </h4>
+          <div class="add-form-grid">
+            <div class="form-group">
+              <label class="form-label">{{ 'editCourse.lessonTitle' | translate }} *</label>
+              <input
+                type="text"
+                class="form-input"
+                [(ngModel)]="newLesson.title"
+                placeholder="Enter lesson title"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">{{ 'editCourse.lessonDuration' | translate }}</label>
+              <input
+                type="text"
+                class="form-input"
+                [(ngModel)]="newLesson.duration"
+                placeholder="e.g., 45 min"
+              />
+            </div>
+            <div class="form-group form-group--full">
+              <label class="form-label">{{ 'editCourse.lessonDescription' | translate }}</label>
+              <textarea
+                class="form-input"
+                [(ngModel)]="newLesson.description"
+                rows="2"
+                placeholder="Enter lesson description"
+              ></textarea>
+            </div>
+          </div>
+          <button class="btn btn--primary btn--sm" (click)="addLesson()" [disabled]="!newLesson.title">
+            <span class="material-icons">add</span>
+            {{ 'common.add' | translate }}
+          </button>
+        </div>
+
+        <!-- Lessons List -->
+        <div class="items-list">
+          @if (lessons.length === 0) {
+            <div class="empty-state">
+              <span class="material-icons">menu_book</span>
+              <p>{{ 'editCourse.noLessons' | translate }}</p>
+            </div>
+          } @else {
+            @for (lesson of lessons; track lesson.id) {
+              <div class="item-card item-card--lesson">
+                <div class="item-card__header">
+                  <div class="item-card__order">{{ lesson.order }}</div>
+                  <div class="item-card__info">
+                    <h4 class="item-card__title">{{ lesson.title }}</h4>
+                    <p class="item-card__description">{{ lesson.description }}</p>
+                  </div>
+                  <div class="item-card__meta">
+                    <span class="item-card__duration">
+                      <span class="material-icons">schedule</span>
+                      {{ lesson.duration }}
+                    </span>
+                    <span class="item-card__counts">
+                      <span class="material-icons">play_circle</span>
+                      {{ getVideosForLesson(lesson.id).length }} videos
+                    </span>
+                    <span class="item-card__counts">
+                      <span class="material-icons">description</span>
+                      {{ getPdfsForLesson(lesson.id).length }} PDFs
+                    </span>
+                  </div>
+                  <button class="item-card__delete" (click)="removeLesson(lesson.id)">
+                    <span class="material-icons">delete</span>
+                  </button>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Videos Section -->
+    @if (activeSection() === 'videos') {
+      <div class="content-section">
+        <!-- Add Video Form -->
+        <div class="add-form-card">
+          <h4 class="add-form-card__title">
+            <span class="material-icons">add_circle</span>
+            {{ 'editCourse.addVideo' | translate }}
+          </h4>
+          <div class="add-form-grid">
+            <div class="form-group">
+              <label class="form-label">{{ 'editCourse.videoTitle' | translate }} *</label>
+              <input
+                type="text"
+                class="form-input"
+                [(ngModel)]="newVideo.title"
+                placeholder="Enter video title"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">{{ 'editCourse.selectLesson' | translate }} *</label>
+              <select class="form-input" [(ngModel)]="newVideo.lessonId">
+                <option [ngValue]="0">Select a lesson</option>
+                @for (lesson of lessons; track lesson.id) {
+                  <option [ngValue]="lesson.id">{{ lesson.title }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">{{ 'editCourse.videoUrl' | translate }} *</label>
+              <input
+                type="url"
+                class="form-input"
+                [(ngModel)]="newVideo.url"
+                placeholder="https://youtube.com/watch?v=..."
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">{{ 'editCourse.videoDuration' | translate }}</label>
+              <input
+                type="text"
+                class="form-input"
+                [(ngModel)]="newVideo.duration"
+                placeholder="e.g., 12:34"
+              />
+            </div>
+          </div>
+          <button 
+            class="btn btn--primary btn--sm" 
+            (click)="addVideo()" 
+            [disabled]="!newVideo.title || !newVideo.url || !newVideo.lessonId"
+          >
+            <span class="material-icons">add</span>
+            {{ 'common.add' | translate }}
+          </button>
+        </div>
+
+        <!-- Videos List -->
+        <div class="items-list">
+          @if (videos.length === 0) {
+            <div class="empty-state">
+              <span class="material-icons">play_circle</span>
+              <p>{{ 'editCourse.noVideos' | translate }}</p>
+            </div>
+          } @else {
+            @for (video of videos; track video.id) {
+              <div class="item-card item-card--video">
+                <div class="item-card__icon">
+                  <span class="material-icons">play_circle</span>
+                </div>
+                <div class="item-card__info">
+                  <h4 class="item-card__title">{{ video.title }}</h4>
+                  <p class="item-card__url">{{ video.url }}</p>
+                </div>
+                <div class="item-card__meta">
+                  <span class="item-card__duration">
+                    <span class="material-icons">schedule</span>
+                    {{ video.duration }}
+                  </span>
+                  <span class="item-card__lesson-badge">
+                    Lesson {{ video.lessonId }}
+                  </span>
+                </div>
+                <button class="item-card__delete" (click)="removeVideo(video.id)">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    }
+
+    <!-- PDFs Section -->
+    @if (activeSection() === 'pdfs') {
+      <div class="content-section">
+        <!-- Add PDF Form -->
+        <div class="add-form-card">
+          <h4 class="add-form-card__title">
+            <span class="material-icons">add_circle</span>
+            {{ 'editCourse.addPdf' | translate }}
+          </h4>
+          <div class="add-form-grid">
+            <div class="form-group">
+              <label class="form-label">{{ 'editCourse.pdfTitle' | translate }} *</label>
+              <input
+                type="text"
+                class="form-input"
+                [(ngModel)]="newPdf.title"
+                placeholder="Enter PDF title"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">{{ 'editCourse.selectLesson' | translate }} *</label>
+              <select class="form-input" [(ngModel)]="newPdf.lessonId">
+                <option [ngValue]="0">Select a lesson</option>
+                @for (lesson of lessons; track lesson.id) {
+                  <option [ngValue]="lesson.id">{{ lesson.title }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group form-group--full">
+              <label class="form-label">{{ 'editCourse.uploadPdf' | translate }}</label>
+              <div class="file-upload">
+                <input
+                  type="file"
+                  accept=".pdf"
+                  (change)="onFileSelect($event)"
+                  id="pdfFile"
+                />
+                <label for="pdfFile" class="file-upload__label">
+                  <span class="material-icons">cloud_upload</span>
+                  <span>{{ newPdf.file?.name || 'editCourse.dragDrop' | translate }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <button 
+            class="btn btn--primary btn--sm" 
+            (click)="addPdf()" 
+            [disabled]="!newPdf.title || !newPdf.lessonId"
+          >
+            <span class="material-icons">add</span>
+            {{ 'common.add' | translate }}
+          </button>
+        </div>
+
+        <!-- PDFs List -->
+        <div class="items-list">
+          @if (pdfs.length === 0) {
+            <div class="empty-state">
+              <span class="material-icons">picture_as_pdf</span>
+              <p>{{ 'editCourse.noPdfs' | translate }}</p>
+            </div>
+          } @else {
+            @for (pdf of pdfs; track pdf.id) {
+              <div class="item-card item-card--pdf">
+                <div class="item-card__icon">
+                  <span class="material-icons">picture_as_pdf</span>
+                </div>
+                <div class="item-card__info">
+                  <h4 class="item-card__title">{{ pdf.title }}</h4>
+                  <p class="item-card__filename">{{ pdf.fileName }}</p>
+                </div>
+                <div class="item-card__meta">
+                  <span class="item-card__size">{{ pdf.size }}</span>
+                  <span class="item-card__lesson-badge">
+                    Lesson {{ pdf.lessonId }}
+                  </span>
+                </div>
+                <button class="item-card__delete" (click)="removePdf(pdf.id)">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Global Save Button for Content Sections -->
+    @if (activeSection() !== 'info') {
       <div class="form-actions">
         <button type="button" class="btn btn--outline" (click)="onCancel()">
           <span class="material-icons">close</span>
-          Cancel
+          {{ 'common.cancel' | translate }}
         </button>
-        <button type="button" class="btn btn--secondary" (click)="onReset()">
-          <span class="material-icons">refresh</span>
-          Reset
-        </button>
-        <button type="submit" class="btn btn--primary" [disabled]="!courseForm.valid">
+        <button type="button" class="btn btn--primary" (click)="onSubmit()">
           <span class="material-icons">save</span>
-          Update Course
+          {{ 'editCourse.saveChanges' | translate }}
         </button>
       </div>
-    </form>
+    }
   </div>
 </div>

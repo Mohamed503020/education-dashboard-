@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
-import { LanguageService } from '../../core/services/language.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
   name: 'translate',
@@ -7,9 +7,9 @@ import { LanguageService } from '../../core/services/language.service';
   pure: false
 })
 export class TranslatePipe implements PipeTransform {
-  private languageService = inject(LanguageService);
+  private translateService = inject(TranslateService);
 
   transform(key: string): string {
-    return this.languageService.translate(key);
+    return this.translateService.instant(key);
   }
 }

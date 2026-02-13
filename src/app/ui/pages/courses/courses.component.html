@@ -1,69 +1,181 @@
 <div class="courses">
-  <div class="courses__header">
-    <div class="courses__title-section">
+  <!-- Hero Header -->
+  <div class="courses__hero">
+    <div class="courses__hero-content">
       <h1 class="courses__title">{{ 'courses.title' | translate }}</h1>
       <p class="courses__subtitle">{{ 'courses.subtitle' | translate }}</p>
     </div>
-    <div class="courses__actions">
-      <button class="btn btn--primary" routerLink="/courses/add">
+    <div class="courses__hero-actions">
+      <button class="btn btn--primary btn--glow" routerLink="/courses/add">
         <span class="material-icons">add</span>
         {{ 'courses.addNew' | translate }}
       </button>
     </div>
   </div>
 
-  <div class="courses__filters">
-    <div class="search-box">
-      <span class="material-icons search-box__icon">search</span>
-      <input type="text" class="search-box__input" [placeholder]="'common.search' | translate">
-    </div>
-    <div class="filter-group">
-      <select class="filter-select">
-        <option value="">{{ 'courses.allDepartments' | translate }}</option>
-        <option value="cs">Computer Science</option>
-        <option value="math">Mathematics</option>
-        <option value="physics">Physics</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="courses__grid">
-    @for (course of courses; track course.id) {
-      <div class="course-card" [routerLink]="['/courses', course.id]">
-        <div class="course-card__header">
-          <span class="course-card__code">{{ course.code }}</span>
-          <span class="course-card__status course-card__status--{{ course.status }}">
-            {{ course.status === 'active' ? ('common.active' | translate) : ('common.inactive' | translate) }}
-          </span>
+  <!-- Category Stats -->
+  <div class="courses__categories">
+    @for (cat of categoryStats; track cat.name) {
+      <div class="category-card" [style.--cat-color]="cat.color">
+        <div class="category-card__icon">
+          <span class="material-icons">{{ cat.icon }}</span>
         </div>
-        <h3 class="course-card__name">{{ course.name }}</h3>
-        <p class="course-card__department">{{ course.department }}</p>
-        <div class="course-card__info">
-          <div class="course-card__info-item">
-            <span class="material-icons">person</span>
-            <span>{{ course.professor }}</span>
-          </div>
-          <div class="course-card__info-item">
-            <span class="material-icons">people</span>
-            <span>{{ course.students }} {{ 'sidebar.students' | translate }}</span>
-          </div>
-          <div class="course-card__info-item">
-            <span class="material-icons">school</span>
-            <span>{{ course.credits }} {{ 'courses.credits' | translate }}</span>
-          </div>
-        </div>
-        <div class="course-card__actions" (click)="$event.stopPropagation()">
-          <a class="course-card__btn course-card__btn--view" [routerLink]="['/courses', course.id]">
-            <span class="material-icons">visibility</span>
-          </a>
-          <a class="course-card__btn course-card__btn--edit" [routerLink]="['/courses/edit', course.id]">
-            <span class="material-icons">edit</span>
-          </a>
-          <button class="course-card__btn course-card__btn--delete">
-            <span class="material-icons">delete</span>
-          </button>
+        <div class="category-card__info">
+          <span class="category-card__count">{{ cat.count }}</span>
+          <span class="category-card__name">{{ cat.name }}</span>
         </div>
       </div>
     }
   </div>
+
+  <!-- Filters Section -->
+  <div class="courses__filter-bar">
+    <div class="courses__search">
+      <span class="material-icons">search</span>
+      <input 
+        type="text" 
+        [placeholder]="'common.search' | translate"
+        [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)"
+      >
+    </div>
+    <div class="courses__filters">
+      <select 
+        class="filter-select"
+        [ngModel]="selectedDepartment()"
+        (ngModelChange)="selectedDepartment.set($event)"
+      >
+        <option value="">{{ 'courses.allDepartments' | translate }}</option>
+        @for (dept of departments; track dept) {
+          <option [value]="dept">{{ dept }}</option>
+        }
+      </select>
+      <select 
+        class="filter-select"
+        [ngModel]="selectedLevel()"
+        (ngModelChange)="selectedLevel.set($event)"
+      >
+        <option value="">All Levels</option>
+        @for (level of levels; track level) {
+          <option [value]="level">{{ level | titlecase }}</option>
+        }
+      </select>
+    </div>
+    <div class="courses__view-toggle">
+      <button 
+        class="view-btn" 
+        [class.view-btn--active]="viewMode() === 'grid'"
+        (click)="setViewMode('grid')"
+      >
+        <span class="material-icons">grid_view</span>
+      </button>
+      <button 
+        class="view-btn" 
+        [class.view-btn--active]="viewMode() === 'list'"
+        (click)="setViewMode('list')"
+      >
+        <span class="material-icons">view_list</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Courses Grid/List -->
+  <div class="courses__content" [class.courses__content--list]="viewMode() === 'list'">
+    @for (course of filteredCourses; track course.id) {
+      <div class="course-card" [class.course-card--list]="viewMode() === 'list'" [style.--course-color]="course.color">
+        <!-- Card Image/Header -->
+        <div class="course-card__visual">
+          <div class="course-card__gradient"></div>
+          <div class="course-card__icon">
+            <span class="material-icons">menu_book</span>
+          </div>
+          <span class="course-card__code">{{ course.code }}</span>
+          <span class="status-badge" [class]="getStatusClass(course.status)">
+            {{ course.status === 'active' ? 'Active' : course.status === 'upcoming' ? 'Coming Soon' : 'Inactive' }}
+          </span>
+        </div>
+
+        <!-- Card Body -->
+        <div class="course-card__body">
+          <div class="course-card__header">
+            <span class="level-badge" [class]="getLevelBadgeClass(course.level)">
+              {{ course.level | titlecase }}
+            </span>
+            @if (course.rating > 0) {
+              <div class="course-card__rating">
+                <span class="material-icons">star</span>
+                <span>{{ course.rating }}</span>
+              </div>
+            }
+          </div>
+
+          <h3 class="course-card__title" [routerLink]="['/courses', course.id]">
+            {{ course.name }}
+          </h3>
+
+          <p class="course-card__department">
+            <span class="material-icons">apartment</span>
+            {{ course.department }}
+          </p>
+
+          <div class="course-card__meta">
+            <div class="meta-item">
+              <span class="material-icons">play_circle</span>
+              <span>{{ course.lessons }} Lessons</span>
+            </div>
+            <div class="meta-item">
+              <span class="material-icons">schedule</span>
+              <span>{{ course.duration }}</span>
+            </div>
+          </div>
+
+          <!-- Enrollment Progress -->
+          <div class="course-card__enrollment">
+            <div class="enrollment-bar">
+              <div class="enrollment-bar__fill" [style.width.%]="getEnrollmentPercentage(course)"></div>
+            </div>
+            <div class="enrollment-info">
+              <span class="material-icons">people</span>
+              <span>{{ course.students }}/{{ course.maxStudents }} enrolled</span>
+            </div>
+          </div>
+
+          <div class="course-card__instructor">
+            <div class="instructor-avatar">
+              <span class="material-icons">person</span>
+            </div>
+            <span class="instructor-name">{{ course.professor }}</span>
+          </div>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="course-card__footer">
+          <div class="course-card__credits">
+            <span class="material-icons">school</span>
+            {{ course.credits }} Credits
+          </div>
+          <div class="course-card__actions">
+            <button class="action-btn action-btn--view" [routerLink]="['/courses', course.id]" title="View Details">
+              <span class="material-icons">visibility</span>
+            </button>
+            <button class="action-btn action-btn--edit" [routerLink]="['/courses/edit', course.id]" title="Edit Course">
+              <span class="material-icons">edit</span>
+            </button>
+            <button class="action-btn action-btn--delete" title="Delete Course">
+              <span class="material-icons">delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Empty State -->
+  @if (filteredCourses.length === 0) {
+    <div class="courses__empty">
+      <span class="material-icons">search_off</span>
+      <h3>No courses found</h3>
+      <p>Try adjusting your filters or search query</p>
+    </div>
+  }
 </div>

@@ -34,49 +34,49 @@ export class SidebarService {
     return [
       {
         id: 'dashboard',
-        label: 'Dashboard',
+        label: 'nav.dashboard',
         icon: 'dashboard',
         route: '/dashboard'
       },
       {
         id: 'event-management',
-        label: 'Event Management',
+        label: 'nav.eventManagement',
         icon: 'event',
         route: '/event-management'
       },
       {
         id: 'professors',
-        label: 'Professors',
+        label: 'nav.professors',
         icon: 'school',
         route: '/professors'
       },
       {
         id: 'students',
-        label: 'Students',
+        label: 'nav.students',
         icon: 'people',
         expanded: true,
         children: [
           {
             id: 'all-students',
-            label: 'All Students',
+            label: 'nav.allStudents',
             icon: 'people_outline',
             route: '/students/all'
           },
           {
             id: 'add-students',
-            label: 'Add Students',
+            label: 'nav.addStudents',
             icon: 'person_add',
             route: '/students/add'
           },
           {
             id: 'edit-students',
-            label: 'Edit Students',
+            label: 'nav.editStudents',
             icon: 'edit',
             route: '/students/edit'
           },
           {
             id: 'about-students',
-            label: 'About Students',
+            label: 'nav.aboutStudents',
             icon: 'info',
             route: '/students/about'
           }
@@ -84,39 +84,45 @@ export class SidebarService {
       },
       {
         id: 'courses',
-        label: 'Courses',
+        label: 'nav.courses',
         icon: 'menu_book',
         route: '/courses'
       },
       {
         id: 'library',
-        label: 'Library',
+        label: 'nav.library',
         icon: 'local_library',
         route: '/library'
       },
       {
         id: 'departments',
-        label: 'Departments',
+        label: 'nav.departments',
         icon: 'apartment',
         route: '/departments'
       },
       {
         id: 'staff',
-        label: 'Staff',
+        label: 'nav.staff',
         icon: 'badge',
         route: '/staff'
       },
       {
         id: 'holiday',
-        label: 'Holiday',
+        label: 'nav.holiday',
         icon: 'event_available',
         route: '/holiday'
       },
       {
         id: 'fees',
-        label: 'Fees',
+        label: 'nav.fees',
         icon: 'payments',
         route: '/fees'
+      },
+      {
+        id: 'reports',
+        label: 'nav.reports',
+        icon: 'assessment',
+        route: '/reports'
       }
     ];
   }

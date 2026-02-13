@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "buildCommand": "npx ng build --configuration production",
+  "outputDirectory": "dist/education-dashboard/browser",
+  "framework": null,
+  "installCommand": "npm install",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
