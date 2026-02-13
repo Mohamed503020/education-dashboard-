@@ -1,0 +1,413 @@
+<div class="course-details">
+  <!-- Course Header -->
+  <div class="course-header">
+    <div class="course-header__background"></div>
+    <div class="course-header__content">
+      <nav class="course-header__breadcrumb">
+        <a routerLink="/dashboard">{{ 'nav.dashboard' | translate }}</a>
+        <span class="material-icons">chevron_right</span>
+        <a routerLink="/courses/all">{{ 'nav.courses' | translate }}</a>
+        <span class="material-icons">chevron_right</span>
+        <span>{{ course.name }}</span>
+      </nav>
+      
+      <div class="course-header__main">
+        <div class="course-header__info">
+          <span class="course-header__badge">{{ course.department }}</span>
+          <h1 class="course-header__title">{{ course.name }}</h1>
+          <p class="course-header__code">{{ course.code }}</p>
+          
+          <div class="course-header__meta">
+            <div class="meta-item">
+              <span class="material-icons">schedule</span>
+              <span>{{ course.duration }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="material-icons">school</span>
+              <span>{{ course.credits }} {{ 'courseDetails.credits' | translate }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="material-icons">people</span>
+              <span>{{ course.students }} {{ 'courseDetails.students' | translate }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="material-icons">star</span>
+              <span>{{ course.rating }}</span>
+            </div>
+          </div>
+
+          <div class="course-header__professor">
+            <div class="professor-avatar">
+              <span class="material-icons">person</span>
+            </div>
+            <div class="professor-info">
+              <span class="professor-label">{{ 'courseDetails.instructor' | translate }}</span>
+              <span class="professor-name">{{ course.professor }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-header__actions">
+          <a routerLink="/courses/edit/{{ courseId }}" class="btn btn--outline">
+            <span class="material-icons">edit</span>
+            {{ 'courseDetails.editCourse' | translate }}
+          </a>
+          <button class="btn btn--primary">
+            <span class="material-icons">play_circle</span>
+            {{ 'courseDetails.continueLearning' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="course-progress">
+    <div class="course-progress__info">
+      <span>{{ 'courseDetails.courseProgress' | translate }}</span>
+      <span>{{ getCompletedLessonsCount() }}/{{ lessons.length }} {{ 'courseDetails.lessonsCompleted' | translate }}</span>
+    </div>
+    <div class="course-progress__bar">
+      <div class="course-progress__fill" [style.width.%]="getProgressPercentage()"></div>
+    </div>
+    <span class="course-progress__percent">{{ getProgressPercentage() }}%</span>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="course-tabs">
+    <button 
+      class="course-tabs__tab"
+      [class.course-tabs__tab--active]="activeTab() === 'overview'"
+      (click)="setActiveTab('overview')"
+    >
+      <span class="material-icons">info</span>
+      {{ 'courseDetails.overview' | translate }}
+    </button>
+    <button 
+      class="course-tabs__tab"
+      [class.course-tabs__tab--active]="activeTab() === 'lessons'"
+      (click)="setActiveTab('lessons')"
+    >
+      <span class="material-icons">menu_book</span>
+      {{ 'courseDetails.lessons' | translate }} ({{ lessons.length }})
+    </button>
+    <button 
+      class="course-tabs__tab"
+      [class.course-tabs__tab--active]="activeTab() === 'videos'"
+      (click)="setActiveTab('videos')"
+    >
+      <span class="material-icons">play_circle</span>
+      {{ 'courseDetails.videos' | translate }} ({{ videos.length }})
+    </button>
+    <button 
+      class="course-tabs__tab"
+      [class.course-tabs__tab--active]="activeTab() === 'resources'"
+      (click)="setActiveTab('resources')"
+    >
+      <span class="material-icons">folder</span>
+      {{ 'courseDetails.resources' | translate }} ({{ pdfs.length }})
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="course-content">
+    <!-- Overview Tab -->
+    @if (activeTab() === 'overview') {
+      <div class="tab-overview">
+        <div class="overview-main">
+          <div class="overview-section">
+            <h3 class="overview-section__title">{{ 'courseDetails.aboutCourse' | translate }}</h3>
+            <p class="overview-section__text">{{ course.description }}</p>
+          </div>
+
+          <div class="overview-section">
+            <h3 class="overview-section__title">{{ 'courseDetails.whatYouLearn' | translate }}</h3>
+            <ul class="overview-list">
+              <li><span class="material-icons">check_circle</span> Understand programming fundamentals</li>
+              <li><span class="material-icons">check_circle</span> Write clean and efficient Python code</li>
+              <li><span class="material-icons">check_circle</span> Work with data structures and algorithms</li>
+              <li><span class="material-icons">check_circle</span> Build real-world applications</li>
+              <li><span class="material-icons">check_circle</span> Debug and troubleshoot code</li>
+              <li><span class="material-icons">check_circle</span> Apply object-oriented programming principles</li>
+            </ul>
+          </div>
+
+          <div class="overview-section">
+            <h3 class="overview-section__title">{{ 'courseDetails.requirements' | translate }}</h3>
+            <ul class="overview-list overview-list--simple">
+              <li>Basic computer skills</li>
+              <li>No prior programming experience required</li>
+              <li>A computer with internet access</li>
+              <li>Willingness to learn and practice</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="overview-sidebar">
+          <div class="sidebar-card">
+            <h4 class="sidebar-card__title">{{ 'courseDetails.courseIncludes' | translate }}</h4>
+            <ul class="sidebar-card__list">
+              <li>
+                <span class="material-icons">play_circle</span>
+                <span>{{ videos.length }} {{ 'courseDetails.videoLessons' | translate }}</span>
+              </li>
+              <li>
+                <span class="material-icons">menu_book</span>
+                <span>{{ lessons.length }} {{ 'courseDetails.chapters' | translate }}</span>
+              </li>
+              <li>
+                <span class="material-icons">description</span>
+                <span>{{ pdfs.length }} {{ 'courseDetails.downloadableResources' | translate }}</span>
+              </li>
+              <li>
+                <span class="material-icons">quiz</span>
+                <span>{{ 'courseDetails.practiceQuizzes' | translate }}</span>
+              </li>
+              <li>
+                <span class="material-icons">emoji_events</span>
+                <span>{{ 'courseDetails.certificate' | translate }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Lessons Tab -->
+    @if (activeTab() === 'lessons') {
+      <div class="tab-lessons">
+        <div class="lessons-header">
+          <h3>{{ 'courseDetails.courseCurriculum' | translate }}</h3>
+          <a routerLink="/courses/{{ courseId }}/lessons/add" class="btn btn--primary btn--sm">
+            <span class="material-icons">add</span>
+            {{ 'courseDetails.addLesson' | translate }}
+          </a>
+        </div>
+        
+        <div class="lessons-list">
+          @for (lesson of lessons; track lesson.id) {
+            <div class="lesson-item" [class.lesson-item--completed]="lesson.isCompleted">
+              <div class="lesson-item__header" (click)="toggleLesson(lesson.id)">
+                <div class="lesson-item__left">
+                  <button 
+                    class="lesson-item__check"
+                    [class.lesson-item__check--checked]="lesson.isCompleted"
+                    (click)="markLessonComplete(lesson); $event.stopPropagation()"
+                  >
+                    <span class="material-icons">{{ lesson.isCompleted ? 'check_circle' : 'radio_button_unchecked' }}</span>
+                  </button>
+                  <div class="lesson-item__info">
+                    <span class="lesson-item__order">{{ 'courseDetails.lesson' | translate }} {{ lesson.order }}</span>
+                    <h4 class="lesson-item__title">{{ lesson.title }}</h4>
+                  </div>
+                </div>
+                <div class="lesson-item__right">
+                  <span class="lesson-item__duration">
+                    <span class="material-icons">schedule</span>
+                    {{ lesson.duration }}
+                  </span>
+                  <span class="material-icons lesson-item__arrow" [class.lesson-item__arrow--expanded]="expandedLesson() === lesson.id">
+                    expand_more
+                  </span>
+                </div>
+              </div>
+
+              @if (expandedLesson() === lesson.id) {
+                <div class="lesson-item__content">
+                  <p class="lesson-item__description">{{ lesson.description }}</p>
+                  
+                  <div class="lesson-item__resources">
+                    @if (getVideosForLesson(lesson.id).length > 0) {
+                      <div class="resource-section">
+                        <h5>Videos</h5>
+                        <div class="resource-list">
+                          @for (video of getVideosForLesson(lesson.id); track video.id) {
+                            <div class="resource-item resource-item--video" (click)="playVideo(video)">
+                              <span class="material-icons">play_circle</span>
+                              <span class="resource-item__title">{{ video.title }}</span>
+                              <span class="resource-item__meta">{{ video.duration }}</span>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    }
+
+                    @if (getPdfsForLesson(lesson.id).length > 0) {
+                      <div class="resource-section">
+                        <h5>Documents</h5>
+                        <div class="resource-list">
+                          @for (pdf of getPdfsForLesson(lesson.id); track pdf.id) {
+                            <div class="resource-item resource-item--pdf" (click)="viewPdf(pdf)">
+                              <span class="material-icons">picture_as_pdf</span>
+                              <span class="resource-item__title">{{ pdf.title }}</span>
+                              <span class="resource-item__meta">{{ pdf.size }}</span>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </div>
+
+                  <div class="lesson-item__actions">
+                    <button class="btn btn--primary btn--sm">
+                      <span class="material-icons">play_arrow</span>
+                      {{ 'courseDetails.startLesson' | translate }}
+                    </button>
+                    <a routerLink="/courses/{{ courseId }}/lessons/edit/{{ lesson.id }}" class="btn btn--outline btn--sm">
+                      <span class="material-icons">edit</span>
+                      {{ 'common.edit' | translate }}
+                    </a>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Videos Tab -->
+    @if (activeTab() === 'videos') {
+      <div class="tab-videos">
+        <div class="videos-header">
+          <h3>{{ 'courseDetails.allVideos' | translate }}</h3>
+          <a routerLink="/courses/{{ courseId }}/videos/add" class="btn btn--primary btn--sm">
+            <span class="material-icons">add</span>
+            {{ 'courseDetails.addVideo' | translate }}
+          </a>
+        </div>
+
+        <div class="videos-grid">
+          @for (video of videos; track video.id) {
+            <div class="video-card" (click)="playVideo(video)">
+              <div class="video-card__thumbnail">
+                <div class="video-card__play">
+                  <span class="material-icons">play_circle</span>
+                </div>
+                <span class="video-card__duration">{{ video.duration }}</span>
+              </div>
+              <div class="video-card__info">
+                <h4 class="video-card__title">{{ video.title }}</h4>
+                <p class="video-card__lesson">{{ 'courseDetails.lesson' | translate }} {{ video.lessonId }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Resources Tab -->
+    @if (activeTab() === 'resources') {
+      <div class="tab-resources">
+        <div class="resources-header">
+          <h3>{{ 'courseDetails.courseResources' | translate }}</h3>
+          <a routerLink="/courses/{{ courseId }}/resources/add" class="btn btn--primary btn--sm">
+            <span class="material-icons">add</span>
+            {{ 'courseDetails.addResource' | translate }}
+          </a>
+        </div>
+
+        <div class="resources-table">
+          <div class="resources-table__header">
+            <span>{{ 'courseDetails.name' | translate }}</span>
+            <span>{{ 'courseDetails.type' | translate }}</span>
+            <span>{{ 'courseDetails.size' | translate }}</span>
+            <span>{{ 'courseDetails.lesson' | translate }}</span>
+            <span>{{ 'common.actions' | translate }}</span>
+          </div>
+          @for (pdf of pdfs; track pdf.id) {
+            <div class="resources-table__row">
+              <div class="resources-table__name">
+                <span class="material-icons">picture_as_pdf</span>
+                {{ pdf.title }}
+              </div>
+              <span class="resources-table__type">PDF</span>
+              <span class="resources-table__size">{{ pdf.size }}</span>
+              <span class="resources-table__lesson">{{ 'courseDetails.lesson' | translate }} {{ pdf.lessonId }}</span>
+              <div class="resources-table__actions">
+                <button class="icon-btn" title="Preview" (click)="viewPdf(pdf)">
+                  <span class="material-icons">visibility</span>
+                </button>
+                <button class="icon-btn" title="Download" (click)="downloadPdf(pdf)">
+                  <span class="material-icons">download</span>
+                </button>
+                <button class="icon-btn icon-btn--danger" title="Delete">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<!-- Video Player Modal -->
+@if (showVideoPlayer()) {
+  <div class="media-modal" (click)="closeVideoPlayer()">
+    <div class="media-modal__content media-modal__content--video" (click)="$event.stopPropagation()">
+      <div class="media-modal__header">
+        <h3 class="media-modal__title">{{ currentVideo()?.title }}</h3>
+        <button class="media-modal__close" (click)="closeVideoPlayer()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="media-modal__body">
+        <iframe 
+          [src]="getSafeVideoUrl()"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          class="video-player"
+        ></iframe>
+      </div>
+      <div class="media-modal__footer">
+        <span class="media-modal__meta">
+          <span class="material-icons">schedule</span>
+          {{ currentVideo()?.duration }}
+        </span>
+        <span class="media-modal__meta">
+          <span class="material-icons">menu_book</span>
+          {{ 'courseDetails.lesson' | translate }} {{ currentVideo()?.lessonId }}
+        </span>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- PDF Viewer Modal -->
+@if (showPdfViewer()) {
+  <div class="media-modal" (click)="closePdfViewer()">
+    <div class="media-modal__content media-modal__content--pdf" (click)="$event.stopPropagation()">
+      <div class="media-modal__header">
+        <h3 class="media-modal__title">{{ currentPdf()?.title }}</h3>
+        <div class="media-modal__actions">
+          <button class="btn btn--outline btn--sm" (click)="downloadPdf(currentPdf()!)">
+            <span class="material-icons">download</span>
+            {{ 'courseDetails.download' | translate }}
+          </button>
+          <button class="media-modal__close" (click)="closePdfViewer()">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+      </div>
+      <div class="media-modal__body">
+        <iframe 
+          [src]="getSafePdfUrl()"
+          class="pdf-viewer"
+        ></iframe>
+      </div>
+      <div class="media-modal__footer">
+        <span class="media-modal__meta">
+          <span class="material-icons">description</span>
+          {{ currentPdf()?.size }}
+        </span>
+        <span class="media-modal__meta">
+          <span class="material-icons">menu_book</span>
+          {{ 'courseDetails.lesson' | translate }} {{ currentPdf()?.lessonId }}
+        </span>
+      </div>
+    </div>
+  </div>
+}

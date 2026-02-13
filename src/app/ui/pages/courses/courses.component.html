@@ -1,0 +1,69 @@
+<div class="courses">
+  <div class="courses__header">
+    <div class="courses__title-section">
+      <h1 class="courses__title">{{ 'courses.title' | translate }}</h1>
+      <p class="courses__subtitle">{{ 'courses.subtitle' | translate }}</p>
+    </div>
+    <div class="courses__actions">
+      <button class="btn btn--primary" routerLink="/courses/add">
+        <span class="material-icons">add</span>
+        {{ 'courses.addNew' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="courses__filters">
+    <div class="search-box">
+      <span class="material-icons search-box__icon">search</span>
+      <input type="text" class="search-box__input" [placeholder]="'common.search' | translate">
+    </div>
+    <div class="filter-group">
+      <select class="filter-select">
+        <option value="">{{ 'courses.allDepartments' | translate }}</option>
+        <option value="cs">Computer Science</option>
+        <option value="math">Mathematics</option>
+        <option value="physics">Physics</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="courses__grid">
+    @for (course of courses; track course.id) {
+      <div class="course-card" [routerLink]="['/courses', course.id]">
+        <div class="course-card__header">
+          <span class="course-card__code">{{ course.code }}</span>
+          <span class="course-card__status course-card__status--{{ course.status }}">
+            {{ course.status === 'active' ? ('common.active' | translate) : ('common.inactive' | translate) }}
+          </span>
+        </div>
+        <h3 class="course-card__name">{{ course.name }}</h3>
+        <p class="course-card__department">{{ course.department }}</p>
+        <div class="course-card__info">
+          <div class="course-card__info-item">
+            <span class="material-icons">person</span>
+            <span>{{ course.professor }}</span>
+          </div>
+          <div class="course-card__info-item">
+            <span class="material-icons">people</span>
+            <span>{{ course.students }} {{ 'sidebar.students' | translate }}</span>
+          </div>
+          <div class="course-card__info-item">
+            <span class="material-icons">school</span>
+            <span>{{ course.credits }} {{ 'courses.credits' | translate }}</span>
+          </div>
+        </div>
+        <div class="course-card__actions" (click)="$event.stopPropagation()">
+          <a class="course-card__btn course-card__btn--view" [routerLink]="['/courses', course.id]">
+            <span class="material-icons">visibility</span>
+          </a>
+          <a class="course-card__btn course-card__btn--edit" [routerLink]="['/courses/edit', course.id]">
+            <span class="material-icons">edit</span>
+          </a>
+          <button class="course-card__btn course-card__btn--delete">
+            <span class="material-icons">delete</span>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="dashboard">
+  <div class="dashboard__header">
+    <h1 class="dashboard__title">{{ 'dashboard.title' | translate }}</h1>
+    <p class="dashboard__subtitle">{{ 'dashboard.welcome' | translate }}</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="dashboard__stats">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card stat-card--{{ stat.color }}">
+        <div class="stat-card__icon">
+          <span class="material-icons">{{ stat.icon }}</span>
+        </div>
+        <div class="stat-card__content">
+          <h3 class="stat-card__value">{{ stat.value }}</h3>
+          <p class="stat-card__label">{{ stat.label | translate }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Charts and Tables Section -->
+  <div class="dashboard__grid">
+    <!-- Recent Activities -->
+    <div class="dashboard__card">
+      <div class="dashboard__card-header">
+        <h3 class="dashboard__card-title">{{ 'dashboard.recentActivities' | translate }}</h3>
+        <button class="dashboard__card-action">
+          <span class="material-icons">more_vert</span>
+        </button>
+      </div>
+      <div class="dashboard__card-body">
+        <ul class="activity-list">
+          @for (activity of recentActivities; track activity.text) {
+            <li class="activity-list__item">
+              <div class="activity-list__icon activity-list__icon--{{ activity.color }}">
+                <span class="material-icons">{{ activity.icon }}</span>
+              </div>
+              <div class="activity-list__content">
+                <p class="activity-list__text">{{ activity.text }}</p>
+                <span class="activity-list__time">{{ activity.time }}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Upcoming Events -->
+    <div class="dashboard__card">
+      <div class="dashboard__card-header">
+        <h3 class="dashboard__card-title">{{ 'dashboard.upcomingEvents' | translate }}</h3>
+        <button class="dashboard__card-action">
+          <span class="material-icons">add</span>
+        </button>
+      </div>
+      <div class="dashboard__card-body">
+        <ul class="event-list">
+          @for (event of upcomingEvents; track event.title) {
+            <li class="event-list__item">
+              <div class="event-list__date">
+                <span class="event-list__day">{{ event.date.split(' ')[1] }}</span>
+                <span class="event-list__month">{{ event.date.split(' ')[0] }}</span>
+              </div>
+              <div class="event-list__content">
+                <h4 class="event-list__title">{{ event.title }}</h4>
+                <span class="event-list__type">{{ event.type }}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Quick Stats Chart Placeholder -->
+    <div class="dashboard__card dashboard__card--wide">
+      <div class="dashboard__card-header">
+        <h3 class="dashboard__card-title">{{ 'dashboard.studentStatistics' | translate }}</h3>
+        <div class="dashboard__card-tabs">
+          <button class="dashboard__tab dashboard__tab--active">{{ 'common.weekly' | translate }}</button>
+          <button class="dashboard__tab">{{ 'common.monthly' | translate }}</button>
+          <button class="dashboard__tab">{{ 'common.yearly' | translate }}</button>
+        </div>
+      </div>
+      <div class="dashboard__card-body">
+        <div class="chart-placeholder">
+          <div class="chart-placeholder__bars">
+            <div class="chart-placeholder__bar" style="height: 60%"></div>
+            <div class="chart-placeholder__bar" style="height: 80%"></div>
+            <div class="chart-placeholder__bar" style="height: 45%"></div>
+            <div class="chart-placeholder__bar" style="height: 90%"></div>
+            <div class="chart-placeholder__bar" style="height: 70%"></div>
+            <div class="chart-placeholder__bar" style="height: 55%"></div>
+            <div class="chart-placeholder__bar" style="height: 75%"></div>
+          </div>
+          <div class="chart-placeholder__labels">
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+            <span>Sun</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

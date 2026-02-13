@@ -1,0 +1,17 @@
+<div class="main-layout" [class.main-layout--collapsed]="isCollapsed" [ngClass]="layoutClass">
+  <app-sidebar></app-sidebar>
+  
+  <div class="main-layout__wrapper">
+    <app-header></app-header>
+    
+    <main class="main-layout__content">
+      <ng-content></ng-content>
+    </main>
+
+    <footer class="main-layout__footer">
+      {{ 'footer.copyright' | translate }} <a href="#">{{ 'footer.designLab' | translate }}</a> {{ 'footer.year' | translate }}
+    </footer>
+  </div>
+
+  <app-settings-panel></app-settings-panel>
+</div>

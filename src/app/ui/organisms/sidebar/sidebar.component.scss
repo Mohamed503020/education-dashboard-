@@ -1,0 +1,101 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: $sidebar-width;
+  height: 100vh;
+  background: linear-gradient(180deg, var(--sidebar-color, $bg-sidebar) 0%, var(--sidebar-color-dark, $bg-sidebar-dark) 100%);
+  color: $text-white;
+  display: flex;
+  flex-direction: column;
+  z-index: $z-index-fixed;
+  @include transition;
+  overflow-y: auto;
+  @include hide-scrollbar;
+
+  &--collapsed {
+    width: $sidebar-collapsed-width;
+
+    .sidebar__logo-text,
+    .sidebar__menu-label {
+      display: none;
+    }
+
+    .sidebar__logo {
+      justify-content: center;
+    }
+
+    .sidebar__footer-btn span:not(.material-icons) {
+      display: none;
+    }
+  }
+
+  &__header {
+    padding: $spacing-lg;
+    border-bottom: 1px solid rgba($bg-white, 0.1);
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    &-icon {
+      font-size: 32px;
+      color: $text-white;
+    }
+
+    &-text {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      letter-spacing: 1px;
+    }
+  }
+
+  &__menu-label {
+    padding: $spacing-lg $spacing-lg $spacing-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: rgba($text-white, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__nav {
+    flex: 1;
+    padding: $spacing-sm 0;
+  }
+
+  &__footer {
+    padding: $spacing-md;
+    border-top: 1px solid rgba($bg-white, 0.1);
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    &-btn {
+      @include flex-center;
+      gap: $spacing-sm;
+      padding: $spacing-sm $spacing-md;
+      background-color: rgba($bg-white, 0.1);
+      border: none;
+      border-radius: $border-radius-full;
+      color: $text-white;
+      font-family: $font-family-base;
+      font-size: $font-size-sm;
+      cursor: pointer;
+      @include transition;
+
+      &:hover {
+        background-color: rgba($bg-white, 0.2);
+      }
+
+      .material-icons {
+        font-size: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.action-buttons {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  &__btn {
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    @include transition;
+
+    .material-icons {
+      font-size: 18px;
+    }
+
+    &--view {
+      background-color: rgba($info-color, 0.1);
+      color: $info-color;
+
+      &:hover {
+        background-color: $info-color;
+        color: $text-white;
+      }
+    }
+
+    &--edit {
+      background-color: rgba(var(--primary-rgb, 91, 95, 199), 0.1);
+      color: var(--primary-color, $primary-color);
+
+      &:hover {
+        background-color: var(--primary-color, $primary-color);
+        color: $text-white;
+      }
+    }
+
+    &--delete {
+      background-color: rgba($danger-color, 0.1);
+      color: $danger-color;
+
+      &:hover {
+        background-color: $danger-color;
+        color: $text-white;
+      }
+    }
+  }
+}

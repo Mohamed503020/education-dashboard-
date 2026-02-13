@@ -1,0 +1,69 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-dark;
+  }
+
+  &__error {
+    font-size: $font-size-sm;
+    color: $danger-color;
+  }
+
+  &__hint {
+    font-size: $font-size-sm;
+    color: $text-light;
+  }
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    position: absolute;
+    left: $spacing-md;
+    color: $text-light;
+    font-size: 20px;
+    pointer-events: none;
+
+    &--right {
+      left: auto;
+      right: $spacing-md;
+    }
+  }
+}
+
+.input {
+  @include input-base;
+
+  &--icon-left {
+    padding-left: 44px;
+  }
+
+  &--icon-right {
+    padding-right: 44px;
+  }
+
+  &--error {
+    border-color: $danger-color;
+
+    &:focus {
+      border-color: $danger-color;
+      box-shadow: 0 0 0 3px rgba($danger-color, 0.1);
+    }
+  }
+
+  &--disabled {
+    background-color: $bg-light;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,11 @@
+<div class="search-bar">
+  <span class="search-bar__icon material-icons">search</span>
+  <input
+    type="text"
+    class="search-bar__input"
+    [placeholder]="placeholder"
+    [value]="value"
+    (input)="onInput($event)"
+    (keyup.enter)="onSearch()"
+  />
+</div>

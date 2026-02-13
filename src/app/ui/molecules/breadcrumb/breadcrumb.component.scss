@@ -1,0 +1,36 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-size: $font-size-sm;
+
+  &__item {
+    color: $text-color;
+
+    &--link {
+      text-decoration: none;
+      @include transition;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    &--active {
+      color: $primary-color;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  &__separator {
+    @include flex-center;
+    color: $text-light;
+
+    .material-icons {
+      font-size: 18px;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+@import '../../../../styles/variables';
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+
+  // Sizes
+  &--xs {
+    font-size: 14px;
+  }
+
+  &--sm {
+    font-size: 18px;
+  }
+
+  &--md {
+    font-size: 24px;
+  }
+
+  &--lg {
+    font-size: 32px;
+  }
+
+  &--xl {
+    font-size: 48px;
+  }
+}

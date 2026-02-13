@@ -1,0 +1,107 @@
+<div class="fees">
+  <div class="fees__header">
+    <div class="fees__title-section">
+      <h1 class="fees__title">{{ 'fees.title' | translate }}</h1>
+      <p class="fees__subtitle">{{ 'fees.subtitle' | translate }}</p>
+    </div>
+    <div class="fees__actions">
+      <button class="btn btn--outline">
+        <span class="material-icons">download</span>
+        {{ 'common.export' | translate }}
+      </button>
+      <button class="btn btn--primary">
+        <span class="material-icons">add</span>
+        {{ 'fees.addPayment' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="fees__stats">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card stat-card--{{ stat.color }}">
+        <div class="stat-card__icon">
+          <span class="material-icons">{{ stat.icon }}</span>
+        </div>
+        <div class="stat-card__content">
+          <h3 class="stat-card__value">{{ stat.value }}</h3>
+          <p class="stat-card__label">{{ stat.label | translate }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="fees__filters">
+    <div class="search-box">
+      <span class="material-icons search-box__icon">search</span>
+      <input type="text" class="search-box__input" [placeholder]="'fees.searchStudent' | translate">
+    </div>
+    <div class="filter-group">
+      <select class="filter-select">
+        <option value="">{{ 'fees.allTypes' | translate }}</option>
+        <option value="tuition">Tuition</option>
+        <option value="library">Library</option>
+        <option value="laboratory">Laboratory</option>
+        <option value="sports">Sports</option>
+      </select>
+      <select class="filter-select">
+        <option value="">{{ 'common.allStatus' | translate }}</option>
+        <option value="paid">Paid</option>
+        <option value="pending">Pending</option>
+        <option value="overdue">Overdue</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="fees__table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>{{ 'fees.studentName' | translate }}</th>
+          <th>{{ 'fees.studentId' | translate }}</th>
+          <th>{{ 'fees.feeType' | translate }}</th>
+          <th>{{ 'fees.amount' | translate }}</th>
+          <th>{{ 'fees.dueDate' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th>{{ 'common.actions' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (fee of fees; track fee.id) {
+          <tr>
+            <td>
+              <div class="student-cell">
+                <div class="student-cell__avatar">{{ getInitials(fee.studentName) }}</div>
+                <span class="student-cell__name">{{ fee.studentName }}</span>
+              </div>
+            </td>
+            <td>{{ fee.studentId }}</td>
+            <td>{{ fee.type }}</td>
+            <td class="fees__amount">${{ formatAmount(fee.amount) }}</td>
+            <td>{{ fee.dueDate }}</td>
+            <td>
+              <span class="status-badge status-badge--{{ fee.status }}">
+                {{ fee.status }}
+              </span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="action-btn action-btn--view" title="View">
+                  <span class="material-icons">visibility</span>
+                </button>
+                @if (fee.status !== 'paid') {
+                  <button class="action-btn action-btn--pay" title="Mark as Paid">
+                    <span class="material-icons">check_circle</span>
+                  </button>
+                }
+                <button class="action-btn action-btn--receipt" title="Receipt">
+                  <span class="material-icons">receipt</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

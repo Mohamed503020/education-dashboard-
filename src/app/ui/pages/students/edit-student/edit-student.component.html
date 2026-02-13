@@ -1,0 +1,225 @@
+<div class="edit-student">
+  <div class="edit-student__header">
+    <div class="edit-student__title-section">
+      <h1 class="edit-student__title">{{ 'students.editStudent' | translate }}</h1>
+      <nav class="edit-student__breadcrumb">
+        <a routerLink="/dashboard">{{ 'nav.dashboard' | translate }}</a>
+        <span>/</span>
+        <a routerLink="/students/all">{{ 'nav.students' | translate }}</a>
+        <span>/</span>
+        <span>{{ 'students.editStudent' | translate }}</span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="edit-student__form-container">
+    <form (ngSubmit)="onSubmit()" #studentForm="ngForm">
+      <!-- Personal Information -->
+      <div class="form-section">
+        <h3 class="form-section__title">
+          <span class="material-icons">person</span>
+          Personal Information
+        </h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="firstName">First Name *</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              class="form-input"
+              [(ngModel)]="student.firstName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="lastName">Last Name *</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="form-input"
+              [(ngModel)]="student.lastName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input"
+              [(ngModel)]="student.email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="mobile">Mobile Number *</label>
+            <input
+              type="tel"
+              id="mobile"
+              name="mobile"
+              class="form-input"
+              [(ngModel)]="student.mobile"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dob">Date of Birth *</label>
+            <input
+              type="date"
+              id="dob"
+              name="dateOfBirth"
+              class="form-input"
+              [(ngModel)]="student.dateOfBirth"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gender">Gender *</label>
+            <select
+              id="gender"
+              name="gender"
+              class="form-input"
+              [(ngModel)]="student.gender"
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Academic Information -->
+      <div class="form-section">
+        <h3 class="form-section__title">
+          <span class="material-icons">school</span>
+          Academic Information
+        </h3>
+        <div class="form-grid">
+          <div class="form-group form-group--full">
+            <label class="form-label" for="education">Education/Course *</label>
+            <select
+              id="education"
+              name="education"
+              class="form-input"
+              [(ngModel)]="student.education"
+              required
+            >
+              <option value="">Select Education</option>
+              @for (edu of educationOptions; track edu) {
+                <option [value]="edu">{{ edu }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Information -->
+      <div class="form-section">
+        <h3 class="form-section__title">
+          <span class="material-icons">location_on</span>
+          Address Information
+        </h3>
+        <div class="form-grid">
+          <div class="form-group form-group--full">
+            <label class="form-label" for="address">Address</label>
+            <textarea
+              id="address"
+              name="address"
+              class="form-input form-input--textarea"
+              [(ngModel)]="student.address"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="city">City</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              class="form-input"
+              [(ngModel)]="student.city"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="state">State</label>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              class="form-input"
+              [(ngModel)]="student.state"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="zipCode">Zip Code</label>
+            <input
+              type="text"
+              id="zipCode"
+              name="zipCode"
+              class="form-input"
+              [(ngModel)]="student.zipCode"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Parent/Guardian Information -->
+      <div class="form-section">
+        <h3 class="form-section__title">
+          <span class="material-icons">family_restroom</span>
+          Parent/Guardian Information
+        </h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="parentName">Parent/Guardian Name</label>
+            <input
+              type="text"
+              id="parentName"
+              name="parentName"
+              class="form-input"
+              [(ngModel)]="student.parentName"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="parentPhone">Parent Phone</label>
+            <input
+              type="tel"
+              id="parentPhone"
+              name="parentPhone"
+              class="form-input"
+              [(ngModel)]="student.parentPhone"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="parentEmail">Parent Email</label>
+            <input
+              type="email"
+              id="parentEmail"
+              name="parentEmail"
+              class="form-input"
+              [(ngModel)]="student.parentEmail"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn btn--outline" (click)="onCancel()">
+          <span class="material-icons">close</span>
+          Cancel
+        </button>
+        <button type="submit" class="btn btn--primary" [disabled]="!studentForm.valid">
+          <span class="material-icons">save</span>
+          Update Student
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

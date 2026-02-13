@@ -1,0 +1,31 @@
+<aside class="sidebar" [class.sidebar--collapsed]="isCollapsed">
+  <div class="sidebar__header">
+    <div class="sidebar__logo">
+      <span class="sidebar__logo-icon material-icons">school</span>
+      <span *ngIf="!isCollapsed" class="sidebar__logo-text">EDUMIN</span>
+    </div>
+  </div>
+
+  <div class="sidebar__menu-label" *ngIf="!isCollapsed">
+    MAIN MENU
+  </div>
+
+  <nav class="sidebar__nav">
+    <app-sidebar-item
+      *ngFor="let item of menuItems"
+      [item]="item"
+      [isCollapsed]="isCollapsed"
+      (toggle)="toggleMenuItem($event)"
+    ></app-sidebar-item>
+  </nav>
+
+  <div class="sidebar__footer">
+    <button class="sidebar__footer-btn">
+      <span class="material-icons">headset_mic</span>
+      <span *ngIf="!isCollapsed">Support</span>
+    </button>
+    <button class="sidebar__footer-btn">
+      <span class="material-icons">shopping_cart</span>
+    </button>
+  </div>
+</aside>

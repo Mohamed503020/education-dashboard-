@@ -1,0 +1,165 @@
+<!-- Settings Toggle Button -->
+<button class="settings-toggle" (click)="toggle()">
+  <span class="material-icons">settings</span>
+</button>
+
+<!-- Settings Panel -->
+<div class="settings-panel" [class.settings-panel--open]="isOpen()">
+  <div class="settings-panel__header">
+    <h3 class="settings-panel__title">{{ 'settings.title' | translate }}</h3>
+    <button class="settings-panel__close" (click)="close()">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+
+  <div class="settings-panel__body">
+    <!-- Theme -->
+    <div class="settings-section">
+      <label class="settings-section__label">{{ 'settings.theme' | translate }}</label>
+      <div class="settings-section__options">
+        <button
+          class="option-btn"
+          [class.option-btn--active]="settings.theme === 'light'"
+          (click)="setTheme('light')"
+        >
+          <span class="material-icons">light_mode</span>
+          {{ 'settings.light' | translate }}
+        </button>
+        <button
+          class="option-btn"
+          [class.option-btn--active]="settings.theme === 'dark'"
+          (click)="setTheme('dark')"
+        >
+          <span class="material-icons">dark_mode</span>
+          {{ 'settings.dark' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Language -->
+    <div class="settings-section">
+      <label class="settings-section__label">{{ 'settings.language' | translate }}</label>
+      <div class="settings-section__options">
+        <button
+          class="option-btn"
+          [class.option-btn--active]="currentLanguage === 'en'"
+          (click)="setLanguage('en')"
+        >
+          🇺🇸 {{ 'settings.english' | translate }}
+        </button>
+        <button
+          class="option-btn"
+          [class.option-btn--active]="currentLanguage === 'ar'"
+          (click)="setLanguage('ar')"
+        >
+          🇸🇦 {{ 'settings.arabic' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Layout -->
+    <div class="settings-section">
+      <label class="settings-section__label">{{ 'settings.layout' | translate }}</label>
+      <div class="settings-section__options settings-section__options--three">
+        <button
+          class="option-btn option-btn--small"
+          [class.option-btn--active]="settings.layout === 'wide'"
+          (click)="setLayout('wide')"
+        >
+          {{ 'settings.wide' | translate }}
+        </button>
+        <button
+          class="option-btn option-btn--small"
+          [class.option-btn--active]="settings.layout === 'boxed'"
+          (click)="setLayout('boxed')"
+        >
+          {{ 'settings.boxed' | translate }}
+        </button>
+        <button
+          class="option-btn option-btn--small"
+          [class.option-btn--active]="settings.layout === 'compact'"
+          (click)="setLayout('compact')"
+        >
+          {{ 'settings.compact' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar Style -->
+    <div class="settings-section">
+      <label class="settings-section__label">{{ 'settings.sidebarStyle' | translate }}</label>
+      <div class="settings-section__options settings-section__options--three">
+        <button
+          class="option-btn option-btn--small"
+          [class.option-btn--active]="settings.sidebarStyle === 'default'"
+          (click)="setSidebarStyle('default')"
+        >
+          {{ 'settings.default' | translate }}
+        </button>
+        <button
+          class="option-btn option-btn--small"
+          [class.option-btn--active]="settings.sidebarStyle === 'mini'"
+          (click)="setSidebarStyle('mini')"
+        >
+          {{ 'settings.mini' | translate }}
+        </button>
+        <button
+          class="option-btn option-btn--small"
+          [class.option-btn--active]="settings.sidebarStyle === 'icon'"
+          (click)="setSidebarStyle('icon')"
+        >
+          {{ 'settings.icon' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Primary Color -->
+    <div class="settings-section">
+      <label class="settings-section__label">{{ 'settings.primaryColor' | translate }}</label>
+      <div class="color-options">
+        <button
+          *ngFor="let color of colorOptions"
+          class="color-btn"
+          [style.background-color]="color.value"
+          [class.color-btn--active]="settings.primaryColor === color.value"
+          [title]="color.name"
+          (click)="setPrimaryColor(color.value)"
+        >
+          <span *ngIf="settings.primaryColor === color.value" class="material-icons">check</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar Color -->
+    <div class="settings-section">
+      <label class="settings-section__label">{{ 'settings.sidebarColor' | translate }}</label>
+      <div class="color-options">
+        <button
+          *ngFor="let color of colorOptions"
+          class="color-btn"
+          [style.background-color]="color.value"
+          [class.color-btn--active]="settings.sidebarColor === color.value"
+          [title]="color.name"
+          (click)="setSidebarColor(color.value)"
+        >
+          <span *ngIf="settings.sidebarColor === color.value" class="material-icons">check</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Reset Button -->
+    <div class="settings-section">
+      <button class="reset-btn" (click)="resetSettings()">
+        <span class="material-icons">refresh</span>
+        {{ 'settings.reset' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop -->
+<div
+  class="settings-backdrop"
+  [class.settings-backdrop--visible]="isOpen()"
+  (click)="close()"
+></div>

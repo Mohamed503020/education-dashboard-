@@ -1,0 +1,75 @@
+<div class="all-students">
+  <div class="all-students__header">
+    <h1 class="all-students__title">All Student</h1>
+    <app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+  </div>
+
+  <div class="all-students__toolbar">
+    <app-view-toggle
+      [activeView]="viewMode()"
+      (viewChange)="onViewChange($event)"
+    ></app-view-toggle>
+  </div>
+
+  <div class="all-students__content">
+    <div class="all-students__card">
+      <div class="all-students__card-header">
+        <h2 class="all-students__card-title">All Students List</h2>
+        <app-button
+          variant="primary"
+          icon="add"
+          (click)="onAddNew()"
+        >
+          Add new
+        </app-button>
+      </div>
+
+      <div class="all-students__card-body">
+        <app-students-table
+          *ngIf="viewMode() === 'list'"
+          [students]="tableData.students"
+          [totalItems]="tableData.totalCount"
+          [currentPage]="tableData.currentPage"
+          [pageSize]="tableData.pageSize"
+          (edit)="onEditStudent($event)"
+          (delete)="onDeleteStudent($event)"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)"
+          (search)="onSearch($event)"
+        ></app-students-table>
+
+        <!-- Grid View Placeholder -->
+        <div *ngIf="viewMode() === 'grid'" class="all-students__grid">
+          <div 
+            *ngFor="let student of tableData.students" 
+            class="all-students__grid-item"
+          >
+            <div class="student-card">
+              <div class="student-card__avatar">
+                <img [src]="student.avatar" [alt]="student.name" />
+              </div>
+              <h3 class="student-card__name">{{ student.name }}</h3>
+              <p class="student-card__education">{{ student.education }}</p>
+              <p class="student-card__info">
+                <span class="material-icons">phone</span>
+                {{ student.mobile }}
+              </p>
+              <p class="student-card__info">
+                <span class="material-icons">email</span>
+                {{ student.email }}
+              </p>
+              <div class="student-card__actions">
+                <button class="student-card__btn student-card__btn--edit" (click)="onEditStudent(student)">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="student-card__btn student-card__btn--delete" (click)="onDeleteStudent(student)">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

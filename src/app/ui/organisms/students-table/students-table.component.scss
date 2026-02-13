@@ -1,0 +1,146 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.students-table {
+  &__controls {
+    @include flex-between;
+    margin-bottom: $spacing-lg;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+  }
+
+  &__entries {
+    @include flex-start;
+    gap: $spacing-sm;
+    font-size: $font-size-sm;
+    color: $text-color;
+  }
+
+  &__select {
+    padding: $spacing-xs $spacing-md;
+    font-family: $font-family-base;
+    font-size: $font-size-sm;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-md;
+    background-color: $bg-white;
+    cursor: pointer;
+    
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color, $primary-color);
+    }
+  }
+
+  &__search {
+    @include flex-start;
+    gap: $spacing-sm;
+    font-size: $font-size-sm;
+    color: $text-color;
+
+    &-input {
+      padding: $spacing-xs $spacing-sm;
+      font-family: $font-family-base;
+      font-size: $font-size-sm;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-md;
+      min-width: 200px;
+      @include transition;
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color, $primary-color);
+        box-shadow: 0 0 0 2px rgba(var(--primary-rgb, 91, 95, 199), 0.1);
+      }
+    }
+  }
+
+  &__wrapper {
+    overflow-x: auto;
+    border-radius: $border-radius-md;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-size-sm;
+  }
+
+  &__th {
+    padding: $spacing-md;
+    text-align: left;
+    font-weight: $font-weight-medium;
+    color: $text-dark;
+    background-color: $bg-light;
+    border-bottom: 1px solid $border-color;
+    white-space: nowrap;
+    cursor: pointer;
+    @include transition;
+
+    &:hover {
+      background-color: darken($bg-light, 3%);
+    }
+  }
+
+  &__sort {
+    font-size: 16px;
+    vertical-align: middle;
+    color: $text-light;
+    margin-left: $spacing-xs;
+  }
+
+  &__row {
+    @include transition;
+
+    &:hover {
+      background-color: rgba(var(--primary-rgb, 91, 95, 199), 0.02);
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $border-light;
+    }
+  }
+
+  &__td {
+    padding: $spacing-md;
+    color: $text-color;
+    vertical-align: middle;
+
+    &--roll {
+      font-weight: $font-weight-medium;
+      color: $text-dark;
+    }
+
+    &--education {
+      color: var(--primary-color, $primary-color);
+    }
+
+    &--phone {
+      color: $success-color;
+    }
+  }
+
+  &__name-link {
+    color: var(--primary-color, $primary-color);
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    @include transition;
+
+    &:hover {
+      color: var(--primary-hover, $primary-dark);
+      text-decoration: underline;
+    }
+  }
+
+  &__email-link {
+    color: $info-color;
+    text-decoration: none;
+    cursor: pointer;
+    @include transition;
+
+    &:hover {
+      color: darken($info-color, 10%);
+      text-decoration: underline;
+    }
+  }
+}

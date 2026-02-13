@@ -1,0 +1,111 @@
+<div class="professors">
+  <div class="professors__header">
+    <div class="professors__title-section">
+      <h1 class="professors__title">{{ 'professors.title' | translate }}</h1>
+      <p class="professors__subtitle">{{ 'professors.subtitle' | translate }}</p>
+    </div>
+    <div class="professors__actions">
+      <button class="btn btn--primary" routerLink="/professors/add">
+        <span class="material-icons">add</span>
+        {{ 'professors.addNew' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="professors__filters">
+    <div class="search-box">
+      <span class="material-icons search-box__icon">search</span>
+      <input type="text" class="search-box__input" [placeholder]="'common.search' | translate">
+    </div>
+    <div class="filter-group">
+      <select class="filter-select">
+        <option value="">{{ 'professors.allDepartments' | translate }}</option>
+        <option value="cs">Computer Science</option>
+        <option value="math">Mathematics</option>
+        <option value="physics">Physics</option>
+        <option value="chemistry">Chemistry</option>
+        <option value="biology">Biology</option>
+      </select>
+      <select class="filter-select">
+        <option value="">{{ 'common.allStatus' | translate }}</option>
+        <option value="active">{{ 'common.active' | translate }}</option>
+        <option value="inactive">{{ 'common.inactive' | translate }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="professors__table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th class="data-table__check">
+            <input type="checkbox" [checked]="allSelected" (change)="toggleSelectAll($event)">
+          </th>
+          <th>{{ 'common.name' | translate }}</th>
+          <th>{{ 'common.email' | translate }}</th>
+          <th>{{ 'common.phone' | translate }}</th>
+          <th>{{ 'professors.department' | translate }}</th>
+          <th>{{ 'professors.subject' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th>{{ 'common.actions' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (professor of professors; track professor.id) {
+          <tr [class.selected]="isSelected(professor.id)">
+            <td class="data-table__check">
+              <input type="checkbox" [checked]="isSelected(professor.id)" (change)="toggleSelect(professor.id)">
+            </td>
+            <td>
+              <div class="user-cell">
+                <div class="user-cell__avatar">{{ professor.avatar }}</div>
+                <span class="user-cell__name">{{ professor.name }}</span>
+              </div>
+            </td>
+            <td>{{ professor.email }}</td>
+            <td>{{ professor.phone }}</td>
+            <td>{{ professor.department }}</td>
+            <td>{{ professor.subject }}</td>
+            <td>
+              <span class="status-badge status-badge--{{ professor.status }}">
+                {{ professor.status === 'active' ? ('common.active' | translate) : ('common.inactive' | translate) }}
+              </span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="action-btn action-btn--view" title="View">
+                  <span class="material-icons">visibility</span>
+                </button>
+                <a class="action-btn action-btn--edit" title="Edit" [routerLink]="['/professors/edit', professor.id]">
+                  <span class="material-icons">edit</span>
+                </a>
+                <button class="action-btn action-btn--delete" title="Delete">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="professors__pagination">
+    <div class="pagination-info">
+      {{ 'common.showing' | translate }} 1-6 {{ 'common.of' | translate }} 150
+    </div>
+    <div class="pagination-controls">
+      <button class="pagination-btn" disabled>
+        <span class="material-icons">chevron_left</span>
+      </button>
+      <button class="pagination-btn pagination-btn--active">1</button>
+      <button class="pagination-btn">2</button>
+      <button class="pagination-btn">3</button>
+      <span class="pagination-ellipsis">...</span>
+      <button class="pagination-btn">25</button>
+      <button class="pagination-btn">
+        <span class="material-icons">chevron_right</span>
+      </button>
+    </div>
+  </div>
+</div>

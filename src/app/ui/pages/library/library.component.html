@@ -1,0 +1,106 @@
+<div class="library">
+  <div class="library__header">
+    <div class="library__title-section">
+      <h1 class="library__title">{{ 'library.title' | translate }}</h1>
+      <p class="library__subtitle">{{ 'library.subtitle' | translate }}</p>
+    </div>
+    <div class="library__actions">
+      <button class="btn btn--outline">
+        <span class="material-icons">download</span>
+        {{ 'common.export' | translate }}
+      </button>
+      <button class="btn btn--primary">
+        <span class="material-icons">add</span>
+        {{ 'library.addBook' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="library__stats">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card stat-card--{{ stat.color }}">
+        <div class="stat-card__icon">
+          <span class="material-icons">{{ stat.icon }}</span>
+        </div>
+        <div class="stat-card__content">
+          <h3 class="stat-card__value">{{ stat.value }}</h3>
+          <p class="stat-card__label">{{ stat.label | translate }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="library__filters">
+    <div class="search-box">
+      <span class="material-icons search-box__icon">search</span>
+      <input type="text" class="search-box__input" [placeholder]="'library.searchBooks' | translate">
+    </div>
+    <div class="filter-group">
+      <select class="filter-select">
+        <option value="">{{ 'library.allCategories' | translate }}</option>
+        <option value="cs">Computer Science</option>
+        <option value="math">Mathematics</option>
+        <option value="physics">Physics</option>
+      </select>
+      <select class="filter-select">
+        <option value="">{{ 'library.allStatus' | translate }}</option>
+        <option value="available">Available</option>
+        <option value="limited">Limited</option>
+        <option value="unavailable">Unavailable</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="library__table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>{{ 'library.bookTitle' | translate }}</th>
+          <th>{{ 'library.author' | translate }}</th>
+          <th>ISBN</th>
+          <th>{{ 'library.category' | translate }}</th>
+          <th>{{ 'library.copies' | translate }}</th>
+          <th>{{ 'library.available' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th>{{ 'common.actions' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (book of books; track book.id) {
+          <tr>
+            <td>
+              <div class="book-cell">
+                <span class="material-icons book-cell__icon">menu_book</span>
+                <span class="book-cell__title">{{ book.title }}</span>
+              </div>
+            </td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.category }}</td>
+            <td>{{ book.copies }}</td>
+            <td>{{ book.available }}</td>
+            <td>
+              <span class="status-badge status-badge--{{ book.status }}">
+                {{ book.status }}
+              </span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="action-btn action-btn--view" title="View">
+                  <span class="material-icons">visibility</span>
+                </button>
+                <button class="action-btn action-btn--edit" title="Edit">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="action-btn action-btn--issue" title="Issue">
+                  <span class="material-icons">bookmark_add</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

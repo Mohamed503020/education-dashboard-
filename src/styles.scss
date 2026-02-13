@@ -1,0 +1,307 @@
+// ============================================
+// EDUMIN - Education Dashboard Global Styles
+// ============================================
+
+// Variables
+@import 'styles/variables';
+@import 'styles/mixins';
+
+// CSS Variables for theming
+:root {
+  // Light theme (default)
+  --bg-white: #{$bg-white};
+  --bg-light: #{$bg-light};
+  --bg-sidebar: #{$bg-sidebar};
+  --text-color: #{$text-color};
+  --text-dark: #{$text-dark};
+  --text-light: #{$text-light};
+  --border-color: #{$border-color};
+  --border-light: #{$border-light};
+  --primary-color: #{$primary-color};
+  --primary-hover: #{$primary-dark};
+  --primary-rgb: 91, 95, 199;
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  
+  // Additional variables for components
+  --card-bg: #{$bg-white};
+  --input-bg: #{$bg-white};
+  --bg-secondary: #{$bg-light};
+  --text-primary: #{$text-dark};
+  --text-secondary: #{$text-color};
+  --text-muted: #{$text-light};
+}
+
+// Base styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  color: var(--text-color);
+  background-color: var(--bg-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+  
+  &:hover {
+    background: var(--text-light);
+  }
+}
+
+// ============================================
+// DARK THEME
+// ============================================
+.theme-dark {
+  --bg-white: #1e293b;
+  --bg-light: #0f172a;
+  --bg-sidebar: #1e293b;
+  --text-color: #94a3b8;
+  --text-dark: #f1f5f9;
+  --text-light: #64748b;
+  --border-color: #334155;
+  --border-light: #1e293b;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+  
+  // Additional variables for components
+  --card-bg: #1e293b;
+  --input-bg: #0f172a;
+  --bg-secondary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --primary-hover: #7c7fe6;
+
+  // Dark mode specific styles
+  .card, .students-table, .page-card {
+    background-color: var(--bg-white) !important;
+  }
+
+  input, select, textarea {
+    background-color: var(--bg-light) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-dark) !important;
+
+    &::placeholder {
+      color: var(--text-light) !important;
+    }
+  }
+
+  table {
+    th {
+      background-color: var(--bg-light) !important;
+      color: var(--text-dark) !important;
+    }
+
+    td {
+      border-color: var(--border-color) !important;
+    }
+
+    tr:hover {
+      background-color: rgba(255, 255, 255, 0.02) !important;
+    }
+  }
+}
+
+// ============================================
+// RTL SUPPORT (Arabic)
+// ============================================
+[dir="rtl"] {
+  text-align: right;
+
+  .sidebar {
+    left: auto;
+    right: 0;
+  }
+
+  .main-layout__wrapper {
+    margin-left: 0;
+    margin-right: $sidebar-width;
+  }
+
+  .main-layout--collapsed .main-layout__wrapper {
+    margin-right: $sidebar-collapsed-width;
+  }
+
+  // Flip icons and arrows
+  .material-icons {
+    &.flip-rtl {
+      transform: scaleX(-1);
+    }
+  }
+
+  // Adjust padding and margins
+  .sidebar-item {
+    &__icon {
+      margin-right: 0;
+      margin-left: $spacing-md;
+    }
+  }
+
+  // Table alignment
+  table {
+    th, td {
+      text-align: right;
+    }
+  }
+
+  // Search bar
+  .search-bar {
+    &__icon {
+      margin-right: 0;
+      margin-left: $spacing-sm;
+    }
+  }
+
+  // Breadcrumb
+  .breadcrumb__separator .material-icons {
+    transform: scaleX(-1);
+  }
+}
+
+// ============================================
+// LAYOUT OPTIONS
+// ============================================
+
+// Boxed Layout
+.layout-boxed {
+  .main-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Compact Layout
+.layout-compact {
+  .main-layout__content {
+    padding: $spacing-md;
+  }
+
+  .sidebar {
+    width: 200px;
+  }
+
+  .main-layout__wrapper {
+    margin-left: 200px;
+  }
+
+  [dir="rtl"] & .main-layout__wrapper {
+    margin-left: 0;
+    margin-right: 200px;
+  }
+}
+
+// Sidebar Styles
+.sidebar-mini {
+  .sidebar {
+    width: 180px;
+  }
+
+  .main-layout__wrapper {
+    margin-left: 180px;
+  }
+
+  [dir="rtl"] & .main-layout__wrapper {
+    margin-left: 0;
+    margin-right: 180px;
+  }
+}
+
+.sidebar-icon {
+  .sidebar {
+    width: $sidebar-collapsed-width;
+
+    .sidebar__logo-text,
+    .sidebar__menu-label,
+    .sidebar-item__label,
+    .sidebar-item__arrow {
+      display: none;
+    }
+
+    .sidebar-item {
+      justify-content: center;
+      padding: $spacing-md;
+    }
+  }
+
+  .main-layout__wrapper {
+    margin-left: $sidebar-collapsed-width;
+  }
+
+  [dir="rtl"] & .main-layout__wrapper {
+    margin-left: 0;
+    margin-right: $sidebar-collapsed-width;
+  }
+}
+
+// ============================================
+// UTILITY CLASSES
+// ============================================
+.text-primary { color: var(--primary-color) !important; }
+.text-success { color: $success-color !important; }
+.text-danger { color: $danger-color !important; }
+.text-warning { color: $warning-color !important; }
+.text-info { color: $info-color !important; }
+
+.bg-primary { background-color: var(--primary-color) !important; }
+.bg-success { background-color: $success-color !important; }
+.bg-danger { background-color: $danger-color !important; }
+.bg-warning { background-color: $warning-color !important; }
+.bg-info { background-color: $info-color !important; }
+
+// Responsive
+@media (max-width: $breakpoint-lg) {
+  .main-layout__wrapper {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+
+    [dir="rtl"] & {
+      transform: translateX(100%);
+    }
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+}

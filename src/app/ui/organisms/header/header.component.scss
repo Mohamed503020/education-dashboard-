@@ -1,0 +1,119 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.header {
+  @include flex-between;
+  height: $header-height;
+  padding: 0 $content-padding;
+  background-color: $bg-white;
+  border-bottom: 1px solid $border-light;
+
+  &__left {
+    @include flex-start;
+    gap: $spacing-md;
+  }
+
+  &__right {
+    @include flex-start;
+    gap: $spacing-sm;
+  }
+
+  &__toggle {
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    color: $text-color;
+    @include transition;
+
+    &:hover {
+      background-color: $bg-light;
+      color: var(--primary-color, $primary-color);
+    }
+
+    .material-icons {
+      font-size: 24px;
+    }
+  }
+
+  &__icon-btn {
+    position: relative;
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    color: $text-color;
+    @include transition;
+
+    &:hover {
+      background-color: $bg-light;
+      color: var(--primary-color, $primary-color);
+    }
+
+    .material-icons {
+      font-size: 22px;
+    }
+
+    &--badge {
+      .header__badge {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 4px;
+        font-size: 10px;
+        font-weight: $font-weight-semibold;
+        color: $text-white;
+        background-color: var(--primary-color, $primary-color);
+        border-radius: $border-radius-full;
+        @include flex-center;
+      }
+    }
+
+    &--lang {
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-sm;
+    }
+  }
+
+  &__lang-text {
+    font-family: $font-family-base;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+  }
+
+  &__user {
+    margin-left: $spacing-sm;
+    cursor: pointer;
+
+    [dir="rtl"] & {
+      margin-left: 0;
+      margin-right: $spacing-sm;
+    }
+  }
+}
+
+// Dark theme
+:host-context(.theme-dark) {
+  .header {
+    background-color: var(--bg-white);
+    border-bottom-color: var(--border-color);
+  }
+
+  .header__toggle,
+  .header__icon-btn {
+    color: var(--text-color);
+
+    &:hover {
+      background-color: var(--border-color);
+      color: var(--primary-color);
+    }
+  }
+}

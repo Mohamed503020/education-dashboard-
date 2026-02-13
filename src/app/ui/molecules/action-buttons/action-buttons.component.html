@@ -1,0 +1,26 @@
+<div class="action-buttons">
+  <button
+    *ngIf="showView"
+    class="action-buttons__btn action-buttons__btn--view"
+    title="View"
+    (click)="onView()"
+  >
+    <span class="material-icons">visibility</span>
+  </button>
+  <button
+    *ngIf="showEdit"
+    class="action-buttons__btn action-buttons__btn--edit"
+    title="Edit"
+    (click)="onEdit()"
+  >
+    <span class="material-icons">edit</span>
+  </button>
+  <button
+    *ngIf="showDelete"
+    class="action-buttons__btn action-buttons__btn--delete"
+    title="Delete"
+    (click)="onDelete()"
+  >
+    <span class="material-icons">delete</span>
+  </button>
+</div>

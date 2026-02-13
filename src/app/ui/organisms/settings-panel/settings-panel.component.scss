@@ -1,0 +1,266 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.settings-toggle {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: $z-index-fixed + 10;
+  width: 48px;
+  height: 48px;
+  background: var(--primary-color, $primary-color);
+  border: none;
+  border-radius: $border-radius-lg 0 0 $border-radius-lg;
+  color: $text-white;
+  cursor: pointer;
+  @include flex-center;
+  @include transition;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+
+  .material-icons {
+    font-size: 24px;
+    animation: spin 3s linear infinite;
+  }
+
+  &:hover {
+    width: 56px;
+  }
+
+  [dir="rtl"] & {
+    right: auto;
+    left: 0;
+    border-radius: 0 $border-radius-lg $border-radius-lg 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.settings-panel {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 320px;
+  height: 100vh;
+  background-color: var(--bg-white, $bg-white);
+  z-index: $z-index-modal;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+  @include transition;
+  display: flex;
+  flex-direction: column;
+
+  [dir="rtl"] & {
+    right: auto;
+    left: -320px;
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.15);
+  }
+
+  &--open {
+    right: 0;
+
+    [dir="rtl"] & {
+      right: auto;
+      left: 0;
+    }
+  }
+
+  &__header {
+    @include flex-between;
+    padding: $spacing-lg;
+    border-bottom: 1px solid var(--border-color, $border-color);
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: var(--text-dark, $text-dark);
+    margin: 0;
+  }
+
+  &__close {
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    color: var(--text-color, $text-color);
+    @include transition;
+
+    &:hover {
+      background-color: var(--bg-light, $bg-light);
+      color: $danger-color;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-lg;
+    @include hide-scrollbar;
+  }
+}
+
+.settings-section {
+  margin-bottom: $spacing-lg;
+
+  &__label {
+    display: block;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--text-dark, $text-dark);
+    margin-bottom: $spacing-sm;
+  }
+
+  &__options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-sm;
+
+    &--three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.option-btn {
+  @include flex-center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  background-color: var(--bg-light, $bg-light);
+  border: 2px solid transparent;
+  border-radius: $border-radius-md;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: var(--text-color, $text-color);
+  cursor: pointer;
+  @include transition;
+
+  .material-icons {
+    font-size: 18px;
+  }
+
+  &:hover {
+    border-color: var(--primary-color, $primary-color);
+    color: var(--primary-color, $primary-color);
+  }
+
+  &--active {
+    background-color: rgba(91, 95, 199, 0.1);
+    border-color: var(--primary-color, $primary-color);
+    color: var(--primary-color, $primary-color);
+  }
+
+  &--small {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+  }
+}
+
+.color-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.color-btn {
+  @include flex-center;
+  width: 36px;
+  height: 36px;
+  border: 2px solid transparent;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  @include transition;
+
+  .material-icons {
+    font-size: 16px;
+    color: $text-white;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &--active {
+    border-color: var(--text-dark, $text-dark);
+    box-shadow: 0 0 0 2px var(--bg-white, $bg-white);
+  }
+}
+
+.reset-btn {
+  @include flex-center;
+  gap: $spacing-sm;
+  width: 100%;
+  padding: $spacing-md;
+  background-color: var(--bg-light, $bg-light);
+  border: 1px solid var(--border-color, $border-color);
+  border-radius: $border-radius-md;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  color: var(--text-color, $text-color);
+  cursor: pointer;
+  @include transition;
+
+  .material-icons {
+    font-size: 20px;
+  }
+
+  &:hover {
+    background-color: $danger-color;
+    border-color: $danger-color;
+    color: $text-white;
+  }
+}
+
+.settings-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: $z-index-modal - 1;
+  opacity: 0;
+  visibility: hidden;
+  @include transition;
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Dark theme adjustments
+:host-context(.theme-dark) {
+  .settings-panel {
+    background-color: #1e293b;
+  }
+
+  .settings-panel__title {
+    color: #f1f5f9;
+  }
+
+  .settings-section__label {
+    color: #f1f5f9;
+  }
+
+  .option-btn {
+    background-color: #334155;
+    color: #94a3b8;
+
+    &--active {
+      background-color: rgba(91, 95, 199, 0.2);
+    }
+  }
+
+  .reset-btn {
+    background-color: #334155;
+    border-color: #475569;
+    color: #94a3b8;
+  }
+}

@@ -1,0 +1,30 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.view-toggle {
+  display: inline-flex;
+  background-color: $bg-light;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+
+  &__btn {
+    padding: $spacing-sm $spacing-md;
+    font-family: $font-family-base;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-color;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    @include transition;
+
+    &:hover:not(&--active) {
+      color: $primary-color;
+    }
+
+    &--active {
+      background-color: $primary-color;
+      color: $text-white;
+    }
+  }
+}

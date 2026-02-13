@@ -1,0 +1,87 @@
+<div class="staff">
+  <div class="staff__header">
+    <div class="staff__title-section">
+      <h1 class="staff__title">{{ 'staff.title' | translate }}</h1>
+      <p class="staff__subtitle">{{ 'staff.subtitle' | translate }}</p>
+    </div>
+    <div class="staff__actions">
+      <button class="btn btn--primary">
+        <span class="material-icons">add</span>
+        {{ 'staff.addNew' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="staff__filters">
+    <div class="search-box">
+      <span class="material-icons search-box__icon">search</span>
+      <input type="text" class="search-box__input" [placeholder]="'common.search' | translate">
+    </div>
+    <div class="filter-group">
+      <select class="filter-select">
+        <option value="">{{ 'staff.allDepartments' | translate }}</option>
+        <option value="admin">Administration</option>
+        <option value="finance">Finance</option>
+        <option value="library">Library</option>
+        <option value="it">IT</option>
+      </select>
+      <select class="filter-select">
+        <option value="">{{ 'common.allStatus' | translate }}</option>
+        <option value="active">{{ 'common.active' | translate }}</option>
+        <option value="inactive">{{ 'common.inactive' | translate }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="staff__table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>{{ 'common.name' | translate }}</th>
+          <th>{{ 'common.email' | translate }}</th>
+          <th>{{ 'common.phone' | translate }}</th>
+          <th>{{ 'staff.role' | translate }}</th>
+          <th>{{ 'staff.department' | translate }}</th>
+          <th>{{ 'staff.joinDate' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th>{{ 'common.actions' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (member of staff; track member.id) {
+          <tr>
+            <td>
+              <div class="user-cell">
+                <div class="user-cell__avatar">{{ member.avatar }}</div>
+                <span class="user-cell__name">{{ member.name }}</span>
+              </div>
+            </td>
+            <td>{{ member.email }}</td>
+            <td>{{ member.phone }}</td>
+            <td>{{ member.role }}</td>
+            <td>{{ member.department }}</td>
+            <td>{{ member.joinDate }}</td>
+            <td>
+              <span class="status-badge status-badge--{{ member.status }}">
+                {{ member.status === 'active' ? ('common.active' | translate) : ('common.inactive' | translate) }}
+              </span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="action-btn action-btn--view" title="View">
+                  <span class="material-icons">visibility</span>
+                </button>
+                <button class="action-btn action-btn--edit" title="Edit">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="action-btn action-btn--delete" title="Delete">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

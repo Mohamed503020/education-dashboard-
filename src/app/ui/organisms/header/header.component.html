@@ -1,0 +1,47 @@
+<header class="header">
+  <div class="header__left">
+    <button class="header__toggle" (click)="toggleSidebar()">
+      <span class="material-icons">menu</span>
+    </button>
+    
+    <app-search-bar
+      [placeholder]="'common.search' | translate"
+      (search)="onSearch($event)"
+    ></app-search-bar>
+  </div>
+
+  <div class="header__right">
+    <!-- Theme Toggle -->
+    <button class="header__icon-btn" (click)="toggleTheme()" [title]="isDarkMode ? 'Light Mode' : 'Dark Mode'">
+      <span class="material-icons">{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</span>
+    </button>
+
+    <!-- Language Toggle -->
+    <button class="header__icon-btn header__icon-btn--lang" (click)="toggleLanguage()">
+      <span class="header__lang-text">{{ currentLanguage === 'en' ? 'EN' : 'AR' }}</span>
+    </button>
+    
+    <button class="header__icon-btn header__icon-btn--badge">
+      <span class="material-icons">shopping_cart</span>
+      <span class="header__badge">19</span>
+    </button>
+    
+    <button class="header__icon-btn header__icon-btn--badge">
+      <span class="material-icons">notifications</span>
+      <span class="header__badge">5</span>
+    </button>
+    
+    <button class="header__icon-btn header__icon-btn--badge">
+      <span class="material-icons">chat</span>
+      <span class="header__badge">3</span>
+    </button>
+
+    <div class="header__user">
+      <app-avatar
+        src="assets/images/avatars/user.jpg"
+        alt="User"
+        size="sm"
+      ></app-avatar>
+    </div>
+  </div>
+</header>

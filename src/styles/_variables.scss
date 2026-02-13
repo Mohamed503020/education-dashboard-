@@ -1,0 +1,98 @@
+// ============================================
+// SCSS Variables - Design Tokens
+// ============================================
+
+// Colors - Primary
+$primary-color: #5b5fc7;
+$primary-light: #7c7fe6;
+$primary-dark: #4547a9;
+
+// Colors - Secondary
+$secondary-color: #6c757d;
+$secondary-light: #adb5bd;
+$secondary-dark: #495057;
+
+// Colors - Status
+$success-color: #10b981;
+$danger-color: #ef4444;
+$warning-color: #f59e0b;
+$info-color: #3b82f6;
+
+// Colors - Background
+$bg-white: #ffffff;
+$bg-light: #f8f9fc;
+$bg-sidebar: #5b5fc7;
+$bg-sidebar-dark: #4547a9;
+
+// Colors - Text
+$text-color: #6c757d;
+$text-dark: #1e293b;
+$text-light: #94a3b8;
+$text-white: #ffffff;
+
+// Colors - Border
+$border-color: #e2e8f0;
+$border-light: #f1f5f9;
+
+// Typography
+$font-family-base: 'Poppins', sans-serif;
+$font-size-base: 14px;
+$font-size-sm: 12px;
+$font-size-lg: 16px;
+$font-size-xl: 18px;
+$font-size-xxl: 24px;
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 50%;
+
+// Shadows
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+// Transitions
+$transition-fast: 0.15s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Layout
+$sidebar-width: 250px;
+$sidebar-collapsed-width: 70px;
+$header-height: 70px;
+$content-padding: 24px;
+
+// Z-Index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Breakpoints
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;

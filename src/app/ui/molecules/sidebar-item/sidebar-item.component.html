@@ -1,0 +1,42 @@
+<ng-container *ngIf="!hasChildren; else withChildren">
+  <a
+    [routerLink]="item.route"
+    routerLinkActive="sidebar-item--active"
+    class="sidebar-item"
+    [class.sidebar-item--child]="isChild"
+    [class.sidebar-item--collapsed]="isCollapsed"
+  >
+    <span class="sidebar-item__icon material-icons">{{ item.icon }}</span>
+    <span *ngIf="!isCollapsed" class="sidebar-item__label">{{ item.label }}</span>
+    <span *ngIf="item.badge && !isCollapsed" class="sidebar-item__badge">{{ item.badge }}</span>
+  </a>
+</ng-container>
+
+<ng-template #withChildren>
+  <div class="sidebar-item-group" [class.sidebar-item-group--expanded]="item.expanded">
+    <button
+      class="sidebar-item sidebar-item--parent"
+      [class.sidebar-item--collapsed]="isCollapsed"
+      [class.sidebar-item--active]="item.expanded"
+      (click)="onToggle()"
+    >
+      <span class="sidebar-item__icon material-icons">{{ item.icon }}</span>
+      <span *ngIf="!isCollapsed" class="sidebar-item__label">{{ item.label }}</span>
+      <span *ngIf="!isCollapsed" class="sidebar-item__arrow material-icons">
+        {{ item.expanded ? 'expand_less' : 'expand_more' }}
+      </span>
+    </button>
+    
+    <div *ngIf="item.expanded && !isCollapsed" class="sidebar-item-group__children">
+      <a
+        *ngFor="let child of item.children"
+        [routerLink]="child.route"
+        routerLinkActive="sidebar-item--active"
+        class="sidebar-item sidebar-item--child"
+      >
+        <span class="sidebar-item__dot"></span>
+        <span class="sidebar-item__label">{{ child.label }}</span>
+      </a>
+    </div>
+  </div>
+</ng-template>

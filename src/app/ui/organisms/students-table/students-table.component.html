@@ -1,0 +1,109 @@
+<div class="students-table">
+  <div class="students-table__controls">
+    <div class="students-table__entries">
+      <span>Show</span>
+      <select
+        [(ngModel)]="pageSize"
+        (change)="onPageSizeChange()"
+        class="students-table__select"
+      >
+        <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+      </select>
+      <span>entries</span>
+    </div>
+
+    <div class="students-table__search">
+      <label>Search:</label>
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+        class="students-table__search-input"
+      />
+    </div>
+  </div>
+
+  <div class="students-table__wrapper">
+    <table class="students-table__table">
+      <thead>
+        <tr>
+          <th class="students-table__th">
+            Profile
+            <span class="material-icons students-table__sort">unfold_more</span>
+          </th>
+          <th class="students-table__th">
+            Roll No.
+            <span class="material-icons students-table__sort">unfold_more</span>
+          </th>
+          <th class="students-table__th">
+            Name
+            <span class="material-icons students-table__sort">unfold_more</span>
+          </th>
+          <th class="students-table__th">
+            Education
+            <span class="material-icons students-table__sort">unfold_more</span>
+          </th>
+          <th class="students-table__th">
+            Mobile
+            <span class="material-icons students-table__sort">unfold_more</span>
+          </th>
+          <th class="students-table__th">
+            Email
+            <span class="material-icons students-table__sort">unfold_more</span>
+          </th>
+          <th class="students-table__th">
+            Admission Date
+            <span class="material-icons students-table__sort">unfold_more</span>
+          </th>
+          <th class="students-table__th">
+            Action
+            <span class="material-icons students-table__sort">unfold_more</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students" class="students-table__row">
+          <td class="students-table__td">
+            <app-avatar
+              [src]="student.avatar"
+              [alt]="student.name"
+              size="sm"
+            ></app-avatar>
+          </td>
+          <td class="students-table__td students-table__td--roll">
+            {{ student.rollNo }}
+          </td>
+          <td class="students-table__td">
+            <a class="students-table__name-link">{{ student.name }}</a>
+          </td>
+          <td class="students-table__td students-table__td--education">
+            {{ student.education }}
+          </td>
+          <td class="students-table__td students-table__td--phone">
+            {{ student.mobile }}
+          </td>
+          <td class="students-table__td">
+            <a class="students-table__email-link">{{ student.email }}</a>
+          </td>
+          <td class="students-table__td">
+            {{ student.admissionDate }}
+          </td>
+          <td class="students-table__td">
+            <app-action-buttons
+              (edit)="onEdit(student)"
+              (delete)="onDelete(student)"
+            ></app-action-buttons>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    [totalItems]="totalItems"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+</div>

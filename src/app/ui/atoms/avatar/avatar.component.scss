@@ -1,0 +1,103 @@
+@import '../../../../styles/variables';
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius-full;
+  background-color: $primary-light;
+  color: $text-white;
+  font-weight: $font-weight-medium;
+  overflow: hidden;
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__initials {
+    text-transform: uppercase;
+  }
+
+  &__status {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    border-radius: $border-radius-full;
+    border: 2px solid $bg-white;
+  }
+
+  // Sizes
+  &--xs {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+
+    .avatar__status {
+      width: 6px;
+      height: 6px;
+    }
+  }
+
+  &--sm {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+
+    .avatar__status {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  &--md {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  &--lg {
+    width: 56px;
+    height: 56px;
+    font-size: 18px;
+
+    .avatar__status {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  &--xl {
+    width: 80px;
+    height: 80px;
+    font-size: 24px;
+
+    .avatar__status {
+      width: 14px;
+      height: 14px;
+      bottom: 4px;
+      right: 4px;
+    }
+  }
+
+  // Status Colors
+  &--online .avatar__status {
+    background-color: $success-color;
+  }
+
+  &--offline .avatar__status {
+    background-color: $secondary-light;
+  }
+
+  &--away .avatar__status {
+    background-color: $warning-color;
+  }
+
+  &--busy .avatar__status {
+    background-color: $danger-color;
+  }
+}

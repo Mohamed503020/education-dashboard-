@@ -1,0 +1,63 @@
+<div class="holiday">
+  <div class="holiday__header">
+    <div class="holiday__title-section">
+      <h1 class="holiday__title">{{ 'holiday.title' | translate }}</h1>
+      <p class="holiday__subtitle">{{ 'holiday.subtitle' | translate }} {{ currentYear }}</p>
+    </div>
+    <div class="holiday__actions">
+      <button class="btn btn--outline">
+        <span class="material-icons">download</span>
+        {{ 'common.export' | translate }}
+      </button>
+      <button class="btn btn--primary">
+        <span class="material-icons">add</span>
+        {{ 'holiday.addNew' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="holiday__legend">
+    <div class="legend-item">
+      <span class="legend-dot legend-dot--national"></span>
+      <span>{{ 'holiday.national' | translate }}</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot legend-dot--religious"></span>
+      <span>{{ 'holiday.religious' | translate }}</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot legend-dot--academic"></span>
+      <span>{{ 'holiday.academic' | translate }}</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot legend-dot--other"></span>
+      <span>{{ 'holiday.other' | translate }}</span>
+    </div>
+  </div>
+
+  <div class="holiday__list">
+    @for (h of holidays; track h.id) {
+      <div class="holiday-card holiday-card--{{ h.type }}">
+        <div class="holiday-card__date">
+          <span class="holiday-card__date-text">{{ h.date }}</span>
+          <span class="holiday-card__day">{{ h.day }}</span>
+        </div>
+        <div class="holiday-card__content">
+          <h3 class="holiday-card__name">{{ h.name }}</h3>
+          <p class="holiday-card__description">{{ h.description }}</p>
+        </div>
+        <div class="holiday-card__type">
+          <span class="type-badge type-badge--{{ h.type }}">{{ h.type }}</span>
+        </div>
+        <div class="holiday-card__actions">
+          <button class="holiday-card__btn">
+            <span class="material-icons">edit</span>
+          </button>
+          <button class="holiday-card__btn holiday-card__btn--delete">
+            <span class="material-icons">delete</span>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

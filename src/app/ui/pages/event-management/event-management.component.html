@@ -1,0 +1,102 @@
+<div class="events">
+  <div class="events__header">
+    <div class="events__title-section">
+      <h1 class="events__title">{{ 'events.title' | translate }}</h1>
+      <p class="events__subtitle">{{ 'events.subtitle' | translate }}</p>
+    </div>
+    <div class="events__actions">
+      <button class="btn btn--primary">
+        <span class="material-icons">add</span>
+        {{ 'events.addNew' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="events__stats">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card stat-card--{{ stat.color }}">
+        <div class="stat-card__icon">
+          <span class="material-icons">{{ stat.icon }}</span>
+        </div>
+        <div class="stat-card__content">
+          <h3 class="stat-card__value">{{ stat.value }}</h3>
+          <p class="stat-card__label">{{ stat.label | translate }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="events__filters">
+    <div class="search-box">
+      <span class="material-icons search-box__icon">search</span>
+      <input type="text" class="search-box__input" [placeholder]="'events.searchEvents' | translate">
+    </div>
+    <div class="filter-group">
+      <select class="filter-select">
+        <option value="">{{ 'events.allCategories' | translate }}</option>
+        <option value="academic">Academic</option>
+        <option value="sports">Sports</option>
+        <option value="cultural">Cultural</option>
+        <option value="meeting">Meeting</option>
+      </select>
+      <select class="filter-select">
+        <option value="">{{ 'common.allStatus' | translate }}</option>
+        <option value="upcoming">Upcoming</option>
+        <option value="ongoing">Ongoing</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="events__grid">
+    @for (event of events; track event.id) {
+      <div class="event-card">
+        <div class="event-card__header">
+          <span class="event-card__category event-card__category--{{ event.category }}">
+            {{ event.category }}
+          </span>
+          <span class="event-card__status event-card__status--{{ event.status }}">
+            {{ event.status }}
+          </span>
+        </div>
+        <h3 class="event-card__title">{{ event.title }}</h3>
+        <div class="event-card__details">
+          <div class="event-card__detail">
+            <span class="material-icons">calendar_today</span>
+            <span>{{ event.date }}</span>
+          </div>
+          <div class="event-card__detail">
+            <span class="material-icons">schedule</span>
+            <span>{{ event.time }}</span>
+          </div>
+          <div class="event-card__detail">
+            <span class="material-icons">location_on</span>
+            <span>{{ event.location }}</span>
+          </div>
+          <div class="event-card__detail">
+            <span class="material-icons">person</span>
+            <span>{{ event.organizer }}</span>
+          </div>
+        </div>
+        <div class="event-card__footer">
+          <div class="event-card__attendees">
+            <span class="material-icons">people</span>
+            <span>{{ event.attendees }} {{ 'events.attendees' | translate }}</span>
+          </div>
+          <div class="event-card__actions">
+            <button class="event-card__btn" title="View">
+              <span class="material-icons">visibility</span>
+            </button>
+            <button class="event-card__btn" title="Edit">
+              <span class="material-icons">edit</span>
+            </button>
+            <button class="event-card__btn event-card__btn--delete" title="Delete">
+              <span class="material-icons">delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

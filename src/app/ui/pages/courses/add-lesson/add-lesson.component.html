@@ -1,0 +1,283 @@
+<div class="add-lesson">
+  <div class="add-lesson__header">
+    <div class="add-lesson__title-section">
+      <h1 class="add-lesson__title">Add New Lesson</h1>
+      <nav class="add-lesson__breadcrumb">
+        <a routerLink="/dashboard">Dashboard</a>
+        <span>/</span>
+        <a routerLink="/courses/all">Courses</a>
+        <span>/</span>
+        <a [routerLink]="['/courses', courseId]">Course Details</a>
+        <span>/</span>
+        <span>Add Lesson</span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="add-lesson__container">
+    <!-- Section Tabs -->
+    <div class="section-tabs">
+      <button 
+        class="section-tabs__tab"
+        [class.section-tabs__tab--active]="activeSection() === 'info'"
+        (click)="setActiveSection('info')"
+      >
+        <span class="material-icons">info</span>
+        Lesson Info
+      </button>
+      <button 
+        class="section-tabs__tab"
+        [class.section-tabs__tab--active]="activeSection() === 'videos'"
+        (click)="setActiveSection('videos')"
+      >
+        <span class="material-icons">videocam</span>
+        Videos ({{ videos.length }})
+      </button>
+      <button 
+        class="section-tabs__tab"
+        [class.section-tabs__tab--active]="activeSection() === 'resources'"
+        (click)="setActiveSection('resources')"
+      >
+        <span class="material-icons">folder</span>
+        Resources ({{ pdfs.length }})
+      </button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #lessonForm="ngForm">
+      <!-- Lesson Info Section -->
+      @if (activeSection() === 'info') {
+        <div class="form-section">
+          <h3 class="form-section__title">
+            <span class="material-icons">edit_note</span>
+            Lesson Information
+          </h3>
+          
+          <div class="form-grid">
+            <div class="form-group form-group--full">
+              <label class="form-label" for="title">Lesson Title *</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                class="form-input"
+                [(ngModel)]="lesson.title"
+                required
+                placeholder="Enter lesson title"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="order">Lesson Order *</label>
+              <input
+                type="number"
+                id="order"
+                name="order"
+                class="form-input"
+                [(ngModel)]="lesson.order"
+                required
+                min="1"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="duration">Duration</label>
+              <input
+                type="text"
+                id="duration"
+                name="duration"
+                class="form-input"
+                [(ngModel)]="lesson.duration"
+                placeholder="e.g., 45 min"
+              />
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label" for="description">Short Description *</label>
+              <textarea
+                id="description"
+                name="description"
+                class="form-input form-input--textarea"
+                [(ngModel)]="lesson.description"
+                required
+                rows="3"
+                placeholder="Brief description of what this lesson covers"
+              ></textarea>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-label" for="content">Lesson Content</label>
+              <textarea
+                id="content"
+                name="content"
+                class="form-input form-input--textarea form-input--large"
+                [(ngModel)]="lesson.content"
+                rows="10"
+                placeholder="Full lesson content, notes, and instructions..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Videos Section -->
+      @if (activeSection() === 'videos') {
+        <div class="form-section">
+          <div class="form-section__header">
+            <h3 class="form-section__title">
+              <span class="material-icons">videocam</span>
+              Lesson Videos
+            </h3>
+            <button type="button" class="btn btn--primary btn--sm" (click)="addVideo()">
+              <span class="material-icons">add</span>
+              Add Video
+            </button>
+          </div>
+
+          @if (videos.length === 0) {
+            <div class="empty-state">
+              <span class="material-icons">video_library</span>
+              <p>No videos added yet</p>
+              <button type="button" class="btn btn--outline" (click)="addVideo()">
+                Add Your First Video
+              </button>
+            </div>
+          } @else {
+            <div class="items-list">
+              @for (video of videos; track video.id) {
+                <div class="item-card">
+                  <div class="item-card__header">
+                    <span class="item-card__icon item-card__icon--video">
+                      <span class="material-icons">play_circle</span>
+                    </span>
+                    <span class="item-card__label">Video {{ video.id }}</span>
+                    <button type="button" class="item-card__remove" (click)="removeVideo(video.id)">
+                      <span class="material-icons">close</span>
+                    </button>
+                  </div>
+                  <div class="item-card__body">
+                    <div class="form-group">
+                      <label class="form-label">Video Title *</label>
+                      <input
+                        type="text"
+                        class="form-input"
+                        [(ngModel)]="video.title"
+                        [name]="'videoTitle' + video.id"
+                        placeholder="Enter video title"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Video URL *</label>
+                      <input
+                        type="url"
+                        class="form-input"
+                        [(ngModel)]="video.url"
+                        [name]="'videoUrl' + video.id"
+                        placeholder="https://youtube.com/watch?v=..."
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Duration</label>
+                      <input
+                        type="text"
+                        class="form-input"
+                        [(ngModel)]="video.duration"
+                        [name]="'videoDuration' + video.id"
+                        placeholder="e.g., 12:34"
+                      />
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Resources Section -->
+      @if (activeSection() === 'resources') {
+        <div class="form-section">
+          <div class="form-section__header">
+            <h3 class="form-section__title">
+              <span class="material-icons">folder</span>
+              Lesson Resources (PDFs)
+            </h3>
+            <button type="button" class="btn btn--primary btn--sm" (click)="addPdf()">
+              <span class="material-icons">add</span>
+              Add PDF
+            </button>
+          </div>
+
+          @if (pdfs.length === 0) {
+            <div class="empty-state">
+              <span class="material-icons">description</span>
+              <p>No resources added yet</p>
+              <button type="button" class="btn btn--outline" (click)="addPdf()">
+                Add Your First PDF
+              </button>
+            </div>
+          } @else {
+            <div class="items-list">
+              @for (pdf of pdfs; track pdf.id) {
+                <div class="item-card">
+                  <div class="item-card__header">
+                    <span class="item-card__icon item-card__icon--pdf">
+                      <span class="material-icons">picture_as_pdf</span>
+                    </span>
+                    <span class="item-card__label">PDF {{ pdf.id }}</span>
+                    <button type="button" class="item-card__remove" (click)="removePdf(pdf.id)">
+                      <span class="material-icons">close</span>
+                    </button>
+                  </div>
+                  <div class="item-card__body">
+                    <div class="form-group">
+                      <label class="form-label">Document Title *</label>
+                      <input
+                        type="text"
+                        class="form-input"
+                        [(ngModel)]="pdf.title"
+                        [name]="'pdfTitle' + pdf.id"
+                        placeholder="Enter document title"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Upload PDF *</label>
+                      <div class="file-upload">
+                        <input
+                          type="file"
+                          [id]="'pdfFile' + pdf.id"
+                          accept=".pdf"
+                          (change)="onFileSelect($event, pdf)"
+                          class="file-upload__input"
+                        />
+                        <label [for]="'pdfFile' + pdf.id" class="file-upload__label">
+                          <span class="material-icons">upload_file</span>
+                          @if (pdf.fileName) {
+                            <span>{{ pdf.fileName }}</span>
+                          } @else {
+                            <span>Choose PDF file</span>
+                          }
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn btn--outline" (click)="onCancel()">
+          <span class="material-icons">close</span>
+          Cancel
+        </button>
+        <button type="submit" class="btn btn--primary" [disabled]="!lessonForm.valid">
+          <span class="material-icons">save</span>
+          Save Lesson
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

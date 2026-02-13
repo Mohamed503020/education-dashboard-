@@ -1,0 +1,43 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.badge {
+  @include badge;
+
+  // Variants
+  &--primary {
+    background-color: rgba($primary-color, 0.1);
+    color: $primary-color;
+  }
+
+  &--secondary {
+    background-color: rgba($secondary-color, 0.1);
+    color: $secondary-color;
+  }
+
+  &--success {
+    background-color: rgba($success-color, 0.1);
+    color: $success-color;
+  }
+
+  &--danger {
+    background-color: rgba($danger-color, 0.1);
+    color: $danger-color;
+  }
+
+  &--warning {
+    background-color: rgba($warning-color, 0.1);
+    color: $warning-color;
+  }
+
+  &--info {
+    background-color: rgba($info-color, 0.1);
+    color: $info-color;
+  }
+
+  // Modifiers
+  &--pill {
+    border-radius: 50px;
+    padding: 4px 12px;
+  }
+}

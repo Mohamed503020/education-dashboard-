@@ -1,0 +1,57 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.pagination {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  padding: $spacing-md 0;
+
+  &__info {
+    font-size: $font-size-sm;
+    color: $text-color;
+
+    strong {
+      color: $text-dark;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__btn {
+    padding: $spacing-sm $spacing-md;
+    font-family: $font-family-base;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-color;
+    background-color: $bg-light;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    @include transition;
+
+    &:hover:not(:disabled):not(&--active) {
+      background-color: darken($bg-light, 5%);
+      color: var(--primary-color, $primary-color);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &--page {
+      min-width: 36px;
+      padding: $spacing-sm;
+    }
+
+    &--active {
+      background-color: var(--primary-color, $primary-color);
+      color: $text-white;
+    }
+  }
+}

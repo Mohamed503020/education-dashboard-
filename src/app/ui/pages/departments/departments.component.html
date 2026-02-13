@@ -1,0 +1,48 @@
+<div class="departments">
+  <div class="departments__header">
+    <div class="departments__title-section">
+      <h1 class="departments__title">{{ 'departments.title' | translate }}</h1>
+      <p class="departments__subtitle">{{ 'departments.subtitle' | translate }}</p>
+    </div>
+    <div class="departments__actions">
+      <button class="btn btn--primary">
+        <span class="material-icons">add</span>
+        {{ 'departments.addNew' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="departments__grid">
+    @for (dept of departments; track dept.id) {
+      <div class="dept-card">
+        <div class="dept-card__icon" [style.background]="dept.color">
+          <span class="material-icons">apartment</span>
+        </div>
+        <div class="dept-card__content">
+          <h3 class="dept-card__name">{{ dept.name }}</h3>
+          <p class="dept-card__head">{{ 'departments.head' | translate }}: {{ dept.head }}</p>
+          <div class="dept-card__stats">
+            <div class="dept-card__stat">
+              <span class="dept-card__stat-value">{{ dept.professors }}</span>
+              <span class="dept-card__stat-label">{{ 'sidebar.professors' | translate }}</span>
+            </div>
+            <div class="dept-card__stat">
+              <span class="dept-card__stat-value">{{ dept.students }}</span>
+              <span class="dept-card__stat-label">{{ 'sidebar.students' | translate }}</span>
+            </div>
+            <div class="dept-card__stat">
+              <span class="dept-card__stat-value">{{ dept.courses }}</span>
+              <span class="dept-card__stat-label">{{ 'sidebar.courses' | translate }}</span>
+            </div>
+          </div>
+          <p class="dept-card__established">{{ 'departments.established' | translate }}: {{ dept.established }}</p>
+        </div>
+        <div class="dept-card__actions">
+          <button class="dept-card__btn">
+            <span class="material-icons">more_vert</span>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="view-toggle">
+  <button
+    class="view-toggle__btn"
+    [class.view-toggle__btn--active]="activeView === 'list'"
+    (click)="setView('list')"
+  >
+    List View
+  </button>
+  <button
+    class="view-toggle__btn"
+    [class.view-toggle__btn--active]="activeView === 'grid'"
+    (click)="setView('grid')"
+  >
+    Grid View
+  </button>
+</div>

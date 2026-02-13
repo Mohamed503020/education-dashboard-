@@ -1,0 +1,13 @@
+<div [class]="avatarClasses">
+  <img
+    *ngIf="src"
+    [src]="src"
+    [alt]="alt"
+    class="avatar__image"
+    (error)="onImageError()"
+  />
+  <span *ngIf="!src" class="avatar__initials">
+    {{ displayInitials }}
+  </span>
+  <span *ngIf="status" class="avatar__status"></span>
+</div>

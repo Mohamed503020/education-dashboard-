@@ -1,0 +1,246 @@
+.courses {
+  padding: 24px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0 0 4px;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  &__filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+}
+
+.search-box {
+  position: relative;
+  width: 300px;
+
+  &__icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 20px;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 10px 12px 10px 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--bg-white);
+    color: var(--text-color);
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+  }
+}
+
+.filter-select {
+  padding: 10px 32px 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg-white);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &--primary {
+    background: var(--primary-color);
+    color: white;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.course-card {
+  background: var(--bg-white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  &__code {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 4px 8px;
+    background: rgba(91, 95, 199, 0.1);
+    border-radius: 4px;
+  }
+
+  &__status {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+
+    &--active {
+      background: rgba(40, 167, 69, 0.1);
+      color: #28a745;
+    }
+
+    &--inactive {
+      background: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+    }
+  }
+
+  &__name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0 0 8px;
+  }
+
+  &__department {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  &__info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+
+    .material-icons {
+      font-size: 18px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  &__btn {
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+
+    .material-icons {
+      font-size: 18px;
+    }
+
+    &--view {
+      color: #17a2b8;
+      &:hover { background: rgba(23, 162, 184, 0.1); }
+    }
+
+    &--edit {
+      color: #ffc107;
+      &:hover { background: rgba(255, 193, 7, 0.1); }
+    }
+
+    &--delete {
+      color: #dc3545;
+      &:hover { background: rgba(220, 53, 69, 0.1); }
+    }
+  }
+}
+
+[dir="rtl"] {
+  .search-box {
+    &__icon {
+      left: auto;
+      right: 12px;
+    }
+    &__input {
+      padding: 10px 40px 10px 12px;
+    }
+  }
+
+  .course-card__actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .courses {
+    &__header {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    &__filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  .search-box {
+    width: 100%;
+  }
+}
