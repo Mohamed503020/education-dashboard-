@@ -258,7 +258,18 @@ const TRANSLATIONS: Translations = {
     'courseDetails.type': 'Type',
     'courseDetails.size': 'Size',
     'courseDetails.download': 'Download',
-    'courseDetails.preview': 'Preview'
+    'courseDetails.preview': 'Preview',
+    'courseDetails.documents': 'Documents',
+    'courseDetails.learn1': 'Understand programming fundamentals',
+    'courseDetails.learn2': 'Write clean and efficient Python code',
+    'courseDetails.learn3': 'Work with data structures and algorithms',
+    'courseDetails.learn4': 'Build real-world applications',
+    'courseDetails.learn5': 'Debug and troubleshoot code',
+    'courseDetails.learn6': 'Apply object-oriented programming principles',
+    'courseDetails.req1': 'Basic computer skills',
+    'courseDetails.req2': 'No prior programming experience required',
+    'courseDetails.req3': 'A computer with internet access',
+    'courseDetails.req4': 'Willingness to learn and practice'
   },
   ar: {
     // Navigation
@@ -505,7 +516,18 @@ const TRANSLATIONS: Translations = {
     'courseDetails.type': 'النوع',
     'courseDetails.size': 'الحجم',
     'courseDetails.download': 'تحميل',
-    'courseDetails.preview': 'معاينة'
+    'courseDetails.preview': 'معاينة',
+    'courseDetails.documents': 'المستندات',
+    'courseDetails.learn1': 'فهم أساسيات البرمجة',
+    'courseDetails.learn2': 'كتابة كود Python نظيف وفعال',
+    'courseDetails.learn3': 'العمل مع هياكل البيانات والخوارزميات',
+    'courseDetails.learn4': 'بناء تطبيقات واقعية',
+    'courseDetails.learn5': 'تصحيح الأخطاء واستكشاف المشاكل',
+    'courseDetails.learn6': 'تطبيق مبادئ البرمجة كائنية التوجه',
+    'courseDetails.req1': 'مهارات الكمبيوتر الأساسية',
+    'courseDetails.req2': 'لا تحتاج خبرة سابقة في البرمجة',
+    'courseDetails.req3': 'جهاز كمبيوتر متصل بالإنترنت',
+    'courseDetails.req4': 'الرغبة في التعلم والممارسة'
   }
 };
 

@@ -33,6 +33,11 @@
   &--child {
     padding-left: $spacing-xxl;
     font-size: $font-size-sm;
+
+    :host-context([dir="rtl"]) & {
+      padding-left: $spacing-lg;
+      padding-right: $spacing-xxl;
+    }
   }
 
   &--collapsed {
@@ -55,11 +60,21 @@
     flex: 1;
     text-align: left;
     white-space: nowrap;
+
+    :host-context([dir="rtl"]) & {
+      text-align: right;
+    }
   }
 
   &__arrow {
     font-size: 20px;
     margin-left: auto;
+
+    :host-context([dir="rtl"]) & {
+      margin-left: 0;
+      margin-right: auto;
+      transform: scaleX(-1);
+    }
   }
 
   &__badge {

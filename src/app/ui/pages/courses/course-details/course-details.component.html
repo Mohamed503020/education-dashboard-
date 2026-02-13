@@ -123,22 +123,22 @@
           <div class="overview-section">
             <h3 class="overview-section__title">{{ 'courseDetails.whatYouLearn' | translate }}</h3>
             <ul class="overview-list">
-              <li><span class="material-icons">check_circle</span> Understand programming fundamentals</li>
-              <li><span class="material-icons">check_circle</span> Write clean and efficient Python code</li>
-              <li><span class="material-icons">check_circle</span> Work with data structures and algorithms</li>
-              <li><span class="material-icons">check_circle</span> Build real-world applications</li>
-              <li><span class="material-icons">check_circle</span> Debug and troubleshoot code</li>
-              <li><span class="material-icons">check_circle</span> Apply object-oriented programming principles</li>
+              <li><span class="material-icons">check_circle</span> {{ 'courseDetails.learn1' | translate }}</li>
+              <li><span class="material-icons">check_circle</span> {{ 'courseDetails.learn2' | translate }}</li>
+              <li><span class="material-icons">check_circle</span> {{ 'courseDetails.learn3' | translate }}</li>
+              <li><span class="material-icons">check_circle</span> {{ 'courseDetails.learn4' | translate }}</li>
+              <li><span class="material-icons">check_circle</span> {{ 'courseDetails.learn5' | translate }}</li>
+              <li><span class="material-icons">check_circle</span> {{ 'courseDetails.learn6' | translate }}</li>
             </ul>
           </div>
 
           <div class="overview-section">
             <h3 class="overview-section__title">{{ 'courseDetails.requirements' | translate }}</h3>
             <ul class="overview-list overview-list--simple">
-              <li>Basic computer skills</li>
-              <li>No prior programming experience required</li>
-              <li>A computer with internet access</li>
-              <li>Willingness to learn and practice</li>
+              <li>{{ 'courseDetails.req1' | translate }}</li>
+              <li>{{ 'courseDetails.req2' | translate }}</li>
+              <li>{{ 'courseDetails.req3' | translate }}</li>
+              <li>{{ 'courseDetails.req4' | translate }}</li>
             </ul>
           </div>
         </div>
@@ -219,7 +219,7 @@
                   <div class="lesson-item__resources">
                     @if (getVideosForLesson(lesson.id).length > 0) {
                       <div class="resource-section">
-                        <h5>Videos</h5>
+                        <h5>{{ 'courseDetails.videos' | translate }}</h5>
                         <div class="resource-list">
                           @for (video of getVideosForLesson(lesson.id); track video.id) {
                             <div class="resource-item resource-item--video" (click)="playVideo(video)">
@@ -234,7 +234,7 @@
 
                     @if (getPdfsForLesson(lesson.id).length > 0) {
                       <div class="resource-section">
-                        <h5>Documents</h5>
+                        <h5>{{ 'courseDetails.documents' | translate }}</h5>
                         <div class="resource-list">
                           @for (pdf of getPdfsForLesson(lesson.id); track pdf.id) {
                             <div class="resource-item resource-item--pdf" (click)="viewPdf(pdf)">

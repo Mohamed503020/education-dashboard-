@@ -16,6 +16,12 @@
   overflow-y: auto;
   @include hide-scrollbar;
 
+  // RTL Support
+  :host-context([dir="rtl"]) & {
+    left: auto;
+    right: 0;
+  }
+
   &--collapsed {
     width: $sidebar-collapsed-width;
 
