@@ -1,0 +1,169 @@
+import{a as J}from"./chunk-VMT66XCF.js";import{a as L,b as z,c as k,d as I,e as A,f as F,h as D,i as q,j as G,m as j,n as R}from"./chunk-K2MEFKBR.js";import{d as T}from"./chunk-BJ2JVOKX.js";import{g as N,i as B,j as V}from"./chunk-YWRECBJH.js";import{$ as y,Bb as P,Cb as o,Db as c,Ib as s,Jb as p,Kb as u,Mb as O,Na as r,Ob as _,Pb as f,W as h,db as b,ja as d,jb as w,ka as l,kb as E,lb as x,mb as n,nb as t,pc as W,rb as v,sb as S}from"./chunk-IXPTXOMZ.js";function Y(g,U){if(g&1&&(n(0,"option",34),o(1),t()),g&2){let C=U.$implicit;b("value",C),r(),c(C)}}var ie=(()=>{class g{constructor(){this.router=h(B),this.route=h(N),this.languageService=h(J),this.studentId="",this.student={firstName:"",lastName:"",email:"",mobile:"",dateOfBirth:"",gender:"",education:"",address:"",city:"",state:"",zipCode:"",parentName:"",parentPhone:"",parentEmail:""},this.educationOptions=["B.Sc Computer Science","B.Tech Engineering","B.Com Commerce","BBA Business","B.A Arts","M.Sc Computer Science","MBA Business"]}ngOnInit(){this.studentId=this.route.snapshot.paramMap.get("id")||"",this.loadStudentData()}loadStudentData(){this.student={firstName:"John",lastName:"Doe",email:"john.doe@edu.com",mobile:"+1 234 567 890",dateOfBirth:"2000-05-15",gender:"male",education:"B.Sc Computer Science",address:"123 Main Street",city:"New York",state:"NY",zipCode:"10001",parentName:"Jane Doe",parentPhone:"+1 234 567 891",parentEmail:"jane.doe@email.com"}}onSubmit(){console.log("Updated Student Data:",this.student),this.router.navigate(["/students/all"])}onCancel(){this.router.navigate(["/students/all"])}static{this.\u0275fac=function(M){return new(M||g)}}static{this.\u0275cmp=y({type:g,selectors:[["app-edit-student"]],standalone:!0,features:[O],decls:124,vars:27,consts:[["studentForm","ngForm"],[1,"edit-student"],[1,"edit-student__header"],[1,"edit-student__title-section"],[1,"edit-student__title"],[1,"edit-student__breadcrumb"],["routerLink","/dashboard"],["routerLink","/students/all"],[1,"edit-student__form-container"],[3,"ngSubmit"],[1,"form-section"],[1,"form-section__title"],[1,"material-icons"],[1,"form-grid"],[1,"form-group"],["for","firstName",1,"form-label"],["type","text","id","firstName","name","firstName","required","",1,"form-input",3,"ngModelChange","ngModel"],["for","lastName",1,"form-label"],["type","text","id","lastName","name","lastName","required","",1,"form-input",3,"ngModelChange","ngModel"],["for","email",1,"form-label"],["type","email","id","email","name","email","required","",1,"form-input",3,"ngModelChange","ngModel"],["for","mobile",1,"form-label"],["type","tel","id","mobile","name","mobile","required","",1,"form-input",3,"ngModelChange","ngModel"],["for","dob",1,"form-label"],["type","date","id","dob","name","dateOfBirth","required","",1,"form-input",3,"ngModelChange","ngModel"],["for","gender",1,"form-label"],["id","gender","name","gender","required","",1,"form-input",3,"ngModelChange","ngModel"],["value",""],["value","male"],["value","female"],["value","other"],[1,"form-group","form-group--full"],["for","education",1,"form-label"],["id","education","name","education","required","",1,"form-input",3,"ngModelChange","ngModel"],[3,"value"],["for","address",1,"form-label"],["id","address","name","address","rows","3",1,"form-input","form-input--textarea",3,"ngModelChange","ngModel"],["for","city",1,"form-label"],["type","text","id","city","name","city",1,"form-input",3,"ngModelChange","ngModel"],["for","state",1,"form-label"],["type","text","id","state","name","state",1,"form-input",3,"ngModelChange","ngModel"],["for","zipCode",1,"form-label"],["type","text","id","zipCode","name","zipCode",1,"form-input",3,"ngModelChange","ngModel"],["for","parentName",1,"form-label"],["type","text","id","parentName","name","parentName",1,"form-input",3,"ngModelChange","ngModel"],["for","parentPhone",1,"form-label"],["type","tel","id","parentPhone","name","parentPhone",1,"form-input",3,"ngModelChange","ngModel"],["for","parentEmail",1,"form-label"],["type","email","id","parentEmail","name","parentEmail",1,"form-input",3,"ngModelChange","ngModel"],[1,"form-actions"],["type","button",1,"btn","btn--outline",3,"click"],["type","submit",1,"btn","btn--primary",3,"disabled"]],template:function(M,i){if(M&1){let a=v();n(0,"div",1)(1,"div",2)(2,"div",3)(3,"h1",4),o(4),_(5,"translate"),t(),n(6,"nav",5)(7,"a",6),o(8),_(9,"translate"),t(),n(10,"span"),o(11,"/"),t(),n(12,"a",7),o(13),_(14,"translate"),t(),n(15,"span"),o(16,"/"),t(),n(17,"span"),o(18),_(19,"translate"),t()()()(),n(20,"div",8)(21,"form",9,0),S("ngSubmit",function(){return d(a),l(i.onSubmit())}),n(23,"div",10)(24,"h3",11)(25,"span",12),o(26,"person"),t(),o(27," Personal Information "),t(),n(28,"div",13)(29,"div",14)(30,"label",15),o(31,"First Name *"),t(),n(32,"input",16),u("ngModelChange",function(e){return d(a),p(i.student.firstName,e)||(i.student.firstName=e),l(e)}),t()(),n(33,"div",14)(34,"label",17),o(35,"Last Name *"),t(),n(36,"input",18),u("ngModelChange",function(e){return d(a),p(i.student.lastName,e)||(i.student.lastName=e),l(e)}),t()(),n(37,"div",14)(38,"label",19),o(39,"Email *"),t(),n(40,"input",20),u("ngModelChange",function(e){return d(a),p(i.student.email,e)||(i.student.email=e),l(e)}),t()(),n(41,"div",14)(42,"label",21),o(43,"Mobile Number *"),t(),n(44,"input",22),u("ngModelChange",function(e){return d(a),p(i.student.mobile,e)||(i.student.mobile=e),l(e)}),t()(),n(45,"div",14)(46,"label",23),o(47,"Date of Birth *"),t(),n(48,"input",24),u("ngModelChange",function(e){return d(a),p(i.student.dateOfBirth,e)||(i.student.dateOfBirth=e),l(e)}),t()(),n(49,"div",14)(50,"label",25),o(51,"Gender *"),t(),n(52,"select",26),u("ngModelChange",function(e){return d(a),p(i.student.gender,e)||(i.student.gender=e),l(e)}),n(53,"option",27),o(54,"Select Gender"),t(),n(55,"option",28),o(56,"Male"),t(),n(57,"option",29),o(58,"Female"),t(),n(59,"option",30),o(60,"Other"),t()()()()(),n(61,"div",10)(62,"h3",11)(63,"span",12),o(64,"school"),t(),o(65," Academic Information "),t(),n(66,"div",13)(67,"div",31)(68,"label",32),o(69,"Education/Course *"),t(),n(70,"select",33),u("ngModelChange",function(e){return d(a),p(i.student.education,e)||(i.student.education=e),l(e)}),n(71,"option",27),o(72,"Select Education"),t(),E(73,Y,2,2,"option",34,w),t()()()(),n(75,"div",10)(76,"h3",11)(77,"span",12),o(78,"location_on"),t(),o(79," Address Information "),t(),n(80,"div",13)(81,"div",31)(82,"label",35),o(83,"Address"),t(),n(84,"textarea",36),u("ngModelChange",function(e){return d(a),p(i.student.address,e)||(i.student.address=e),l(e)}),t()(),n(85,"div",14)(86,"label",37),o(87,"City"),t(),n(88,"input",38),u("ngModelChange",function(e){return d(a),p(i.student.city,e)||(i.student.city=e),l(e)}),t()(),n(89,"div",14)(90,"label",39),o(91,"State"),t(),n(92,"input",40),u("ngModelChange",function(e){return d(a),p(i.student.state,e)||(i.student.state=e),l(e)}),t()(),n(93,"div",14)(94,"label",41),o(95,"Zip Code"),t(),n(96,"input",42),u("ngModelChange",function(e){return d(a),p(i.student.zipCode,e)||(i.student.zipCode=e),l(e)}),t()()()(),n(97,"div",10)(98,"h3",11)(99,"span",12),o(100,"family_restroom"),t(),o(101," Parent/Guardian Information "),t(),n(102,"div",13)(103,"div",14)(104,"label",43),o(105,"Parent/Guardian Name"),t(),n(106,"input",44),u("ngModelChange",function(e){return d(a),p(i.student.parentName,e)||(i.student.parentName=e),l(e)}),t()(),n(107,"div",14)(108,"label",45),o(109,"Parent Phone"),t(),n(110,"input",46),u("ngModelChange",function(e){return d(a),p(i.student.parentPhone,e)||(i.student.parentPhone=e),l(e)}),t()(),n(111,"div",14)(112,"label",47),o(113,"Parent Email"),t(),n(114,"input",48),u("ngModelChange",function(e){return d(a),p(i.student.parentEmail,e)||(i.student.parentEmail=e),l(e)}),t()()()(),n(115,"div",49)(116,"button",50),S("click",function(){return d(a),l(i.onCancel())}),n(117,"span",12),o(118,"close"),t(),o(119," Cancel "),t(),n(120,"button",51)(121,"span",12),o(122,"save"),t(),o(123," Update Student "),t()()()()()}if(M&2){let a=P(22);r(4),c(f(5,19,"students.editStudent")),r(4),c(f(9,21,"nav.dashboard")),r(5),c(f(14,23,"nav.students")),r(5),c(f(19,25,"students.editStudent")),r(14),s("ngModel",i.student.firstName),r(4),s("ngModel",i.student.lastName),r(4),s("ngModel",i.student.email),r(4),s("ngModel",i.student.mobile),r(4),s("ngModel",i.student.dateOfBirth),r(4),s("ngModel",i.student.gender),r(18),s("ngModel",i.student.education),r(3),x(i.educationOptions),r(11),s("ngModel",i.student.address),r(4),s("ngModel",i.student.city),r(4),s("ngModel",i.student.state),r(4),s("ngModel",i.student.zipCode),r(10),s("ngModel",i.student.parentName),r(4),s("ngModel",i.student.parentPhone),r(4),s("ngModel",i.student.parentEmail),r(6),b("disabled",!a.valid)}},dependencies:[W,R,F,q,G,L,D,z,k,j,A,I,V,T],styles:[`
+
+.edit-student[_ngcontent-%COMP%] {
+  padding: 24px;
+}
+.edit-student__header[_ngcontent-%COMP%] {
+  margin-bottom: 24px;
+}
+.edit-student__title[_ngcontent-%COMP%] {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 0 0 8px;
+}
+.edit-student__breadcrumb[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.edit-student__breadcrumb[_ngcontent-%COMP%]   a[_ngcontent-%COMP%] {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.edit-student__breadcrumb[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]:hover {
+  color: var(--primary-color);
+}
+.edit-student__breadcrumb[_ngcontent-%COMP%]   span[_ngcontent-%COMP%]:last-child {
+  color: var(--text-color);
+}
+.edit-student__form-container[_ngcontent-%COMP%] {
+  background: var(--bg-white);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  padding: 24px;
+}
+.form-section[_ngcontent-%COMP%] {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+.form-section[_ngcontent-%COMP%]:last-of-type {
+  margin-bottom: 24px;
+  border-bottom: none;
+}
+.form-section__title[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0 0 20px;
+}
+.form-section__title[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 22px;
+  color: var(--primary-color);
+}
+.form-grid[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 992px) {
+  .form-grid[_ngcontent-%COMP%] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .form-grid[_ngcontent-%COMP%] {
+    grid-template-columns: 1fr;
+  }
+}
+.form-group[_ngcontent-%COMP%] {
+  display: flex;
+  flex-direction: column;
+}
+.form-group--full[_ngcontent-%COMP%] {
+  grid-column: 1/-1;
+}
+.form-label[_ngcontent-%COMP%] {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
+.form-input[_ngcontent-%COMP%] {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-color);
+  background: var(--bg-white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-input[_ngcontent-%COMP%]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(91, 95, 199, 0.1);
+}
+.form-input[_ngcontent-%COMP%]::placeholder {
+  color: var(--text-muted);
+}
+.form-input--textarea[_ngcontent-%COMP%] {
+  resize: vertical;
+  min-height: 80px;
+}
+select.form-input[_ngcontent-%COMP%] {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%236c757d' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 36px;
+  appearance: none;
+}
+.form-actions[_ngcontent-%COMP%] {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+}
+.btn[_ngcontent-%COMP%] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 18px;
+}
+.btn--primary[_ngcontent-%COMP%] {
+  background: var(--primary-color);
+  color: white;
+}
+.btn--primary[_ngcontent-%COMP%]:hover:not(:disabled) {
+  opacity: 0.9;
+}
+.btn--primary[_ngcontent-%COMP%]:disabled {
+  background: var(--text-muted);
+  cursor: not-allowed;
+}
+.btn--outline[_ngcontent-%COMP%] {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+.btn--outline[_ngcontent-%COMP%]:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+[dir=rtl][_ngcontent-%COMP%]   .edit-student__breadcrumb[_ngcontent-%COMP%] {
+  flex-direction: row-reverse;
+}
+[dir=rtl][_ngcontent-%COMP%]   select.form-input[_ngcontent-%COMP%] {
+  background-position: left 10px center;
+  padding-right: 14px;
+  padding-left: 36px;
+}
+[dir=rtl][_ngcontent-%COMP%]   .form-actions[_ngcontent-%COMP%] {
+  flex-direction: row-reverse;
+}`]})}}return g})();export{ie as EditStudentComponent};

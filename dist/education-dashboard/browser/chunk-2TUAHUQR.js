@@ -1,0 +1,705 @@
+import{d as R}from"./chunk-BJ2JVOKX.js";import{g as T,i as D,j as N,m as F}from"./chunk-YWRECBJH.js";import{$ as y,Cb as n,Db as r,Eb as m,Fb as v,Hb as k,Ja as E,Mb as B,Na as i,Ob as o,Pb as d,W as P,Xa as I,bb as M,db as w,eb as C,fb as x,gb as h,ib as f,kb as O,lb as S,mb as t,nb as e,nc as A,ob as b,pc as z,sb as u,tb as g}from"./chunk-IXPTXOMZ.js";var j=(l,p)=>p.id;function L(l,p){if(l&1&&(t(0,"div",36)(1,"div",37)(2,"h3",38)(3,"span",4),n(4,"person"),e(),n(5),o(6,"translate"),e(),t(7,"div",39)(8,"div",40)(9,"span",41),n(10),o(11,"translate"),e(),t(12,"span",42),n(13),e()(),t(14,"div",40)(15,"span",41),n(16),o(17,"translate"),e(),t(18,"span",42),n(19),e()(),t(20,"div",40)(21,"span",41),n(22),o(23,"translate"),e(),t(24,"span",42),n(25),e()(),t(26,"div",40)(27,"span",41),n(28),o(29,"translate"),e(),t(30,"span",42),n(31),e()(),t(32,"div",40)(33,"span",41),n(34),o(35,"translate"),e(),t(36,"span",42),n(37),e()(),t(38,"div",40)(39,"span",41),n(40),o(41,"translate"),e(),t(42,"span",42),n(43),e()()()(),t(44,"div",37)(45,"h3",38)(46,"span",4),n(47,"contact_phone"),e(),n(48),o(49,"translate"),e(),t(50,"div",39)(51,"div",40)(52,"span",41),n(53),o(54,"translate"),e(),t(55,"span",42),n(56),e()(),t(57,"div",40)(58,"span",41),n(59),o(60,"translate"),e(),t(61,"span",42),n(62),e()(),t(63,"div",43)(64,"span",41),n(65),o(66,"translate"),e(),t(67,"span",42),n(68),e()()()(),t(69,"div",37)(70,"h3",38)(71,"span",4),n(72,"family_restroom"),e(),n(73),o(74,"translate"),e(),t(75,"div",39)(76,"div",40)(77,"span",41),n(78),o(79,"translate"),e(),t(80,"span",42),n(81),e()(),t(82,"div",40)(83,"span",41),n(84),o(85,"translate"),e(),t(86,"span",42),n(87),e()(),t(88,"div",40)(89,"span",41),n(90),o(91,"translate"),e(),t(92,"span",42),n(93),e()(),t(94,"div",40)(95,"span",41),n(96),o(97,"translate"),e(),t(98,"span",42),n(99),e()()()(),t(100,"div",37)(101,"h3",38)(102,"span",4),n(103,"school"),e(),n(104),o(105,"translate"),e(),t(106,"div",39)(107,"div",40)(108,"span",41),n(109),o(110,"translate"),e(),t(111,"span",42),n(112),e()(),t(113,"div",40)(114,"span",41),n(115),o(116,"translate"),e(),t(117,"span",42),n(118),e()(),t(119,"div",40)(120,"span",41),n(121),o(122,"translate"),e(),t(123,"span",42),n(124),e()(),t(125,"div",40)(126,"span",41),n(127),o(128,"translate"),e(),t(129,"span",42),n(130),e()(),t(131,"div",40)(132,"span",41),n(133),o(134,"translate"),e(),t(135,"span",42),n(136),e()(),t(137,"div",40)(138,"span",41),n(139),o(140,"translate"),e(),t(141,"span",44),n(142),e()(),t(143,"div",40)(144,"span",41),n(145),o(146,"translate"),e(),t(147,"span",42),n(148),e()()()()(),t(149,"div",45)(150,"h3",46),n(151),o(152,"translate"),e(),t(153,"div",47)(154,"div",48)(155,"div",49)(156,"span",4),n(157,"event_available"),e()(),t(158,"div",50)(159,"span",51),n(160),e(),t(161,"span",52),n(162),o(163,"translate"),e()(),t(164,"div",53),b(165,"div",54),e()(),t(166,"div",48)(167,"div",55)(168,"span",4),n(169,"assignment_turned_in"),e()(),t(170,"div",50)(171,"span",51),n(172),e(),t(173,"span",52),n(174,"Assignments Completed"),e()(),t(175,"div",53),b(176,"div",54),e()(),t(177,"div",48)(178,"div",56)(179,"span",4),n(180,"menu_book"),e()(),t(181,"div",50)(182,"span",51),n(183),e(),t(184,"span",52),n(185),o(186,"translate"),e()()()()()),l&2){let a=g();i(5),m(" ",d(6,59,"aboutStudent.personalInfo")," "),i(5),r(d(11,61,"aboutStudent.fullName")),i(3),r(a.getFullName()),i(3),r(d(17,63,"aboutStudent.dateOfBirth")),i(3),r(a.student.dateOfBirth),i(3),r(d(23,65,"aboutStudent.gender")),i(3),r(a.student.gender),i(3),r(d(29,67,"aboutStudent.bloodGroup")),i(3),r(a.student.bloodGroup),i(3),r(d(35,69,"aboutStudent.nationality")),i(3),r(a.student.nationality),i(3),r(d(41,71,"aboutStudent.religion")),i(3),r(a.student.religion),i(5),m(" ",d(49,73,"aboutStudent.contactInfo")," "),i(5),r(d(54,75,"aboutStudent.email")),i(3),r(a.student.email),i(3),r(d(60,77,"aboutStudent.phone")),i(3),r(a.student.phone),i(3),r(d(66,79,"aboutStudent.address")),i(3),k("",a.student.address,", ",a.student.city,", ",a.student.country," ",a.student.zipCode,""),i(5),m(" ",d(74,81,"aboutStudent.parentInfo")," "),i(5),r(d(79,83,"aboutStudent.fatherName")),i(3),r(a.student.fatherName),i(3),r(d(85,85,"aboutStudent.motherName")),i(3),r(a.student.motherName),i(3),r(d(91,87,"aboutStudent.guardianPhone")),i(3),r(a.student.guardianPhone),i(3),r(d(97,89,"aboutStudent.guardianEmail")),i(3),r(a.student.guardianEmail),i(5),m(" ",d(105,91,"aboutStudent.academicInfo")," "),i(5),r(d(110,93,"aboutStudent.studentId")),i(3),r(a.student.studentId),i(3),r(d(116,95,"aboutStudent.department")),i(3),r(a.student.department),i(3),r(d(122,97,"aboutStudent.batch")),i(3),r(a.student.batch),i(3),r(d(128,99,"aboutStudent.semester")),i(3),r(a.student.semester),i(3),r(d(134,101,"aboutStudent.enrollmentDate")),i(3),r(a.student.enrollmentDate),i(3),r(d(140,103,"aboutStudent.cgpa")),i(3),m("",a.student.cgpa,"/4.0"),i(3),r(d(146,105,"aboutStudent.totalCredits")),i(3),v("",a.student.completedCredits,"/",a.student.totalCredits,""),i(3),r(d(152,107,"aboutStudent.performance")),i(9),m("",a.attendanceRate,"%"),i(2),r(d(163,109,"aboutStudent.attendance")),i(3),C("--progress",a.attendanceRate),i(7),v("",a.assignmentsCompleted,"/",a.totalAssignments,""),i(4),C("--progress",a.assignmentsCompleted/a.totalAssignments*100),i(7),r(a.enrolledCourses.length),i(2),r(d(186,111,"aboutStudent.ongoingCourses"))}}function G(l,p){if(l&1&&(t(0,"span",61),n(1),e()),l&2){let a=g().$implicit;i(),r(a.grade)}}function K(l,p){if(l&1&&(t(0,"div",58)(1,"div",59)(2,"span",60),n(3),e(),M(4,G,2,1,"span",61),e(),t(5,"h4",62),n(6),e(),t(7,"p",63)(8,"span",4),n(9,"person"),e(),n(10),e(),t(11,"div",64)(12,"span",65)(13,"span",4),n(14,"school"),e(),n(15),e()(),t(16,"div",66)(17,"div",67),b(18,"div",68),e(),t(19,"span",69),n(20),e()()()),l&2){let a=p.$implicit,s=g(2);i(3),r(a.code),i(),f(4,a.grade?4:-1),i(2),r(a.name),i(4),m(" ",a.professor," "),i(5),m(" ",a.credits," Credits "),i(3),C("width",a.progress,"%")("background-color",s.getProgressColor(a.progress)),i(2),m("",a.progress,"% Complete")}}function Y(l,p){if(l&1&&(t(0,"div",33)(1,"div",57),O(2,K,21,10,"div",58,j),e()()),l&2){let a=g();i(2),S(a.enrolledCourses)}}function W(l,p){if(l&1&&(t(0,"div",72)(1,"div",73)(2,"span",4),n(3),e()(),t(4,"div",74)(5,"h4",75),n(6),e(),t(7,"p",76),n(8),e()(),t(9,"span",77),n(10),e()()),l&2){let a=p.$implicit,s=g(2);h(s.getActivityTypeClass(a.type)),i(3),r(a.icon),i(3),r(a.title),i(2),r(a.description),i(2),r(a.date)}}function H(l,p){if(l&1&&(t(0,"div",34)(1,"div",70),O(2,W,11,6,"div",71,j),e()()),l&2){let a=g();i(2),S(a.recentActivity)}}function U(l,p){l&1&&(t(0,"div",35)(1,"div",78)(2,"div",79)(3,"div",80)(4,"span",4),n(5,"description"),e()(),t(6,"div",81)(7,"h4"),n(8,"Admission Letter"),e(),t(9,"p"),n(10,"PDF - 245 KB"),e()(),t(11,"button",82)(12,"span",4),n(13,"download"),e()()(),t(14,"div",79)(15,"div",80)(16,"span",4),n(17,"badge"),e()(),t(18,"div",81)(19,"h4"),n(20,"ID Card"),e(),t(21,"p"),n(22,"PDF - 128 KB"),e()(),t(23,"button",82)(24,"span",4),n(25,"download"),e()()(),t(26,"div",79)(27,"div",80)(28,"span",4),n(29,"receipt_long"),e()(),t(30,"div",81)(31,"h4"),n(32,"Fee Receipt (2024)"),e(),t(33,"p"),n(34,"PDF - 89 KB"),e()(),t(35,"button",82)(36,"span",4),n(37,"download"),e()()(),t(38,"div",79)(39,"div",80)(40,"span",4),n(41,"grading"),e()(),t(42,"div",81)(43,"h4"),n(44,"Transcript"),e(),t(45,"p"),n(46,"PDF - 312 KB"),e()(),t(47,"button",82)(48,"span",4),n(49,"download"),e()()()()())}var ne=(()=>{class l{constructor(){this.route=P(T),this.router=P(D),this.studentId="",this.activeTab=I("overview"),this.student={id:"",firstName:"",lastName:"",email:"",phone:"",dateOfBirth:"",gender:"",bloodGroup:"",nationality:"",religion:"",address:"",city:"",country:"",zipCode:"",profileImage:"assets/images/student-avatar.png",fatherName:"",motherName:"",guardianPhone:"",guardianEmail:"",studentId:"",department:"",batch:"",semester:1,enrollmentDate:"",cgpa:0,totalCredits:0,completedCredits:0,feeStatus:"pending",status:"active"},this.enrolledCourses=[],this.recentActivity=[],this.attendanceRate=0,this.assignmentsCompleted=0,this.totalAssignments=0}ngOnInit(){this.route.params.subscribe(a=>{this.studentId=a.id||"1",this.loadStudentData()})}loadStudentData(){this.student={id:this.studentId,firstName:"Ahmed",lastName:"Mohamed",email:"ahmed.mohamed@university.edu",phone:"+20 123 456 7890",dateOfBirth:"2000-05-15",gender:"Male",bloodGroup:"A+",nationality:"Egyptian",religion:"Islam",address:"123 Main Street, Apt 4B",city:"Cairo",country:"Egypt",zipCode:"11511",profileImage:"assets/images/student-avatar.png",fatherName:"Mohamed Ahmed Ali",motherName:"Fatima Hassan",guardianPhone:"+20 111 222 3333",guardianEmail:"mohamed.ali@email.com",studentId:"STU-2024-001",department:"Computer Science",batch:"2024",semester:3,enrollmentDate:"2022-09-01",cgpa:3.75,totalCredits:120,completedCredits:45,feeStatus:"paid",status:"active"},this.enrolledCourses=[{id:1,code:"CS301",name:"Data Structures & Algorithms",professor:"Dr. Sarah Johnson",credits:4,progress:75,grade:"A"},{id:2,code:"CS302",name:"Database Management Systems",professor:"Prof. Michael Chen",credits:3,progress:60},{id:3,code:"CS303",name:"Web Development",professor:"Dr. Emily Brown",credits:3,progress:85,grade:"A+"},{id:4,code:"MATH201",name:"Linear Algebra",professor:"Prof. Robert Wilson",credits:3,progress:50},{id:5,code:"ENG101",name:"Technical Writing",professor:"Dr. Lisa Anderson",credits:2,progress:90,grade:"A"}],this.recentActivity=[{id:1,type:"assignment",title:"Assignment Submitted",description:'Submitted "Data Structures Lab 5" for CS301',date:"2024-01-15",icon:"assignment_turned_in"},{id:2,type:"exam",title:"Exam Result",description:"Scored 92/100 in CS302 Midterm Exam",date:"2024-01-12",icon:"quiz"},{id:3,type:"attendance",title:"Attendance Marked",description:"Present in all classes today",date:"2024-01-11",icon:"check_circle"},{id:4,type:"fee",title:"Fee Payment",description:"Semester fee payment completed",date:"2024-01-01",icon:"payments"},{id:5,type:"course",title:"Course Enrolled",description:'Enrolled in "Advanced Programming" course',date:"2023-12-20",icon:"school"}],this.attendanceRate=92,this.assignmentsCompleted=18,this.totalAssignments=20}setActiveTab(a){this.activeTab.set(a)}getFullName(){return`${this.student.firstName} ${this.student.lastName}`}getStatusClass(){switch(this.student.status){case"active":return"status--active";case"inactive":return"status--inactive";case"graduated":return"status--graduated";default:return""}}getFeeStatusClass(){switch(this.student.feeStatus){case"paid":return"fee-status--paid";case"pending":return"fee-status--pending";case"partial":return"fee-status--partial";default:return""}}getProgressColor(a){return a>=80?"#22c55e":a>=60?"#3b82f6":a>=40?"#f59e0b":"#ef4444"}getActivityTypeClass(a){return`activity-item--${a}`}onImageError(a){let s=a.target;s.src=`https://ui-avatars.com/api/?name=${this.student.firstName}+${this.student.lastName}&background=6366f1&color=fff&size=150`}editStudent(){this.router.navigate(["/students/edit",this.studentId])}printProfile(){window.print()}goBack(){this.router.navigate(["/students/all"])}calculateAge(){let a=new Date,s=new Date(this.student.dateOfBirth),c=a.getFullYear()-s.getFullYear(),_=a.getMonth()-s.getMonth();return(_<0||_===0&&a.getDate()<s.getDate())&&c--,c}static{this.\u0275fac=function(s){return new(s||l)}}static{this.\u0275cmp=y({type:l,selectors:[["app-about-student"]],standalone:!0,features:[B],decls:118,vars:68,consts:[[1,"about-student"],[1,"about-student__header"],[1,"about-student__header-left"],[1,"back-btn",3,"click"],[1,"material-icons"],[1,"about-student__title-section"],[1,"about-student__title"],[1,"about-student__breadcrumb"],["routerLink","/dashboard"],["routerLink","/students/all"],[1,"about-student__header-actions"],[1,"btn","btn--outline",3,"click"],[1,"btn","btn--primary",3,"click"],[1,"about-student__content"],[1,"profile-card"],[1,"profile-card__header"],[1,"profile-card__avatar"],[3,"error","src","alt"],[1,"profile-card__status"],[1,"profile-card__name"],[1,"profile-card__id"],[1,"profile-card__department"],[1,"profile-card__stats"],[1,"stat-item"],[1,"stat-item__value"],[1,"stat-item__label"],[1,"profile-card__info"],[1,"info-item"],[1,"profile-card__fee-status"],[1,"main-content"],[1,"content-tabs"],[1,"content-tabs__tab",3,"click"],[1,"tab-content"],[1,"courses-section"],[1,"activity-section"],[1,"documents-section"],[1,"overview-grid"],[1,"info-card"],[1,"info-card__title"],[1,"info-card__grid"],[1,"info-field"],[1,"info-field__label"],[1,"info-field__value"],[1,"info-field","info-field--full"],[1,"info-field__value","info-field__value--highlight"],[1,"performance-section"],[1,"performance-section__title"],[1,"performance-cards"],[1,"performance-card"],[1,"performance-card__icon","performance-card__icon--attendance"],[1,"performance-card__info"],[1,"performance-card__value"],[1,"performance-card__label"],[1,"performance-card__progress"],[1,"progress-ring"],[1,"performance-card__icon","performance-card__icon--assignments"],[1,"performance-card__icon","performance-card__icon--courses"],[1,"courses-grid"],[1,"course-card"],[1,"course-card__header"],[1,"course-card__code"],[1,"course-card__grade"],[1,"course-card__name"],[1,"course-card__professor"],[1,"course-card__meta"],[1,"course-card__credits"],[1,"course-card__progress"],[1,"progress-bar"],[1,"progress-bar__fill"],[1,"progress-text"],[1,"activity-list"],[1,"activity-item",3,"class"],[1,"activity-item"],[1,"activity-item__icon"],[1,"activity-item__content"],[1,"activity-item__title"],[1,"activity-item__description"],[1,"activity-item__date"],[1,"documents-grid"],[1,"document-card"],[1,"document-card__icon"],[1,"document-card__info"],[1,"document-card__download"]],template:function(s,c){s&1&&(t(0,"div",0)(1,"div",1)(2,"div",2)(3,"button",3),u("click",function(){return c.goBack()}),t(4,"span",4),n(5,"arrow_back"),e()(),t(6,"div",5)(7,"h1",6),n(8),o(9,"translate"),e(),t(10,"nav",7)(11,"a",8),n(12),o(13,"translate"),e(),t(14,"span"),n(15,"/"),e(),t(16,"a",9),n(17),o(18,"translate"),e(),t(19,"span"),n(20,"/"),e(),t(21,"span"),n(22),e()()()(),t(23,"div",10)(24,"button",11),u("click",function(){return c.printProfile()}),t(25,"span",4),n(26,"print"),e(),n(27),o(28,"translate"),e(),t(29,"button",12),u("click",function(){return c.editStudent()}),t(30,"span",4),n(31,"edit"),e(),n(32),o(33,"translate"),e()()(),t(34,"div",13)(35,"aside",14)(36,"div",15)(37,"div",16)(38,"img",17),u("error",function($){return c.onImageError($)}),e(),b(39,"span",18),e(),t(40,"h2",19),n(41),e(),t(42,"p",20),n(43),e(),t(44,"span",21),n(45),e()(),t(46,"div",22)(47,"div",23)(48,"span",24),n(49),e(),t(50,"span",25),n(51),o(52,"translate"),e()(),t(53,"div",23)(54,"span",24),n(55),e(),t(56,"span",25),n(57),o(58,"translate"),e()(),t(59,"div",23)(60,"span",24),n(61),e(),t(62,"span",25),n(63),o(64,"translate"),e()()(),t(65,"div",26)(66,"div",27)(67,"span",4),n(68,"email"),e(),t(69,"span"),n(70),e()(),t(71,"div",27)(72,"span",4),n(73,"phone"),e(),t(74,"span"),n(75),e()(),t(76,"div",27)(77,"span",4),n(78,"location_on"),e(),t(79,"span"),n(80),e()(),t(81,"div",27)(82,"span",4),n(83,"cake"),e(),t(84,"span"),n(85),e()()(),t(86,"div",28)(87,"span",4),n(88,"account_balance_wallet"),e(),t(89,"span"),n(90),o(91,"translate"),o(92,"titlecase"),e()()(),t(93,"main",29)(94,"div",30)(95,"button",31),u("click",function(){return c.setActiveTab("overview")}),t(96,"span",4),n(97,"person"),e(),n(98," Overview "),e(),t(99,"button",31),u("click",function(){return c.setActiveTab("courses")}),t(100,"span",4),n(101,"school"),e(),n(102),o(103,"translate"),e(),t(104,"button",31),u("click",function(){return c.setActiveTab("activity")}),t(105,"span",4),n(106,"history"),e(),n(107),o(108,"translate"),e(),t(109,"button",31),u("click",function(){return c.setActiveTab("documents")}),t(110,"span",4),n(111,"folder"),e(),n(112," Documents "),e()(),t(113,"div",32),M(114,L,187,113)(115,Y,4,0,"div",33)(116,H,4,0,"div",34)(117,U,50,0,"div",35),e()()()()),s&2&&(i(8),r(d(9,44,"aboutStudent.title")),i(4),r(d(13,46,"nav.dashboard")),i(5),r(d(18,48,"nav.students")),i(5),r(c.getFullName()),i(5),m(" ",d(28,50,"aboutStudent.printProfile")," "),i(5),m(" ",d(33,52,"aboutStudent.editProfile")," "),i(6),w("src",c.student.profileImage,E)("alt",c.getFullName()),i(),h(c.getStatusClass()),i(2),r(c.getFullName()),i(2),r(c.student.studentId),i(2),r(c.student.department),i(4),r(c.student.cgpa),i(2),r(d(52,54,"aboutStudent.cgpa")),i(4),m("",c.attendanceRate,"%"),i(2),r(d(58,56,"aboutStudent.attendance")),i(4),r(c.student.semester),i(2),r(d(64,58,"aboutStudent.semester")),i(7),r(c.student.email),i(5),r(c.student.phone),i(5),v("",c.student.city,", ",c.student.country,""),i(5),v("",c.student.dateOfBirth," (",c.calculateAge()," years)"),i(),h(c.getFeeStatusClass()),i(4),v("",d(91,60,"aboutStudent.feeStatus"),": ",d(92,62,c.student.feeStatus),""),i(5),x("content-tabs__tab--active",c.activeTab()==="overview"),i(4),x("content-tabs__tab--active",c.activeTab()==="courses"),i(3),v(" ",d(103,64,"aboutStudent.enrolledCourses")," (",c.enrolledCourses.length,") "),i(2),x("content-tabs__tab--active",c.activeTab()==="activity"),i(3),m(" ",d(108,66,"aboutStudent.recentActivity")," "),i(2),x("content-tabs__tab--active",c.activeTab()==="documents"),i(5),f(114,c.activeTab()==="overview"?114:-1),i(),f(115,c.activeTab()==="courses"?115:-1),i(),f(116,c.activeTab()==="activity"?116:-1),i(),f(117,c.activeTab()==="documents"?117:-1))},dependencies:[z,A,F,N,R],styles:[`
+
+.about-student[_ngcontent-%COMP%] {
+  padding: 1.5rem;
+  min-height: 100vh;
+}
+.about-student__header[_ngcontent-%COMP%] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.about-student__header-left[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.about-student__title-section[_ngcontent-%COMP%] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.about-student__title[_ngcontent-%COMP%] {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+.about-student__breadcrumb[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+.about-student__breadcrumb[_ngcontent-%COMP%]   a[_ngcontent-%COMP%] {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.about-student__breadcrumb[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]:hover {
+  text-decoration: underline;
+}
+.about-student__breadcrumb[_ngcontent-%COMP%]   span[_ngcontent-%COMP%] {
+  color: var(--text-muted);
+}
+.about-student__header-actions[_ngcontent-%COMP%] {
+  display: flex;
+  gap: 0.75rem;
+}
+.about-student__content[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+}
+@media (max-width: 1024px) {
+  .about-student__content[_ngcontent-%COMP%] {
+    grid-template-columns: 1fr;
+  }
+}
+.back-btn[_ngcontent-%COMP%] {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+}
+.back-btn[_ngcontent-%COMP%]:hover {
+  background: var(--bg-secondary);
+  color: var(--primary-color);
+}
+.profile-card[_ngcontent-%COMP%] {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  height: fit-content;
+  position: sticky;
+  top: 1.5rem;
+}
+@media (max-width: 1024px) {
+  .profile-card[_ngcontent-%COMP%] {
+    position: static;
+  }
+}
+.profile-card__header[_ngcontent-%COMP%] {
+  text-align: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
+}
+.profile-card__avatar[_ngcontent-%COMP%] {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1rem;
+}
+.profile-card__avatar[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--primary-color);
+}
+.profile-card__status[_ngcontent-%COMP%] {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid var(--card-bg);
+}
+.profile-card__status.status--active[_ngcontent-%COMP%] {
+  background: #22c55e;
+}
+.profile-card__status.status--inactive[_ngcontent-%COMP%] {
+  background: #ef4444;
+}
+.profile-card__status.status--graduated[_ngcontent-%COMP%] {
+  background: #3b82f6;
+}
+.profile-card__name[_ngcontent-%COMP%] {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem 0;
+}
+.profile-card__id[_ngcontent-%COMP%] {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.5rem 0;
+}
+.profile-card__department[_ngcontent-%COMP%] {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.profile-card__stats[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
+}
+.profile-card__info[_ngcontent-%COMP%] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.profile-card__fee-status[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.profile-card__fee-status.fee-status--paid[_ngcontent-%COMP%] {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+.profile-card__fee-status.fee-status--pending[_ngcontent-%COMP%] {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+.profile-card__fee-status.fee-status--partial[_ngcontent-%COMP%] {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+.stat-item[_ngcontent-%COMP%] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.stat-item__value[_ngcontent-%COMP%] {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+.stat-item__label[_ngcontent-%COMP%] {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.info-item[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+.info-item[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+}
+.info-item[_ngcontent-%COMP%]   span[_ngcontent-%COMP%]:last-child {
+  word-break: break-word;
+}
+.btn[_ngcontent-%COMP%] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+.btn[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 1.125rem;
+}
+.btn--primary[_ngcontent-%COMP%] {
+  background: var(--primary-color);
+  color: white;
+}
+.btn--primary[_ngcontent-%COMP%]:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+.btn--outline[_ngcontent-%COMP%] {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+.btn--outline[_ngcontent-%COMP%]:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+.main-content[_ngcontent-%COMP%] {
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.content-tabs[_ngcontent-%COMP%] {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 1.5rem;
+  overflow-x: auto;
+}
+.content-tabs__tab[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border: none;
+  background: transparent;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+.content-tabs__tab[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 1.125rem;
+}
+.content-tabs__tab[_ngcontent-%COMP%]:hover {
+  color: var(--text-primary);
+}
+.content-tabs__tab--active[_ngcontent-%COMP%] {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+.content-tabs__tab--active[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  color: var(--primary-color);
+}
+.tab-content[_ngcontent-%COMP%] {
+  padding: 1.5rem;
+}
+.overview-grid[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+  .overview-grid[_ngcontent-%COMP%] {
+    grid-template-columns: 1fr;
+  }
+}
+.info-card[_ngcontent-%COMP%] {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+.info-card__title[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+}
+.info-card__title[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+.info-card__grid[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 576px) {
+  .info-card__grid[_ngcontent-%COMP%] {
+    grid-template-columns: 1fr;
+  }
+}
+.info-field[_ngcontent-%COMP%] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.info-field--full[_ngcontent-%COMP%] {
+  grid-column: 1/-1;
+}
+.info-field__label[_ngcontent-%COMP%] {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+.info-field__value[_ngcontent-%COMP%] {
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+.info-field__value--highlight[_ngcontent-%COMP%] {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+.performance-section__title[_ngcontent-%COMP%] {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+}
+.performance-cards[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 768px) {
+  .performance-cards[_ngcontent-%COMP%] {
+    grid-template-columns: 1fr;
+  }
+}
+.performance-card[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+}
+.performance-card__icon[_ngcontent-%COMP%] {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+.performance-card__icon[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 1.5rem;
+  color: white;
+}
+.performance-card__icon--attendance[_ngcontent-%COMP%] {
+  background:
+    linear-gradient(
+      135deg,
+      #22c55e,
+      #16a34a);
+}
+.performance-card__icon--assignments[_ngcontent-%COMP%] {
+  background:
+    linear-gradient(
+      135deg,
+      #3b82f6,
+      #2563eb);
+}
+.performance-card__icon--courses[_ngcontent-%COMP%] {
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #7c3aed);
+}
+.performance-card__info[_ngcontent-%COMP%] {
+  flex: 1;
+}
+.performance-card__value[_ngcontent-%COMP%] {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.performance-card__label[_ngcontent-%COMP%] {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+.courses-grid[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.course-card[_ngcontent-%COMP%] {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: all 0.2s ease;
+}
+.course-card[_ngcontent-%COMP%]:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.course-card__header[_ngcontent-%COMP%] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.course-card__code[_ngcontent-%COMP%] {
+  padding: 0.25rem 0.5rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.course-card__grade[_ngcontent-%COMP%] {
+  padding: 0.25rem 0.5rem;
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.course-card__name[_ngcontent-%COMP%] {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+}
+.course-card__professor[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem 0;
+}
+.course-card__professor[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 1rem;
+}
+.course-card__meta[_ngcontent-%COMP%] {
+  margin-bottom: 1rem;
+}
+.course-card__credits[_ngcontent-%COMP%] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.course-card__credits[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 0.875rem;
+}
+.course-card__progress[_ngcontent-%COMP%] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.progress-bar[_ngcontent-%COMP%] {
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-bar__fill[_ngcontent-%COMP%] {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+.progress-text[_ngcontent-%COMP%] {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.activity-list[_ngcontent-%COMP%] {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.activity-item[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+.activity-item[_ngcontent-%COMP%]:hover {
+  background: var(--hover-bg);
+}
+.activity-item__icon[_ngcontent-%COMP%] {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.activity-item__icon[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 1.25rem;
+}
+.activity-item--assignment[_ngcontent-%COMP%]   .activity-item__icon[_ngcontent-%COMP%] {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+.activity-item--exam[_ngcontent-%COMP%]   .activity-item__icon[_ngcontent-%COMP%] {
+  background: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+}
+.activity-item--attendance[_ngcontent-%COMP%]   .activity-item__icon[_ngcontent-%COMP%] {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+.activity-item--fee[_ngcontent-%COMP%]   .activity-item__icon[_ngcontent-%COMP%] {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+.activity-item--course[_ngcontent-%COMP%]   .activity-item__icon[_ngcontent-%COMP%] {
+  background: rgba(236, 72, 153, 0.1);
+  color: #ec4899;
+}
+.activity-item__content[_ngcontent-%COMP%] {
+  flex: 1;
+  min-width: 0;
+}
+.activity-item__title[_ngcontent-%COMP%] {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem 0;
+}
+.activity-item__description[_ngcontent-%COMP%] {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+.activity-item__date[_ngcontent-%COMP%] {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.documents-grid[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.document-card[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+.document-card[_ngcontent-%COMP%]:hover {
+  background: var(--hover-bg);
+}
+.document-card__icon[_ngcontent-%COMP%] {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.document-card__icon[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 1.5rem;
+}
+.document-card__info[_ngcontent-%COMP%] {
+  flex: 1;
+  min-width: 0;
+}
+.document-card__info[_ngcontent-%COMP%]   h4[_ngcontent-%COMP%] {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem 0;
+}
+.document-card__info[_ngcontent-%COMP%]   p[_ngcontent-%COMP%] {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+.document-card__download[_ngcontent-%COMP%] {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--card-bg);
+  color: var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.document-card__download[_ngcontent-%COMP%]:hover {
+  background: var(--primary-color);
+  color: white;
+}
+.document-card__download[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  font-size: 1.125rem;
+}
+[dir=rtl][_nghost-%COMP%]   .about-student__breadcrumb[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .about-student__breadcrumb[_ngcontent-%COMP%] {
+  direction: rtl;
+}
+[dir=rtl][_nghost-%COMP%]   .about-student__header-actions[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .about-student__header-actions[_ngcontent-%COMP%] {
+  flex-direction: row-reverse;
+}
+[dir=rtl][_nghost-%COMP%]   .back-btn[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .back-btn[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {
+  transform: rotate(180deg);
+}
+[dir=rtl][_nghost-%COMP%]   .profile-card__avatar[_ngcontent-%COMP%]   .profile-card__status[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .profile-card__avatar[_ngcontent-%COMP%]   .profile-card__status[_ngcontent-%COMP%] {
+  right: auto;
+  left: 8px;
+}
+[dir=rtl][_nghost-%COMP%]   .info-item[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .info-item[_ngcontent-%COMP%] {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+[dir=rtl][_nghost-%COMP%]   .content-tabs[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .content-tabs[_ngcontent-%COMP%] {
+  direction: rtl;
+}
+[dir=rtl][_nghost-%COMP%]   .info-field[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .info-field[_ngcontent-%COMP%] {
+  text-align: right;
+}
+[dir=rtl][_nghost-%COMP%]   .activity-item[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .activity-item[_ngcontent-%COMP%] {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+[dir=rtl][_nghost-%COMP%]   .activity-item__content[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .activity-item__content[_ngcontent-%COMP%] {
+  text-align: right;
+}
+[dir=rtl][_nghost-%COMP%]   .course-card__professor[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .course-card__professor[_ngcontent-%COMP%] {
+  flex-direction: row-reverse;
+}
+[dir=rtl][_nghost-%COMP%]   .course-card__credits[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .course-card__credits[_ngcontent-%COMP%] {
+  flex-direction: row-reverse;
+}
+[dir=rtl][_nghost-%COMP%]   .document-card[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .document-card[_ngcontent-%COMP%] {
+  flex-direction: row-reverse;
+}
+[dir=rtl][_nghost-%COMP%]   .document-card__info[_ngcontent-%COMP%], [dir=rtl]   [_nghost-%COMP%]   .document-card__info[_ngcontent-%COMP%] {
+  text-align: right;
+}
+@media print {
+  .about-student__header-actions[_ngcontent-%COMP%] {
+    display: none;
+  }
+  .back-btn[_ngcontent-%COMP%], .content-tabs[_ngcontent-%COMP%], .document-card__download[_ngcontent-%COMP%] {
+    display: none;
+  }
+  .profile-card[_ngcontent-%COMP%] {
+    position: static;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  .main-content[_ngcontent-%COMP%] {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}`]})}}return l})();export{ne as AboutStudentComponent};
