@@ -1,13 +1,12 @@
 {
   "version": 2,
-  "buildCommand": "npm run vercel-build",
-  "outputDirectory": "dist/education-dashboard/browser",
-  "installCommand": "npm install --legacy-peer-deps",
-  "framework": null,
-  "rewrites": [
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "dist/education-dashboard/browser/**",
+      "use": "@vercel/static"
     }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "dist/education-dashboard/browser/index.html" }
   ]
 }
