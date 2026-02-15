@@ -27,7 +27,7 @@ import {
   ɵɵdefineNgModule,
   ɵɵdefinePipe,
   ɵɵgetInheritedFactory
-} from "./chunk-BMTGMQML.js";
+} from "./chunk-JVV5C5ZQ.js";
 
 // node_modules/@ngx-translate/core/fesm2022/ngx-translate-core.mjs
 function _(key) {
@@ -1264,4 +1264,4 @@ export {
   defaultProviders,
   TranslateModule
 };
-//# sourceMappingURL=chunk-YRENKAM3.js.map
+//# sourceMappingURL=chunk-ABKTYQUL.js.map
