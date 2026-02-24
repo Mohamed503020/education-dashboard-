@@ -21,16 +21,120 @@ export class SidebarService {
   }
 
   toggleMenuItem(itemId: string): void {
-    this.menuItems.update(items => 
-      items.map(item => 
-        item.id === itemId 
+    this.menuItems.update(items =>
+      items.map(item =>
+        item.id === itemId
           ? { ...item, expanded: !item.expanded }
           : item
       )
     );
   }
 
+  refreshMenu(): void {
+    this.menuItems.set(this.getMenuItems());
+  }
+
   private getMenuItems(): MenuItem[] {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const role = user?.role;
+
+    if (role === 'teacher') {
+      return this.getTeacherMenu();
+    }
+    if (role === 'student') {
+      return this.getStudentMenu();
+    }
+    // Admin / default
+    return this.getAdminMenu();
+  }
+
+  private getTeacherMenu(): MenuItem[] {
+    return [
+      {
+        id: 'dashboard',
+        label: 'nav.dashboard',
+        icon: 'dashboard',
+        route: '/dashboard'
+      },
+      {
+        id: 'students',
+        label: 'nav.students',
+        icon: 'people',
+        expanded: false,
+        children: [
+          {
+            id: 'all-students',
+            label: 'nav.allStudents',
+            icon: 'people_outline',
+            route: '/students/all'
+          },
+          {
+            id: 'add-students',
+            label: 'nav.addStudents',
+            icon: 'person_add',
+            route: '/students/add'
+          }
+        ]
+      },
+      {
+        id: 'courses',
+        label: 'nav.courses',
+        icon: 'menu_book',
+        expanded: false,
+        children: [
+          {
+            id: 'all-courses',
+            label: 'All Courses',
+            icon: 'list',
+            route: '/courses/all'
+          },
+          {
+            id: 'add-course',
+            label: 'Add Course',
+            icon: 'add',
+            route: '/courses/add'
+          }
+        ]
+      },
+      {
+        id: 'live',
+        label: 'Live Streams',
+        icon: 'live_tv',
+        route: '/live/manage'
+      }
+    ];
+  }
+
+  private getStudentMenu(): MenuItem[] {
+    return [
+      {
+        id: 'home',
+        label: 'Home',
+        icon: 'home',
+        route: '/student-website'
+      },
+      {
+        id: 'browse',
+        label: 'Browse Courses',
+        icon: 'search',
+        route: '/browse'
+      },
+      {
+        id: 'my-courses',
+        label: 'My Courses',
+        icon: 'menu_book',
+        route: '/courses/all'
+      },
+      {
+        id: 'live',
+        label: 'Live Streams',
+        icon: 'live_tv',
+        route: '/live/active'
+      }
+    ];
+  }
+
+  private getAdminMenu(): MenuItem[] {
     return [
       {
         id: 'dashboard',
@@ -54,7 +158,7 @@ export class SidebarService {
         id: 'students',
         label: 'nav.students',
         icon: 'people',
-        expanded: true,
+        expanded: false,
         children: [
           {
             id: 'all-students',

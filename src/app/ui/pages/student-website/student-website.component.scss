@@ -1,0 +1,179 @@
+.student-website {
+  .hero {
+    background: linear-gradient(135deg, #1565c0, #42a5f5);
+    color: #fff;
+    padding: 3rem 2rem;
+    border-radius: 0 0 20px 20px;
+    text-align: center;
+    margin-bottom: 2rem;
+
+    .hero-content {
+      max-width: 600px;
+      margin: 0 auto;
+      h1 { font-size: 2rem; margin: 0 0 0.5rem; }
+      p { font-size: 1.1rem; opacity: 0.9; margin: 0 0 1.5rem; }
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+
+    &.btn-primary { background: #1976d2; color: #fff; }
+    &.btn-outline { background: transparent; color: #fff; border: 2px solid #fff; }
+    &.btn-danger { background: #d32f2f; color: #fff; }
+    &.btn-sm { padding: 0.4rem 1rem; font-size: 0.82rem; }
+
+    &:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  }
+
+  .section {
+    padding: 0 1.5rem;
+    margin-bottom: 2.5rem;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+
+      h2 {
+        font-size: 1.3rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        .material-icons { font-size: 1.4rem; color: #1976d2; }
+        .pulse { color: #d32f2f; animation: pulse 1.5s infinite; }
+      }
+
+      .view-all {
+        color: #1976d2;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        &:hover { text-decoration: underline; }
+      }
+    }
+  }
+
+  .course-grid, .live-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .course-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+
+    &:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); transform: translateY(-3px); }
+
+    .course-thumb {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      .material-icons { font-size: 3rem; }
+      &.enrolled-thumb { background: linear-gradient(135deg, #2e7d32, #66bb6a); }
+    }
+
+    .course-body {
+      padding: 1rem;
+      flex: 1;
+      h3 { margin: 0 0 0.4rem; font-size: 1rem; }
+      p { margin: 0 0 0.6rem; color: #666; font-size: 0.85rem; line-height: 1.4; }
+      .course-meta {
+        display: flex; gap: 0.4rem; flex-wrap: wrap;
+        .tag {
+          font-size: 0.7rem;
+          padding: 0.15rem 0.5rem;
+          border-radius: 4px;
+          background: #e3f2fd;
+          color: #1565c0;
+          font-weight: 600;
+          &.level { background: #f3e5f5; color: #7b1fa2; }
+        }
+      }
+    }
+
+    .course-footer {
+      padding: 0.8rem 1rem;
+      border-top: 1px solid #f0f0f0;
+    }
+  }
+
+  .live-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-left: 4px solid #d32f2f;
+    transition: all 0.2s;
+
+    &:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #d32f2f;
+      font-weight: 700;
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+      .dot {
+        width: 8px; height: 8px;
+        background: #d32f2f;
+        border-radius: 50%;
+        animation: pulse 1s infinite;
+      }
+    }
+
+    h3 { margin: 0 0 0.3rem; font-size: 1rem; }
+    p { margin: 0 0 0.8rem; color: #666; font-size: 0.85rem; }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 2.5rem;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 2px dashed #e0e0e0;
+    .material-icons { font-size: 3rem; color: #bdbdbd; }
+    p { color: #888; margin: 0.5rem 0 0; }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@media (max-width: 768px) {
+  .student-website {
+    .hero { padding: 2rem 1rem; }
+    .section { padding: 0 1rem; }
+  }
+}

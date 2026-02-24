@@ -1,28 +1,12 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { LanguageService } from '../../../core/services/language.service';
-
-interface Course {
-  id: number;
-  name: string;
-  code: string;
-  department: string;
-  credits: number;
-  professor: string;
-  students: number;
-  maxStudents: number;
-  status: 'active' | 'inactive' | 'upcoming';
-  level: 'beginner' | 'intermediate' | 'advanced';
-  rating: number;
-  lessons: number;
-  duration: string;
-  image: string;
-  color: string;
-  progress?: number;
-}
+import { CourseService, CourseFilter } from '../../../core/services/course.service';
+import { Course } from '../../../core/models/course.model';
+import { AuthService } from '../../../core/services/auth.service';
 
 interface CategoryStat {
   name: string;
@@ -38,187 +22,114 @@ interface CategoryStat {
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss']
 })
-export class CoursesComponent {
+export class CoursesComponent implements OnInit {
   languageService = inject(LanguageService);
+  private courseService = inject(CourseService);
+  private authService = inject(AuthService);
   
   viewMode = signal<'grid' | 'list'>('grid');
   searchQuery = signal<string>('');
-  selectedDepartment = signal<string>('');
+  selectedCategory = signal<string>('');
   selectedLevel = signal<string>('');
 
-  categoryStats: CategoryStat[] = [
-    { name: 'Technology', count: 128, icon: 'computer', color: '#6366f1' },
-    { name: 'Science', count: 86, icon: 'science', color: '#10b981' },
-    { name: 'Business', count: 72, icon: 'business', color: '#f59e0b' },
-    { name: 'Arts', count: 45, icon: 'palette', color: '#ec4899' }
-  ];
+  courses: Course[] = [];
+  categories: string[] = [];
+  isLoading = true;
+  totalCourses = 0;
 
-  courses: Course[] = [
-    { 
-      id: 1, 
-      name: 'Advanced Web Development', 
-      code: 'CS301', 
-      department: 'Computer Science', 
-      credits: 4, 
-      professor: 'Dr. John Smith', 
-      students: 245, 
-      maxStudents: 300,
-      status: 'active',
-      level: 'advanced',
-      rating: 4.9,
-      lessons: 48,
-      duration: '16 weeks',
-      image: 'assets/images/courses/web-dev.jpg',
-      color: '#6366f1',
-      progress: 75
-    },
-    { 
-      id: 2, 
-      name: 'Machine Learning Fundamentals', 
-      code: 'CS401', 
-      department: 'Computer Science', 
-      credits: 4, 
-      professor: 'Dr. Sarah Johnson', 
-      students: 180, 
-      maxStudents: 200,
-      status: 'active',
-      level: 'intermediate',
-      rating: 4.8,
-      lessons: 36,
-      duration: '12 weeks',
-      image: 'assets/images/courses/ml.jpg',
-      color: '#10b981',
-      progress: 60
-    },
-    { 
-      id: 3, 
-      name: 'Data Science with Python', 
-      code: 'CS302', 
-      department: 'Computer Science', 
-      credits: 3, 
-      professor: 'Dr. Michael Brown', 
-      students: 156, 
-      maxStudents: 180,
-      status: 'active',
-      level: 'intermediate',
-      rating: 4.7,
-      lessons: 32,
-      duration: '10 weeks',
-      image: 'assets/images/courses/python.jpg',
-      color: '#f59e0b',
-      progress: 45
-    },
-    { 
-      id: 4, 
-      name: 'Digital Marketing Mastery', 
-      code: 'BUS201', 
-      department: 'Business', 
-      credits: 3, 
-      professor: 'Dr. Emily Davis', 
-      students: 198, 
-      maxStudents: 250,
-      status: 'active',
-      level: 'beginner',
-      rating: 4.6,
-      lessons: 28,
-      duration: '8 weeks',
-      image: 'assets/images/courses/marketing.jpg',
-      color: '#ec4899',
-      progress: 80
-    },
-    { 
-      id: 5, 
-      name: 'UI/UX Design Principles', 
-      code: 'DES101', 
-      department: 'Design', 
-      credits: 3, 
-      professor: 'Dr. Robert Wilson', 
-      students: 142, 
-      maxStudents: 150,
-      status: 'active',
-      level: 'beginner',
-      rating: 4.9,
-      lessons: 24,
-      duration: '8 weeks',
-      image: 'assets/images/courses/uiux.jpg',
-      color: '#8b5cf6',
-      progress: 92
-    },
-    { 
-      id: 6, 
-      name: 'Blockchain Development', 
-      code: 'CS501', 
-      department: 'Computer Science', 
-      credits: 4, 
-      professor: 'Dr. Lisa Anderson', 
-      students: 98, 
-      maxStudents: 120,
-      status: 'upcoming',
-      level: 'advanced',
-      rating: 0,
-      lessons: 40,
-      duration: '14 weeks',
-      image: 'assets/images/courses/blockchain.jpg',
-      color: '#14b8a6'
-    },
-    { 
-      id: 7, 
-      name: 'Financial Analysis', 
-      code: 'FIN301', 
-      department: 'Business', 
-      credits: 3, 
-      professor: 'Dr. James Taylor', 
-      students: 165, 
-      maxStudents: 200,
-      status: 'active',
-      level: 'intermediate',
-      rating: 4.5,
-      lessons: 30,
-      duration: '10 weeks',
-      image: 'assets/images/courses/finance.jpg',
-      color: '#22c55e',
-      progress: 55
-    },
-    { 
-      id: 8, 
-      name: 'Creative Writing Workshop', 
-      code: 'ENG201', 
-      department: 'Arts', 
-      credits: 2, 
-      professor: 'Dr. Maria Garcia', 
-      students: 78, 
-      maxStudents: 100,
-      status: 'active',
-      level: 'beginner',
-      rating: 4.7,
-      lessons: 20,
-      duration: '6 weeks',
-      image: 'assets/images/courses/writing.jpg',
-      color: '#ef4444',
-      progress: 88
-    }
-  ];
+  categoryStats: CategoryStat[] = [];
 
-  departments = ['Computer Science', 'Business', 'Design', 'Arts', 'Science'];
   levels = ['beginner', 'intermediate', 'advanced'];
+
+  // Color palette for categories
+  private categoryColors: { [key: string]: { icon: string; color: string } } = {
+    'Technology': { icon: 'computer', color: '#6366f1' },
+    'Science': { icon: 'science', color: '#10b981' },
+    'Business': { icon: 'business', color: '#f59e0b' },
+    'Arts': { icon: 'palette', color: '#ec4899' },
+    'Design': { icon: 'design_services', color: '#8b5cf6' },
+  };
+  private defaultCatStyle = { icon: 'category', color: '#64748b' };
+
+  ngOnInit(): void {
+    this.loadCourses();
+    this.loadCategories();
+  }
+
+  loadCourses(): void {
+    this.isLoading = true;
+    const filter: CourseFilter = {};
+    if (this.searchQuery()) filter.search = this.searchQuery();
+    if (this.selectedCategory()) filter.category = this.selectedCategory();
+    if (this.selectedLevel()) filter.level = this.selectedLevel();
+    filter.limit = 50;
+
+    this.courseService.getCourses(filter).subscribe({
+      next: (res) => {
+        this.courses = res.courses || [];
+        this.totalCourses = res.total || this.courses.length;
+        this.isLoading = false;
+        this.buildCategoryStats();
+      },
+      error: () => {
+        this.courses = [];
+        this.isLoading = false;
+      }
+    });
+  }
+
+  loadCategories(): void {
+    // Derive categories from loaded courses, or use a static fallback
+    this.courseService.getCourses({ limit: 100 }).subscribe({
+      next: (res) => {
+        const cats = new Set<string>();
+        (res.courses || []).forEach(c => { if (c.category) cats.add(c.category); });
+        this.categories = Array.from(cats);
+      },
+      error: () => { this.categories = []; }
+    });
+  }
+
+  private buildCategoryStats(): void {
+    const map = new Map<string, number>();
+    this.courses.forEach(c => {
+      const cat = c.category || 'Other';
+      map.set(cat, (map.get(cat) || 0) + 1);
+    });
+    this.categoryStats = Array.from(map.entries()).map(([name, count]) => {
+      const style = this.categoryColors[name] || this.defaultCatStyle;
+      return { name, count, icon: style.icon, color: style.color };
+    });
+  }
+
+  onSearch(): void {
+    this.loadCourses();
+  }
 
   setViewMode(mode: 'grid' | 'list'): void {
     this.viewMode.set(mode);
   }
 
   get filteredCourses(): Course[] {
-    return this.courses.filter(course => {
-      const matchesSearch = !this.searchQuery() || 
-        course.name.toLowerCase().includes(this.searchQuery().toLowerCase()) ||
-        course.code.toLowerCase().includes(this.searchQuery().toLowerCase());
-      const matchesDept = !this.selectedDepartment() || course.department === this.selectedDepartment();
-      const matchesLevel = !this.selectedLevel() || course.level === this.selectedLevel();
-      return matchesSearch && matchesDept && matchesLevel;
-    });
+    // Filtering is done server-side, but we can still do local text filter for instant UX
+    return this.courses;
   }
 
-  getEnrollmentPercentage(course: Course): number {
-    return Math.round((course.students / course.maxStudents) * 100);
+  getTeacherName(course: Course): string {
+    if (typeof course.teacher === 'object' && course.teacher) {
+      return (course.teacher as any).firstName + ' ' + (course.teacher as any).lastName;
+    }
+    return 'Teacher';
+  }
+
+  getEnrollmentCount(course: Course): number {
+    return course.enrolledStudents.length || course.enrollmentCount || 0;
+  }
+
+  getCourseColor(course: Course): string {
+    const colors = ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#14b8a6', '#22c55e', '#ef4444'];
+    const idx = course.title ? course.title.charCodeAt(0) % colors.length : 0;
+    return colors[idx];
   }
 
   getLevelBadgeClass(level: string): string {
@@ -232,10 +143,23 @@ export class CoursesComponent {
 
   getStatusClass(status: string): string {
     const classes: { [key: string]: string } = {
-      'active': 'status-badge--active',
-      'inactive': 'status-badge--inactive',
-      'upcoming': 'status-badge--upcoming'
+      'published': 'status-badge--active',
+      'draft': 'status-badge--inactive',
+      'archived': 'status-badge--upcoming'
     };
     return classes[status] || '';
+  }
+
+  deleteCourse(id: string): void {
+    if (confirm('Are you sure you want to delete this course?')) {
+      this.courseService.deleteCourse(id).subscribe({
+        next: () => this.loadCourses(),
+        error: (err) => alert('Failed to delete course: ' + (err.error?.message || 'Unknown error'))
+      });
+    }
+  }
+
+  get isTeacher(): boolean {
+    return this.authService.isTeacher();
   }
 }

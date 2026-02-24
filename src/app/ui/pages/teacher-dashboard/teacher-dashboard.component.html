@@ -1,0 +1,97 @@
+<div class="teacher-dashboard">
+  <!-- Welcome Header -->
+  <div class="welcome-banner">
+    <div class="welcome-text">
+      <h1>Welcome back, {{ user?.firstName || 'Teacher' }}!</h1>
+      <p>Manage your courses, students and live streams from here.</p>
+    </div>
+    <div class="quick-stats">
+      <div class="stat-card">
+        <span class="material-icons">menu_book</span>
+        <div class="stat-info">
+          <span class="stat-number">{{ courses.length }}</span>
+          <span class="stat-label">Courses</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="material-icons">live_tv</span>
+        <div class="stat-info">
+          <span class="stat-number">{{ liveStreams.length }}</span>
+          <span class="stat-label">Live Streams</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <section class="quick-actions">
+    <a [routerLink]="['/courses/add']" class="action-btn primary">
+      <span class="material-icons">add</span> Add New Course
+    </a>
+    <a [routerLink]="['/live/manage']" class="action-btn success">
+      <span class="material-icons">videocam</span> Start Live Stream
+    </a>
+    <a [routerLink]="['/students/add']" class="action-btn info">
+      <span class="material-icons">person_add</span> Add Student
+    </a>
+  </section>
+
+  <!-- Courses Section -->
+  <section class="dashboard-section">
+    <div class="section-header">
+      <h2><span class="material-icons">menu_book</span> Your Courses</h2>
+      <a [routerLink]="['/courses/all']" class="view-all">View All →</a>
+    </div>
+    <div class="cards-grid" *ngIf="courses.length > 0">
+      <div *ngFor="let course of courses" class="course-card">
+        <div class="card-header" [style.background-color]="'#1976d2'">
+          <span class="material-icons">menu_book</span>
+        </div>
+        <div class="card-body">
+          <h3>{{ course.title }}</h3>
+          <p class="card-desc">{{ course.description | slice:0:80 }}{{ course.description?.length > 80 ? '...' : '' }}</p>
+          <div class="card-meta">
+            <span class="badge">{{ course.status || 'draft' }}</span>
+            <span class="badge secondary">{{ course.level || 'All Levels' }}</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a [routerLink]="['/courses', course._id]" class="card-link">View Details</a>
+        </div>
+      </div>
+    </div>
+    <div class="empty-state" *ngIf="courses.length === 0">
+      <span class="material-icons">school</span>
+      <p>No courses yet. <a [routerLink]="['/courses/add']">Create your first course</a></p>
+    </div>
+  </section>
+
+  <!-- Live Streams Section -->
+  <section class="dashboard-section">
+    <div class="section-header">
+      <h2><span class="material-icons">live_tv</span> Live Streams</h2>
+      <a [routerLink]="['/live/manage']" class="view-all">Manage →</a>
+    </div>
+    <div class="cards-grid" *ngIf="liveStreams.length > 0">
+      <div *ngFor="let stream of liveStreams" class="stream-card">
+        <div class="card-header" [ngClass]="{'live': stream.status === 'live', 'scheduled': stream.status === 'scheduled', 'ended': stream.status === 'ended'}">
+          <span class="material-icons">{{ stream.status === 'live' ? 'sensors' : 'videocam' }}</span>
+          <span class="status-badge">{{ stream.status | uppercase }}</span>
+        </div>
+        <div class="card-body">
+          <h3>{{ stream.title }}</h3>
+          <p class="card-desc">{{ stream.description | slice:0:60 }}</p>
+        </div>
+        <div class="card-footer">
+          <a [routerLink]="['/live', stream._id]" class="card-link">
+            {{ stream.status === 'live' ? 'Join Now' : 'View Details' }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="empty-state" *ngIf="liveStreams.length === 0">
+      <span class="material-icons">videocam_off</span>
+      <p>No live streams yet. <a [routerLink]="['/live/manage']">Create one now</a></p>
+    </div>
+  </section>
+</div>

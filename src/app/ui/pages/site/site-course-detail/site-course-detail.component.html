@@ -1,0 +1,169 @@
+@if (loading) {
+  <div class="loading-state" dir="rtl">
+    <div class="spinner"></div>
+    <p>جاري تحميل الكورس...</p>
+  </div>
+} @else if (course) {
+  <div class="course-detail" dir="rtl">
+    <!-- Course Header -->
+    <section class="course-hero" [attr.data-stage]="course.stage">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-info">
+            @if (course.stage) {
+              <span class="stage-badge">{{ getStageName(course.stage) }}</span>
+            }
+            <h1>{{ course.title }}</h1>
+            <p class="course-desc">{{ course.description }}</p>
+            <div class="course-meta">
+              <div class="meta-item">
+                <span class="meta-icon">👨‍🏫</span>
+                <span>{{ getTeacherName() }}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">📖</span>
+                <span>{{ course.materials.length || 0 }} درس</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">👥</span>
+                <span>{{ course.enrollmentCount || 0 }} طالب مسجل</span>
+              </div>
+              @if (course.grade) {
+                <div class="meta-item">
+                  <span class="meta-icon">🏫</span>
+                  <span>{{ getGradeName(course.grade) }}</span>
+                </div>
+              }
+            </div>
+            <div class="hero-actions">
+              @if (isEnrolled) {
+                <a [routerLink]="['/site/learn', course._id]" class="btn btn-lg btn-primary">🎬 ابدأ التعلم</a>
+                <span class="enrolled-badge">✅ أنت مسجل في هذا الكورس</span>
+              } @else {
+                <button class="btn btn-lg btn-accent" (click)="enroll()" [disabled]="enrolling">
+                  {{ enrolling ? 'جاري التسجيل...' : 'سجّل في الكورس' }}
+                </button>
+              }
+              <div class="price-tag">
+                @if (course.isFree || course.price === 0) {
+                  <span class="free">مجاني</span>
+                } @else {
+                  <span>{{ course.price }} جنيه</span>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="hero-thumb">
+            @if (course.thumbnail) {
+              <img [src]="course.thumbnail" [alt]="course.title">
+            } @else {
+              <div class="thumb-placeholder">📚</div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="course-content">
+      <div class="container">
+        <div class="content-grid">
+          <!-- Materials -->
+          <div class="main-content">
+            <div class="content-card">
+              <h2>📖 محتوى الكورس</h2>
+              @if (course.materials.length) {
+                <div class="materials-list">
+                  @for (material of course.materials; track material._id; let i = $index) {
+                    <div class="material-item" [class.locked]="!isEnrolled">
+                      <div class="material-num">{{ i + 1 }}</div>
+                      <div class="material-info">
+                        <h4>{{ material.title }}</h4>
+                        @if (material.description) {
+                          <p>{{ material.description }}</p>
+                        }
+                      </div>
+                      <div class="material-type">
+                        @switch (material.type) {
+                          @case ('video') { <span>🎥</span> }
+                          @case ('pdf') { <span>📄</span> }
+                          @case ('assignment') { <span>📝</span> }
+                        }
+                      </div>
+                      @if (!isEnrolled) {
+                        <span class="lock-icon">🔒</span>
+                      }
+                    </div>
+                  }
+                </div>
+              } @else {
+                <p class="empty-text">سيتم إضافة المحتوى قريباً</p>
+              }
+            </div>
+
+            <!-- Exams -->
+            @if (exams.length > 0) {
+              <div class="content-card">
+                <h2>📝 الامتحانات</h2>
+                <div class="exams-list">
+                  @for (exam of exams; track exam._id) {
+                    <div class="exam-item">
+                      <div class="exam-info">
+                        <h4>{{ exam.title }}</h4>
+                        @if (exam.description) {
+                          <p>{{ exam.description }}</p>
+                        }
+                        <div class="exam-meta">
+                          <span>📋 {{ exam.questions.length || 0 }} سؤال</span>
+                          <span>⏱ {{ exam.timeLimit }} دقيقة</span>
+                          <span>✅ درجة النجاح: {{ exam.passingScore }}%</span>
+                        </div>
+                      </div>
+                      @if (isEnrolled) {
+                        <a [routerLink]="['/site/exam', exam._id]" class="btn btn-sm btn-primary">ابدأ الامتحان</a>
+                      } @else {
+                        <span class="lock-text">سجّل أولاً</span>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Sidebar -->
+          <div class="side-content">
+            <div class="info-card">
+              <h3>معلومات الكورس</h3>
+              <ul>
+                @if (course.stage) {
+                  <li><span>المرحلة</span><span>{{ getStageName(course.stage) }}</span></li>
+                }
+                @if (course.grade) {
+                  <li><span>الصف</span><span>{{ getGradeName(course.grade) }}</span></li>
+                }
+                <li><span>عدد الدروس</span><span>{{ course.materials.length || 0 }}</span></li>
+                <li><span>عدد الطلاب</span><span>{{ course.enrollmentCount || 0 }}</span></li>
+                @if (course.duration) {
+                  <li><span>المدة</span><span>{{ course.duration }} دقيقة</span></li>
+                }
+                @if (exams.length > 0) {
+                  <li><span>الامتحانات</span><span>{{ exams.length }}</span></li>
+                }
+              </ul>
+            </div>
+
+            @if (!isEnrolled) {
+              <div class="cta-card">
+                <p>سجّل في الكورس الآن وابدأ التعلم</p>
+                <button class="btn btn-accent btn-block" (click)="enroll()" [disabled]="enrolling">
+                  {{ enrolling ? 'جاري التسجيل...' : 'سجّل الآن' }}
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+}

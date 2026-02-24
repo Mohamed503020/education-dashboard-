@@ -6,6 +6,22 @@
     </div>
   </div>
 
+  <!-- User Profile Section -->
+  <div class="sidebar__user" *ngIf="isLoggedIn && !isCollapsed">
+    <div class="sidebar__user-avatar">
+      <span class="material-icons">account_circle</span>
+    </div>
+    <div class="sidebar__user-info">
+      <span class="sidebar__user-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</span>
+      <span class="sidebar__user-role">{{ currentUser?.role | titlecase }}</span>
+    </div>
+  </div>
+  <div class="sidebar__user sidebar__user--collapsed" *ngIf="isLoggedIn && isCollapsed">
+    <div class="sidebar__user-avatar sidebar__user-avatar--small">
+      <span class="material-icons">account_circle</span>
+    </div>
+  </div>
+
   <div class="sidebar__menu-label" *ngIf="!isCollapsed">
     {{ 'nav.mainMenu' | translate }}
   </div>
@@ -24,8 +40,13 @@
       <span class="material-icons">headset_mic</span>
       <span *ngIf="!isCollapsed">{{ 'nav.support' | translate }}</span>
     </button>
-    <button class="sidebar__footer-btn">
-      <span class="material-icons">shopping_cart</span>
+    <button class="sidebar__footer-btn" *ngIf="!isCollapsed">
+      <span class="material-icons">settings</span>
+      <span>Settings</span>
+    </button>
+    <button class="sidebar__footer-btn sidebar__footer-btn--logout" *ngIf="isLoggedIn" (click)="logout()">
+      <span class="material-icons">logout</span>
+      <span *ngIf="!isCollapsed">Logout</span>
     </button>
   </div>
 </aside>

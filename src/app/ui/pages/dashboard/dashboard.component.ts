@@ -1,7 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { LanguageService } from '../../../core/services/language.service';
+import { CourseService } from '../../../core/services/course.service';
+import { StudentService } from '../../../core/services/student.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,14 +12,16 @@ import { LanguageService } from '../../../core/services/language.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   languageService = inject(LanguageService);
+  private courseService = inject(CourseService);
+  private studentService = inject(StudentService);
 
   stats = [
-    { icon: 'people', value: '2,450', label: 'dashboard.totalStudents', color: 'primary' },
-    { icon: 'school', value: '150', label: 'dashboard.professors', color: 'success' },
-    { icon: 'menu_book', value: '85', label: 'dashboard.courses', color: 'warning' },
-    { icon: 'apartment', value: '12', label: 'dashboard.departments', color: 'info' }
+    { icon: 'people', value: '...', label: 'dashboard.totalStudents', color: 'primary' },
+    { icon: 'school', value: '...', label: 'dashboard.professors', color: 'success' },
+    { icon: 'menu_book', value: '0', label: 'dashboard.courses', color: 'warning' },
+    { icon: 'apartment', value: '0', label: 'dashboard.departments', color: 'info' }
   ];
 
   recentActivities = [
@@ -34,4 +38,30 @@ export class DashboardComponent {
     { title: 'Parent Meeting', date: 'Mar 25, 2024', type: 'Meeting' },
     { title: 'Cultural Festival', date: 'Apr 01, 2024', type: 'Cultural' }
   ];
+
+  ngOnInit(): void {
+    this.loadDynamicStats();
+  }
+
+  private loadDynamicStats(): void {
+    // Load course count and categories dynamically
+    this.courseService.getCourses({ limit: 200 }).subscribe({
+      next: (res) => {
+        const totalCourses = res.total || res.courses?.length || 0;
+        const categories = new Set<string>();
+        (res.courses || []).forEach(c => { if (c.category) categories.add(c.category); });
+        
+        this.stats[2].value = totalCourses.toString();
+        this.stats[3].value = categories.size.toString();
+
+        // Count enrolled students across all courses
+        let totalStudents = new Set<string>();
+        (res.courses || []).forEach(c => {
+          (c.enrolledStudents || []).forEach(s => totalStudents.add(s));
+        });
+        this.stats[0].value = totalStudents.size > 0 ? totalStudents.size.toLocaleString() : '0';
+      },
+      error: () => { /* keep defaults */ }
+    });
+  }
 }

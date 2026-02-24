@@ -1,15 +1,21 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { MainLayoutComponent } from './ui/templates/main-layout/main-layout.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MainLayoutComponent],
+  imports: [RouterOutlet, MainLayoutComponent, CommonModule],
   template: `
-    <app-main-layout>
+    @if (isWebsiteRoute) {
       <router-outlet></router-outlet>
-    </app-main-layout>
+    } @else {
+      <app-main-layout>
+        <router-outlet></router-outlet>
+      </app-main-layout>
+    }
   `,
   styles: [`
     :host {
@@ -19,5 +25,22 @@ import { MainLayoutComponent } from './ui/templates/main-layout/main-layout.comp
   `]
 })
 export class AppComponent {
-  title = 'EDUMIN - Education Dashboard';
+  title = 'أستاذ اللغة العربية';
+  isWebsiteRoute = false;
+
+  private router = inject(Router);
+
+  private websiteRoutes = [
+    '/site',
+    '/login',
+    '/register',
+  ];
+
+  constructor() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.isWebsiteRoute = this.websiteRoutes.some(r => event.urlAfterRedirects.startsWith(r));
+    });
+  }
 }

@@ -1,0 +1,196 @@
+<div class="course-viewer" [class.sidebar-closed]="!sidebarOpen">
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-screen">
+      <div class="spinner"></div>
+      <p>جاري تحميل المحتوى...</p>
+    </div>
+  }
+
+  @if (!loading && course) {
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-right">
+        <button class="btn-icon" (click)="toggleSidebar()" title="القائمة الجانبية">
+          <span>☰</span>
+        </button>
+        <a [routerLink]="['/site/course', course._id]" class="back-link">
+          <span>→</span>
+          <span class="course-title-bar">{{ course.title }}</span>
+        </a>
+      </div>
+      <div class="top-bar-left">
+        <div class="progress-info">
+          <span class="progress-text">{{ activeIndex + 1 }} / {{ materials.length }}</span>
+          <div class="progress-bar-mini">
+            <div class="progress-fill" [style.width.%]="progressPercent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewer-body">
+      <!-- Sidebar -->
+      <aside class="sidebar" [class.open]="sidebarOpen">
+        <div class="sidebar-tabs">
+          <button [class.active]="activeTab === 'lessons'" (click)="activeTab = 'lessons'">
+            📚 المحتوى
+          </button>
+          <button [class.active]="activeTab === 'exams'" (click)="activeTab = 'exams'">
+            📝 الاختبارات
+          </button>
+        </div>
+
+        @if (activeTab === 'lessons') {
+          <div class="materials-list">
+            @for (material of materials; track material._id; let i = $index) {
+              <div
+                class="material-entry"
+                [class.active]="activeMaterial?._id === material._id"
+                [class.completed]="i < activeIndex"
+                (click)="selectMaterial(material)"
+              >
+                <div class="entry-number">{{ i + 1 }}</div>
+                <div class="entry-info">
+                  <div class="entry-title">{{ material.title }}</div>
+                  <div class="entry-meta">
+                    <span class="entry-type">{{ getMaterialIcon(material.type) }} {{ getTypeName(material.type) }}</span>
+                    @if (material.duration) {
+                      <span class="entry-duration">{{ formatDuration(material.duration) }}</span>
+                    }
+                  </div>
+                </div>
+                @if (i < activeIndex) {
+                  <span class="check-mark">✓</span>
+                }
+              </div>
+            }
+
+            @if (materials.length === 0) {
+              <div class="empty-list">
+                <span>📭</span>
+                <p>لا يوجد محتوى متاح حالياً</p>
+              </div>
+            }
+          </div>
+        }
+
+        @if (activeTab === 'exams') {
+          <div class="exams-list">
+            @for (exam of exams; track exam._id) {
+              <a [routerLink]="['/site/exam', exam._id]" class="exam-entry">
+                <span class="exam-icon">📋</span>
+                <div class="exam-info">
+                  <div class="exam-title">{{ exam.title }}</div>
+                  <div class="exam-meta">
+                    <span>{{ exam.questions.length || 0 }} سؤال</span>
+                    <span>{{ exam.timeLimit }} دقيقة</span>
+                  </div>
+                </div>
+              </a>
+            }
+
+            @if (exams.length === 0) {
+              <div class="empty-list">
+                <span>📭</span>
+                <p>لا يوجد اختبارات</p>
+              </div>
+            }
+          </div>
+        }
+      </aside>
+
+      <!-- Main Content -->
+      <main class="content-area">
+        @if (activeMaterial) {
+          <!-- Video Player -->
+          @if (activeMaterial.type === 'video') {
+            <div class="video-wrapper">
+              <video
+                controls
+                autoplay
+                [src]="materialFileUrl"
+                class="video-player"
+                controlsList="nodownload"
+              >
+                متصفحك لا يدعم تشغيل الفيديو
+              </video>
+            </div>
+          }
+
+          <!-- PDF Viewer -->
+          @if (activeMaterial.type === 'pdf') {
+            <div class="pdf-wrapper">
+              <div class="pdf-toolbar">
+                <span class="pdf-name">📄 {{ activeMaterial.title }}</span>
+                <button class="btn-download" (click)="downloadFile()">
+                  ⬇ تحميل الملف
+                </button>
+              </div>
+              <iframe
+                [src]="safePdfUrl"
+                class="pdf-viewer"
+                type="application/pdf"
+              ></iframe>
+            </div>
+          }
+
+          <!-- Assignment / Document / Link -->
+          @if (activeMaterial.type !== 'video' && activeMaterial.type !== 'pdf') {
+            <div class="generic-content">
+              <div class="content-icon">{{ getMaterialIcon(activeMaterial.type) }}</div>
+              <h2>{{ activeMaterial.title }}</h2>
+              @if (activeMaterial.description) {
+                <p class="content-desc">{{ activeMaterial.description }}</p>
+              }
+              @if (activeMaterial.fileUrl) {
+                <button class="btn-primary" (click)="downloadFile()">
+                  ⬇ تحميل الملف
+                </button>
+              }
+            </div>
+          }
+
+          <!-- Material Info Section -->
+          <div class="material-info">
+            <div class="info-header">
+              <h2>{{ activeMaterial.title }}</h2>
+              <span class="type-badge">{{ getTypeName(activeMaterial.type) }}</span>
+            </div>
+            @if (activeMaterial.description) {
+              <p class="description">{{ activeMaterial.description }}</p>
+            }
+            <div class="teacher-info">
+              <span>👨‍🏫 {{ getTeacherName() }}</span>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="navigation-bar">
+            <button
+              class="nav-btn prev"
+              [disabled]="!hasPrev"
+              (click)="prevMaterial()"
+            >
+              <span>→</span> الدرس السابق
+            </button>
+            <button
+              class="nav-btn next"
+              [disabled]="!hasNext"
+              (click)="nextMaterial()"
+            >
+              الدرس التالي <span>←</span>
+            </button>
+          </div>
+        } @else {
+          <!-- No material selected -->
+          <div class="no-content">
+            <div class="no-content-icon">📚</div>
+            <h2>مرحباً بك في الدورة</h2>
+            <p>اختر درساً من القائمة الجانبية للبدء</p>
+          </div>
+        }
+      </main>
+    </div>
+  }
+</div>

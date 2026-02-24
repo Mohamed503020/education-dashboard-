@@ -22,26 +22,55 @@
     </button>
     
     <button class="header__icon-btn header__icon-btn--badge">
-      <span class="material-icons">shopping_cart</span>
-      <span class="header__badge">19</span>
-    </button>
-    
-    <button class="header__icon-btn header__icon-btn--badge">
       <span class="material-icons">notifications</span>
       <span class="header__badge">5</span>
     </button>
-    
-    <button class="header__icon-btn header__icon-btn--badge">
-      <span class="material-icons">chat</span>
-      <span class="header__badge">3</span>
-    </button>
 
-    <div class="header__user">
-      <app-avatar
-        src="assets/images/avatars/user.jpg"
-        alt="User"
-        size="sm"
-      ></app-avatar>
-    </div>
+    <!-- User Menu -->
+    @if (isLoggedIn) {
+      <div class="header__user-menu" (clickOutside)="closeUserMenu()">
+        <button class="header__user-btn" (click)="toggleUserMenu()">
+          <div class="header__user-avatar">
+            <span class="material-icons">person</span>
+          </div>
+          <span class="header__user-name">{{ currentUser?.firstName || 'User' }}</span>
+          <span class="material-icons header__user-arrow">{{ showUserMenu ? 'expand_less' : 'expand_more' }}</span>
+        </button>
+        
+        @if (showUserMenu) {
+          <div class="header__dropdown">
+            <div class="header__dropdown-header">
+              <div class="header__dropdown-avatar">
+                <span class="material-icons">account_circle</span>
+              </div>
+              <div class="header__dropdown-info">
+                <span class="header__dropdown-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</span>
+                <span class="header__dropdown-email">{{ currentUser?.email }}</span>
+                <span class="header__dropdown-role">{{ currentUser?.role | titlecase }}</span>
+              </div>
+            </div>
+            <div class="header__dropdown-divider"></div>
+            <a class="header__dropdown-item" routerLink="/profile" (click)="closeUserMenu()">
+              <span class="material-icons">person</span>
+              Profile
+            </a>
+            <a class="header__dropdown-item" routerLink="/settings" (click)="closeUserMenu()">
+              <span class="material-icons">settings</span>
+              Settings
+            </a>
+            <div class="header__dropdown-divider"></div>
+            <button class="header__dropdown-item header__dropdown-item--logout" (click)="logout()">
+              <span class="material-icons">logout</span>
+              Logout
+            </button>
+          </div>
+        }
+      </div>
+    } @else {
+      <a routerLink="/auth/login" class="header__login-btn">
+        <span class="material-icons">login</span>
+        Login
+      </a>
+    }
   </div>
 </header>

@@ -1,0 +1,81 @@
+<div class="student-website">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome{{ user ? ', ' + user.firstName : '' }}!</h1>
+      <p>Explore courses, join live streams, and advance your learning.</p>
+      <div class="hero-actions">
+        <a routerLink="/browse" class="btn btn-primary">Browse Courses</a>
+        <a routerLink="/courses/all" class="btn btn-outline" *ngIf="user">My Courses</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Streams Banner -->
+  <section class="section live-section" *ngIf="activeLiveStreams.length > 0">
+    <div class="section-header">
+      <h2><span class="material-icons pulse">sensors</span> Live Now</h2>
+    </div>
+    <div class="live-grid">
+      <div *ngFor="let stream of activeLiveStreams" class="live-card">
+        <div class="live-indicator">
+          <span class="dot"></span> LIVE
+        </div>
+        <h3>{{ stream.title }}</h3>
+        <p>{{ stream.description | slice:0:80 }}</p>
+        <a [routerLink]="['/live', stream._id]" class="btn btn-danger">Join Stream</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Courses -->
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="material-icons">star</span> Featured Courses</h2>
+      <a routerLink="/browse" class="view-all">View All →</a>
+    </div>
+    <div class="course-grid" *ngIf="publishedCourses.length > 0">
+      <div *ngFor="let course of publishedCourses" class="course-card">
+        <div class="course-thumb" [style.background-color]="'#' + (course._id || '1976d2').slice(-6)">
+          <span class="material-icons">menu_book</span>
+        </div>
+        <div class="course-body">
+          <h3>{{ course.title }}</h3>
+          <p>{{ course.description | slice:0:100 }}{{ course.description?.length > 100 ? '...' : '' }}</p>
+          <div class="course-meta">
+            <span class="tag">{{ course.category || 'General' }}</span>
+            <span class="tag level">{{ course.level || 'All Levels' }}</span>
+          </div>
+        </div>
+        <div class="course-footer">
+          <a [routerLink]="['/browse', course._id]" class="btn btn-sm">Learn More</a>
+        </div>
+      </div>
+    </div>
+    <div class="empty-state" *ngIf="publishedCourses.length === 0">
+      <span class="material-icons">school</span>
+      <p>No courses available yet. Check back soon!</p>
+    </div>
+  </section>
+
+  <!-- My Enrolled Courses -->
+  <section class="section" *ngIf="user && enrolledCourses.length > 0">
+    <div class="section-header">
+      <h2><span class="material-icons">bookmark</span> My Enrolled Courses</h2>
+    </div>
+    <div class="course-grid">
+      <div *ngFor="let course of enrolledCourses" class="course-card enrolled">
+        <div class="course-thumb enrolled-thumb">
+          <span class="material-icons">play_circle</span>
+        </div>
+        <div class="course-body">
+          <h3>{{ course.title }}</h3>
+          <p>{{ course.description | slice:0:80 }}</p>
+        </div>
+        <div class="course-footer">
+          <a [routerLink]="['/courses', course._id]" class="btn btn-sm btn-primary">Continue Learning</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

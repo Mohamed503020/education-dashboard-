@@ -1,13 +1,13 @@
-<div class="add-course">
+<div class="add-course" [dir]="languageService.direction">
   <div class="add-course__header">
     <div class="add-course__title-section">
-      <h1 class="add-course__title">{{ 'courses.addNew' | translate }}</h1>
+      <h1 class="add-course__title">إضافة كورس جديد</h1>
       <nav class="add-course__breadcrumb">
-        <a routerLink="/dashboard">{{ 'nav.dashboard' | translate }}</a>
+        <a routerLink="/dashboard">لوحة التحكم</a>
         <span>/</span>
-        <a routerLink="/courses/all">{{ 'nav.courses' | translate }}</a>
+        <a routerLink="/courses/all">الكورسات</a>
         <span>/</span>
-        <span>{{ 'courses.addNew' | translate }}</span>
+        <span>إضافة كورس</span>
       </nav>
     </div>
   </div>
@@ -22,7 +22,7 @@
         type="button"
       >
         <span class="material-icons">info</span>
-        Course Info
+        معلومات الكورس
       </button>
       <button 
         class="section-tabs__tab"
@@ -31,7 +31,7 @@
         type="button"
       >
         <span class="material-icons">menu_book</span>
-        Lessons ({{ lessons.length }})
+        الدروس ({{ lessons.length }})
       </button>
       <button 
         class="section-tabs__tab"
@@ -40,7 +40,7 @@
         type="button"
       >
         <span class="material-icons">videocam</span>
-        Videos ({{ videos.length }})
+        الفيديوهات ({{ videos.length }})
       </button>
       <button 
         class="section-tabs__tab"
@@ -49,97 +49,148 @@
         type="button"
       >
         <span class="material-icons">picture_as_pdf</span>
-        PDFs ({{ pdfs.length }})
+        ملفات PDF ({{ pdfs.length }})
       </button>
     </div>
 
-    <form (ngSubmit)="onSubmit()" #courseForm="ngForm">
+    <form (ngSubmit)="onSubmit()" #courseForm="ngForm" novalidate>
+      @if (errorMessage) {
+        <div class="form-error" style="margin: 1rem 2rem;">
+          <span class="material-icons">error</span>
+          {{ errorMessage }}
+        </div>
+      }
       <!-- Course Info Section -->
       @if (activeSection() === 'info') {
         <div class="form-section">
           <h3 class="form-section__title">
             <span class="material-icons">info</span>
-            Basic Information
+            المعلومات الأساسية
           </h3>
           <div class="form-grid">
-            <div class="form-group">
-              <label class="form-label" for="code">Course Code *</label>
-              <input
-                type="text"
-                id="code"
-                name="code"
-                class="form-input"
-                [(ngModel)]="course.code"
-                required
-                placeholder="e.g., CS101"
-              />
-            </div>
             <div class="form-group form-group--wide">
-              <label class="form-label" for="name">Course Name *</label>
+              <label class="form-label" for="title">عنوان الكورس *</label>
               <input
                 type="text"
-                id="name"
-                name="name"
+                id="title"
+                name="title"
                 class="form-input"
-                [(ngModel)]="course.name"
+                [(ngModel)]="course.title"
                 required
-                placeholder="Enter course name"
+                placeholder="مثال: أساسيات النحو العربي"
               />
             </div>
             <div class="form-group">
-              <label class="form-label" for="department">Department *</label>
+              <label class="form-label" for="category">التصنيف *</label>
               <select
-                id="department"
-                name="department"
+                id="category"
+                name="category"
                 class="form-input"
-                [(ngModel)]="course.department"
+                [(ngModel)]="course.category"
                 required
               >
-                <option value="">Select Department</option>
-                @for (dept of departments; track dept) {
-                  <option [value]="dept">{{ dept }}</option>
+                <option value="">اختر التصنيف</option>
+                @for (cat of categories; track cat) {
+                  <option [value]="cat">{{ cat }}</option>
                 }
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label" for="credits">Credits *</label>
-              <input
-                type="number"
-                id="credits"
-                name="credits"
-                class="form-input"
-                [(ngModel)]="course.credits"
-                required
-                min="1"
-                max="6"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="professor">Professor *</label>
+              <label class="form-label" for="stage">المرحلة الدراسية</label>
               <select
-                id="professor"
-                name="professor"
+                id="stage"
+                name="stage"
                 class="form-input"
-                [(ngModel)]="course.professor"
-                required
+                [(ngModel)]="course.stage"
+                (ngModelChange)="onStageChange()"
               >
-                <option value="">Select Professor</option>
-                @for (prof of professors; track prof) {
-                  <option [value]="prof">{{ prof }}</option>
+                <option value="">اختر المرحلة</option>
+                @for (s of stages; track s.value) {
+                  <option [value]="s.value">{{ s.label }}</option>
                 }
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label" for="maxStudents">Max Students</label>
-              <input
-                type="number"
-                id="maxStudents"
-                name="maxStudents"
+              <label class="form-label" for="grade">الصف الدراسي</label>
+              <select
+                id="grade"
+                name="grade"
                 class="form-input"
-                [(ngModel)]="course.maxStudents"
-                min="1"
-                max="500"
+                [(ngModel)]="course.grade"
+                [disabled]="!course.stage"
+              >
+                <option [ngValue]="null">اختر الصف</option>
+                @for (g of gradesForStage; track g.value) {
+                  <option [ngValue]="g.value">{{ g.label }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="level">المستوى *</label>
+              <select
+                id="level"
+                name="level"
+                class="form-input"
+                [(ngModel)]="course.level"
+                required
+              >
+                <option value="beginner">مبتدئ</option>
+                <option value="intermediate">متوسط</option>
+                <option value="advanced">متقدم</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="isFree">مجاني؟</label>
+              <div class="toggle-group">
+                <label class="toggle">
+                  <input
+                    type="checkbox"
+                    id="isFree"
+                    name="isFree"
+                    [(ngModel)]="course.isFree"
+                    (ngModelChange)="onFreeToggle()"
+                  />
+                  <span class="toggle__slider"></span>
+                  <span class="toggle__label">{{ course.isFree ? 'مجاني' : 'مدفوع' }}</span>
+                </label>
+              </div>
+            </div>
+            @if (!course.isFree) {
+              <div class="form-group">
+                <label class="form-label" for="price">السعر (جنيه)</label>
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  class="form-input"
+                  [(ngModel)]="course.price"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+            }
+            <div class="form-group">
+              <label class="form-label" for="tags">الوسوم (مفصولة بفاصلة)</label>
+              <input
+                type="text"
+                id="tags"
+                name="tags"
+                class="form-input"
+                [(ngModel)]="course.tags"
+                placeholder="مثال: نحو، صرف، بلاغة"
               />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="status">حالة النشر</label>
+              <select
+                id="status"
+                name="status"
+                class="form-input"
+                [(ngModel)]="course.status"
+              >
+                <option value="published">منشور</option>
+                <option value="draft">مسودة</option>
+              </select>
             </div>
           </div>
         </div>
@@ -147,86 +198,35 @@
         <div class="form-section">
           <h3 class="form-section__title">
             <span class="material-icons">description</span>
-            Course Details
+            تفاصيل الكورس
           </h3>
           <div class="form-grid">
             <div class="form-group form-group--full">
-              <label class="form-label" for="description">Description</label>
+              <label class="form-label" for="shortDescription">وصف مختصر</label>
+              <input
+                type="text"
+                id="shortDescription"
+                name="shortDescription"
+                class="form-input"
+                [(ngModel)]="course.shortDescription"
+                placeholder="وصف مختصر يظهر في بطاقة الكورس"
+              />
+            </div>
+            <div class="form-group form-group--full">
+              <label class="form-label" for="description">الوصف التفصيلي *</label>
               <textarea
                 id="description"
                 name="description"
                 class="form-input form-input--textarea"
                 [(ngModel)]="course.description"
                 rows="4"
-                placeholder="Enter course description"
+                required
+                placeholder="اكتب وصفاً تفصيلياً للكورس..."
               ></textarea>
-            </div>
-            <div class="form-group form-group--full">
-              <label class="form-label" for="prerequisites">Prerequisites</label>
-              <input
-                type="text"
-                id="prerequisites"
-                name="prerequisites"
-                class="form-input"
-                [(ngModel)]="course.prerequisites"
-                placeholder="e.g., CS100, MATH101"
-              />
             </div>
           </div>
         </div>
 
-        <div class="form-section">
-          <h3 class="form-section__title">
-            <span class="material-icons">schedule</span>
-            Schedule
-          </h3>
-          <div class="form-grid">
-            <div class="form-group">
-              <label class="form-label" for="schedule">Class Schedule</label>
-              <input
-                type="text"
-                id="schedule"
-                name="schedule"
-                class="form-input"
-                [(ngModel)]="course.schedule"
-                placeholder="e.g., Mon/Wed 9:00-10:30"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="startDate">Start Date</label>
-              <input
-                type="date"
-                id="startDate"
-                name="startDate"
-                class="form-input"
-                [(ngModel)]="course.startDate"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="endDate">End Date</label>
-              <input
-                type="date"
-                id="endDate"
-                name="endDate"
-                class="form-input"
-                [(ngModel)]="course.endDate"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="status">Status</label>
-              <select
-                id="status"
-                name="status"
-                class="form-input"
-                [(ngModel)]="course.status"
-              >
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-                <option value="upcoming">Upcoming</option>
-              </select>
-            </div>
-          </div>
-        </div>
       }
 
       <!-- Lessons Section -->
@@ -235,20 +235,20 @@
           <div class="form-section__header">
             <h3 class="form-section__title">
               <span class="material-icons">menu_book</span>
-              Course Lessons
+              دروس الكورس
             </h3>
             <button type="button" class="btn btn--primary btn--sm" (click)="addLesson()">
               <span class="material-icons">add</span>
-              Add Lesson
+              إضافة درس
             </button>
           </div>
 
           @if (lessons.length === 0) {
             <div class="empty-state">
               <span class="material-icons">library_books</span>
-              <p>No lessons added yet</p>
+              <p>لم يتم إضافة دروس بعد</p>
               <button type="button" class="btn btn--outline" (click)="addLesson()">
-                Add Your First Lesson
+                أضف الدرس الأول
               </button>
             </div>
           } @else {
@@ -259,40 +259,40 @@
                     <span class="item-card__icon item-card__icon--lesson">
                       <span class="material-icons">school</span>
                     </span>
-                    <span class="item-card__label">Lesson {{ lesson.order }}</span>
+                    <span class="item-card__label">الدرس {{ lesson.order }}</span>
                     <button type="button" class="item-card__remove" (click)="removeLesson(lesson.id)">
                       <span class="material-icons">close</span>
                     </button>
                   </div>
                   <div class="item-card__body">
                     <div class="form-group">
-                      <label class="form-label">Lesson Title *</label>
+                      <label class="form-label">عنوان الدرس *</label>
                       <input
                         type="text"
                         class="form-input"
                         [(ngModel)]="lesson.title"
                         [name]="'lessonTitle' + lesson.id"
-                        placeholder="Enter lesson title"
+                        placeholder="أدخل عنوان الدرس"
                       />
                     </div>
                     <div class="form-group">
-                      <label class="form-label">Duration</label>
+                      <label class="form-label">المدة</label>
                       <input
                         type="text"
                         class="form-input"
                         [(ngModel)]="lesson.duration"
                         [name]="'lessonDuration' + lesson.id"
-                        placeholder="e.g., 45 min"
+                        placeholder="مثال: 45 دقيقة"
                       />
                     </div>
                     <div class="form-group form-group--full">
-                      <label class="form-label">Description</label>
+                      <label class="form-label">الوصف</label>
                       <textarea
                         class="form-input form-input--textarea"
                         [(ngModel)]="lesson.description"
                         [name]="'lessonDesc' + lesson.id"
                         rows="2"
-                        placeholder="Brief description of this lesson"
+                        placeholder="وصف مختصر للدرس"
                       ></textarea>
                     </div>
                   </div>
@@ -309,20 +309,20 @@
           <div class="form-section__header">
             <h3 class="form-section__title">
               <span class="material-icons">videocam</span>
-              Course Videos
+              فيديوهات الكورس
             </h3>
             <button type="button" class="btn btn--primary btn--sm" (click)="addVideo()">
               <span class="material-icons">add</span>
-              Add Video
+              إضافة فيديو
             </button>
           </div>
 
           @if (videos.length === 0) {
             <div class="empty-state">
               <span class="material-icons">video_library</span>
-              <p>No videos added yet</p>
+              <p>لم يتم إضافة فيديوهات بعد</p>
               <button type="button" class="btn btn--outline" (click)="addVideo()">
-                Add Your First Video
+                أضف الفيديو الأول
               </button>
             </div>
           } @else {
@@ -333,24 +333,24 @@
                     <span class="item-card__icon item-card__icon--video">
                       <span class="material-icons">play_circle</span>
                     </span>
-                    <span class="item-card__label">Video {{ video.id }}</span>
+                    <span class="item-card__label">فيديو {{ video.id }}</span>
                     <button type="button" class="item-card__remove" (click)="removeVideo(video.id)">
                       <span class="material-icons">close</span>
                     </button>
                   </div>
                   <div class="item-card__body">
                     <div class="form-group">
-                      <label class="form-label">Video Title *</label>
+                      <label class="form-label">عنوان الفيديو *</label>
                       <input
                         type="text"
                         class="form-input"
                         [(ngModel)]="video.title"
                         [name]="'videoTitle' + video.id"
-                        placeholder="Enter video title"
+                        placeholder="أدخل عنوان الفيديو"
                       />
                     </div>
                     <div class="form-group">
-                      <label class="form-label">Video URL *</label>
+                      <label class="form-label">رابط الفيديو *</label>
                       <input
                         type="url"
                         class="form-input"
@@ -360,25 +360,25 @@
                       />
                     </div>
                     <div class="form-group">
-                      <label class="form-label">Duration</label>
+                      <label class="form-label">المدة</label>
                       <input
                         type="text"
                         class="form-input"
                         [(ngModel)]="video.duration"
                         [name]="'videoDuration' + video.id"
-                        placeholder="e.g., 12:34"
+                        placeholder="مثال: 12:34"
                       />
                     </div>
                     <div class="form-group">
-                      <label class="form-label">Linked Lesson</label>
+                      <label class="form-label">الدرس المرتبط</label>
                       <select
                         class="form-input"
                         [(ngModel)]="video.lessonId"
                         [name]="'videoLesson' + video.id"
                       >
-                        <option [value]="0">-- No Lesson --</option>
+                        <option [value]="0">-- بدون درس --</option>
                         @for (lesson of lessons; track lesson.id) {
-                          <option [value]="lesson.id">{{ lesson.order }}. {{ lesson.title || 'Untitled Lesson' }}</option>
+                          <option [value]="lesson.id">{{ lesson.order }}. {{ lesson.title || 'درس بدون عنوان' }}</option>
                         }
                       </select>
                     </div>
@@ -396,20 +396,20 @@
           <div class="form-section__header">
             <h3 class="form-section__title">
               <span class="material-icons">picture_as_pdf</span>
-              Course PDFs & Resources
+              ملفات PDF والموارد
             </h3>
             <button type="button" class="btn btn--primary btn--sm" (click)="addPdf()">
               <span class="material-icons">add</span>
-              Add PDF
+              إضافة ملف
             </button>
           </div>
 
           @if (pdfs.length === 0) {
             <div class="empty-state">
               <span class="material-icons">description</span>
-              <p>No PDFs added yet</p>
+              <p>لم يتم إضافة ملفات بعد</p>
               <button type="button" class="btn btn--outline" (click)="addPdf()">
-                Add Your First PDF
+                أضف الملف الأول
               </button>
             </div>
           } @else {
@@ -420,24 +420,24 @@
                     <span class="item-card__icon item-card__icon--pdf">
                       <span class="material-icons">picture_as_pdf</span>
                     </span>
-                    <span class="item-card__label">PDF {{ pdf.id }}</span>
+                    <span class="item-card__label">ملف {{ pdf.id }}</span>
                     <button type="button" class="item-card__remove" (click)="removePdf(pdf.id)">
                       <span class="material-icons">close</span>
                     </button>
                   </div>
                   <div class="item-card__body">
                     <div class="form-group">
-                      <label class="form-label">Document Title *</label>
+                      <label class="form-label">عنوان الملف *</label>
                       <input
                         type="text"
                         class="form-input"
                         [(ngModel)]="pdf.title"
                         [name]="'pdfTitle' + pdf.id"
-                        placeholder="Enter document title"
+                        placeholder="أدخل عنوان الملف"
                       />
                     </div>
                     <div class="form-group">
-                      <label class="form-label">Upload PDF *</label>
+                      <label class="form-label">رفع ملف PDF *</label>
                       <div class="file-upload">
                         <input
                           type="file"
@@ -451,21 +451,21 @@
                           @if (pdf.fileName) {
                             <span>{{ pdf.fileName }}</span>
                           } @else {
-                            <span>Choose PDF file</span>
+                            <span>اختر ملف PDF</span>
                           }
                         </label>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="form-label">Linked Lesson</label>
+                      <label class="form-label">الدرس المرتبط</label>
                       <select
                         class="form-input"
                         [(ngModel)]="pdf.lessonId"
                         [name]="'pdfLesson' + pdf.id"
                       >
-                        <option [value]="0">-- No Lesson --</option>
+                        <option [value]="0">-- بدون درس --</option>
                         @for (lesson of lessons; track lesson.id) {
-                          <option [value]="lesson.id">{{ lesson.order }}. {{ lesson.title || 'Untitled Lesson' }}</option>
+                          <option [value]="lesson.id">{{ lesson.order }}. {{ lesson.title || 'درس بدون عنوان' }}</option>
                         }
                       </select>
                     </div>
@@ -479,13 +479,18 @@
 
       <!-- Form Actions -->
       <div class="form-actions">
-        <button type="button" class="btn btn--outline" (click)="onReset()">
+        <button type="button" class="btn btn--outline" (click)="onReset()" [disabled]="isSaving">
           <span class="material-icons">refresh</span>
-          Reset All
+          إعادة تعيين
         </button>
-        <button type="submit" class="btn btn--primary">
-          <span class="material-icons">save</span>
-          Save Course
+        <button type="submit" class="btn btn--primary" [disabled]="isSaving">
+          @if (isSaving) {
+            <span class="material-icons spinning">sync</span>
+            {{ savingProgress || 'جاري الحفظ...' }}
+          } @else {
+            <span class="material-icons">save</span>
+            حفظ الكورس
+          }
         </button>
       </div>
     </form>

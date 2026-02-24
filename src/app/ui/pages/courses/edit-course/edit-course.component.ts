@@ -3,20 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { CourseService } from '../../../../core/services/course.service';
+import { UpdateCourseRequest } from '../../../../core/models/course.model';
 
 interface CourseForm {
-  code: string;
-  name: string;
-  department: string;
-  credits: number;
-  professor: string;
-  maxStudents: number;
+  title: string;
   description: string;
-  prerequisites: string;
-  schedule: string;
-  startDate: string;
-  endDate: string;
-  status: string;
+  category: string;
+  level: 'beginner' | 'intermediate' | 'advanced';
+  price: number;
+  tags: string;
+  status: 'draft' | 'published' | 'archived';
 }
 
 interface LessonItem {
@@ -54,23 +51,22 @@ interface PdfItem {
 export class EditCourseComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private courseService = inject(CourseService);
   
   courseId: string = '';
   activeSection = signal<'info' | 'lessons' | 'videos' | 'pdfs'>('info');
+  isLoading = true;
+  isSaving = false;
+  errorMessage = '';
   
   course: CourseForm = {
-    code: '',
-    name: '',
-    department: '',
-    credits: 3,
-    professor: '',
-    maxStudents: 50,
+    title: '',
     description: '',
-    prerequisites: '',
-    schedule: '',
-    startDate: '',
-    endDate: '',
-    status: 'active'
+    category: '',
+    level: 'beginner',
+    price: 0,
+    tags: '',
+    status: 'published'
   };
 
   lessons: LessonItem[] = [];
@@ -82,24 +78,21 @@ export class EditCourseComponent implements OnInit {
   newVideo: Partial<VideoItem> = { title: '', url: '', duration: '', lessonId: 0 };
   newPdf: Partial<PdfItem> = { title: '', lessonId: 0 };
 
-  departments = [
-    'Computer Science',
-    'Mathematics',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Engineering',
+  categories = [
+    'Technology',
+    'Science',
     'Business',
-    'Arts & Languages'
+    'Arts',
+    'Design',
+    'Marketing',
+    'Finance',
+    'Engineering'
   ];
 
-  professors = [
-    'Dr. Ahmed Hassan',
-    'Dr. Sarah Johnson',
-    'Dr. Mohammed Ali',
-    'Dr. Emily Chen',
-    'Dr. Robert Smith',
-    'Dr. Fatima Al-Rashid'
+  levels: ('beginner' | 'intermediate' | 'advanced')[] = [
+    'beginner',
+    'intermediate',
+    'advanced'
   ];
 
   ngOnInit() {
@@ -108,41 +101,53 @@ export class EditCourseComponent implements OnInit {
   }
 
   loadCourseData() {
-    // Mock data - in real app, fetch from API
-    this.course = {
-      code: 'CS101',
-      name: 'Introduction to Programming',
-      department: 'Computer Science',
-      credits: 3,
-      professor: 'Dr. Ahmed Hassan',
-      maxStudents: 60,
-      description: 'An introductory course covering fundamental programming concepts using Python. Topics include variables, control structures, functions, and basic data structures.',
-      prerequisites: '',
-      schedule: 'Mon/Wed 9:00-10:30',
-      startDate: '2024-01-15',
-      endDate: '2024-05-15',
-      status: 'active'
-    };
+    if (!this.courseId) {
+      this.isLoading = false;
+      return;
+    }
 
-    // Load existing lessons
-    this.lessons = [
-      { id: 1, title: 'Introduction to Python', description: 'Getting started with Python basics', duration: '45 min', order: 1 },
-      { id: 2, title: 'Variables and Data Types', description: 'Understanding variables and data types', duration: '60 min', order: 2 },
-      { id: 3, title: 'Control Structures', description: 'If statements, loops, conditions', duration: '75 min', order: 3 }
-    ];
+    this.courseService.getCourseById(this.courseId).subscribe({
+      next: (data) => {
+        this.course = {
+          title: data.title,
+          description: data.description,
+          category: data.category || '',
+          level: data.level || 'beginner',
+          price: data.price || 0,
+          tags: data.tags?.join(', ') || '',
+          status: data.status || 'published'
+        };
 
-    // Load existing videos
-    this.videos = [
-      { id: 1, title: 'Python Setup Tutorial', url: 'https://youtube.com/watch?v=xxx', duration: '12:34', lessonId: 1 },
-      { id: 2, title: 'First Python Program', url: 'https://youtube.com/watch?v=yyy', duration: '18:45', lessonId: 1 },
-      { id: 3, title: 'Working with Variables', url: 'https://youtube.com/watch?v=zzz', duration: '22:10', lessonId: 2 }
-    ];
-
-    // Load existing PDFs
-    this.pdfs = [
-      { id: 1, title: 'Python Cheat Sheet', fileName: 'python-basics.pdf', size: '1.2 MB', lessonId: 1 },
-      { id: 2, title: 'Variables Reference', fileName: 'variables.pdf', size: '856 KB', lessonId: 2 }
-    ];
+        // Map materials to lessons/videos/pdfs
+        if (data.materials && data.materials.length > 0) {
+          let lessonOrder = 0;
+          data.materials.forEach((m, i) => {
+            if (m.type === 'video') {
+              this.videos.push({
+                id: i + 1, title: m.title, url: m.fileUrl || '',
+                duration: m.duration ? m.duration + ' min' : '', lessonId: 0
+              });
+            } else if (m.type === 'pdf') {
+              this.pdfs.push({
+                id: i + 1, title: m.title, fileName: m.fileUrl || '',
+                size: '', lessonId: 0
+              });
+            } else {
+              lessonOrder++;
+              this.lessons.push({
+                id: i + 1, title: m.title, description: m.description || '',
+                duration: m.duration ? m.duration + ' min' : '', order: lessonOrder
+              });
+            }
+          });
+        }
+        this.isLoading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load course data.';
+        this.isLoading = false;
+      }
+    });
   }
 
   setActiveSection(section: 'info' | 'lessons' | 'videos' | 'pdfs') {
@@ -232,12 +237,34 @@ export class EditCourseComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Updating course:', this.course);
-    console.log('Lessons:', this.lessons);
-    console.log('Videos:', this.videos);
-    console.log('PDFs:', this.pdfs);
-    // In real app, call API to update course
-    this.router.navigate(['/courses/all']);
+    if (!this.course.title || !this.course.description) {
+      this.errorMessage = 'Title and description are required.';
+      return;
+    }
+
+    this.isSaving = true;
+    this.errorMessage = '';
+
+    const updateData: UpdateCourseRequest = {
+      title: this.course.title,
+      description: this.course.description,
+      category: this.course.category,
+      level: this.course.level,
+      status: this.course.status,
+      price: this.course.price,
+      tags: this.course.tags ? this.course.tags.split(',').map(t => t.trim()).filter(t => t) : []
+    };
+
+    this.courseService.updateCourse(this.courseId, updateData).subscribe({
+      next: () => {
+        this.isSaving = false;
+        this.router.navigate(['/courses/all']);
+      },
+      error: (err) => {
+        this.isSaving = false;
+        this.errorMessage = err.error?.message || 'Failed to update course.';
+      }
+    });
   }
 
   onCancel() {
@@ -245,6 +272,9 @@ export class EditCourseComponent implements OnInit {
   }
 
   onReset() {
+    this.lessons = [];
+    this.videos = [];
+    this.pdfs = [];
     this.loadCourseData();
   }
 }

@@ -1,0 +1,20 @@
+<div class="teachers-page">
+  <h2 class="teachers-title">Meet Our Creative Teachers</h2>
+  <div class="teachers-grid">
+    <div class="teacher-card" *ngFor="let teacher of teachers">
+      <div class="teacher-avatar">
+        <img *ngIf="teacher.avatar" [src]="teacher.avatar" alt="Teacher Avatar" />
+        <span *ngIf="!teacher.avatar" class="material-icons">person</span>
+      </div>
+      <div class="teacher-info">
+        <div class="teacher-name">{{ teacher.name }}</div>
+        <div class="teacher-role">{{ teacher.role || 'Teacher' }}</div>
+        <div class="teacher-bio">{{ teacher.bio || 'Creative educator with passion for teaching.' }}</div>
+        <div class="teacher-courses">
+          <span class="courses-label">Courses:</span>
+          <span *ngFor="let course of teacher.courses">{{ course.title }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

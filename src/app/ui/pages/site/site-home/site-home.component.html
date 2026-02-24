@@ -1,0 +1,349 @@
+<div class="home-page" dir="rtl">
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero">
+    <div class="hero-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+    </div>
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span class="badge-icon">✨</span>
+            <span>منصة #1 في تعليم العربية</span>
+          </div>
+          <h1>تعلّم اللغة العربية<br><span class="gradient-text">مع أفضل معلم</span></h1>
+          <p class="hero-desc">
+            منصة تعليمية متخصصة تقدم شرح المناهج الدراسية بالفيديو،
+            بث مباشر تفاعلي، امتحانات ذكية، وشهادات معتمدة لجميع المراحل.
+          </p>
+          <div class="hero-actions">
+            <a routerLink="/site/courses/primary" class="btn-primary-lg">
+              <span>ابدأ التعلم الآن</span>
+              <span class="btn-arrow">←</span>
+            </a>
+            <a routerLink="/register" class="btn-outline-lg">
+              سجّل مجاناً
+            </a>
+          </div>
+          <div class="hero-trust">
+            <div class="trust-avatars">
+              <span class="avatar-circle">👨‍🎓</span>
+              <span class="avatar-circle">👩‍🎓</span>
+              <span class="avatar-circle">👨‍🎓</span>
+              <span class="avatar-circle avatar-more">+١٠٠</span>
+            </div>
+            <span class="trust-text">أكثر من <strong>١٣٠٠ طالب</strong> يتعلمون معنا</span>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-card-stack">
+            <div class="hero-float-card card-1">
+              <span class="card-emoji">📚</span>
+              <div>
+                <strong>٩ كورسات</strong>
+                <small>لجميع المراحل</small>
+              </div>
+            </div>
+            <div class="hero-float-card card-2">
+              <span class="card-emoji">🎥</span>
+              <div>
+                <strong>٥١ فيديو</strong>
+                <small>شرح مفصل</small>
+              </div>
+            </div>
+            <div class="hero-float-card card-3">
+              <span class="card-emoji">📝</span>
+              <div>
+                <strong>امتحانات</strong>
+                <small>تصحيح فوري</small>
+              </div>
+            </div>
+            <div class="hero-main-image">
+              <div class="book-display">
+                <div class="book book-1">
+                  <span>ع</span>
+                  <small>ابتدائي</small>
+                </div>
+                <div class="book book-2">
+                  <span>ن</span>
+                  <small>اعدادي</small>
+                </div>
+                <div class="book book-3">
+                  <span>ب</span>
+                  <small>ثانوي</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ LIVE STREAMS ═══════════ -->
+  @if (liveStreams.length > 0) {
+    <section class="live-section">
+      <div class="container">
+        <div class="live-banner">
+          <div class="live-pulse"></div>
+          <div class="live-info">
+            <span class="live-badge-red">
+              <span class="dot-pulse"></span>
+              بث مباشر الآن
+            </span>
+            <h3>{{ liveStreams[0].title || 'حصة مباشرة' }}</h3>
+            <p>{{ liveStreams[0].description || 'انضم للحصة المباشرة الآن مع الأستاذ' }}</p>
+          </div>
+          <a [routerLink]="['/site/live', liveStreams[0]._id]" class="btn-join-live">
+            <span>🎥</span> انضم الآن
+          </a>
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- ═══════════ STAGES ═══════════ -->
+  <section class="stages-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">📚 المراحل التعليمية</span>
+        <h2>اختر المرحلة التعليمية</h2>
+        <p>كورسات متخصصة لكل مرحلة تعليمية من الابتدائية إلى الثانوية</p>
+      </div>
+      <div class="stages-grid">
+        @for (stage of stages; track stage.key) {
+          <a [routerLink]="stage.link" class="stage-card">
+            <div class="stage-card-bg" [style.background]="stage.gradient"></div>
+            <div class="stage-card-content">
+              <div class="stage-icon-wrapper" [style.background]="stage.gradient">
+                <span class="stage-icon-text">{{ stage.icon }}</span>
+              </div>
+              <h3>{{ stage.name }}</h3>
+              <p class="stage-grades">{{ stage.grades }}</p>
+              <p class="stage-desc">{{ stage.description }}</p>
+              <div class="stage-stats">
+                <div class="stage-stat">
+                  <span class="stat-num">{{ stage.stats.courses }}</span>
+                  <span class="stat-label">كورس</span>
+                </div>
+                <div class="stage-stat">
+                  <span class="stat-num">{{ stage.stats.lessons }}</span>
+                  <span class="stat-label">درس</span>
+                </div>
+                <div class="stage-stat">
+                  <span class="stat-num">{{ stage.stats.students }}</span>
+                  <span class="stat-label">طالب</span>
+                </div>
+              </div>
+              <span class="stage-cta">تصفح الكورسات ←</span>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ COURSES BY STAGE TABS ═══════════ -->
+  <section class="courses-tabs-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">🎓 الكورسات</span>
+        <h2>تصفح الكورسات حسب المرحلة</h2>
+        <p>اختر مرحلتك وابدأ التعلم الآن</p>
+      </div>
+      <div class="tabs-bar">
+        @for (stage of stages; track stage.key) {
+          <button
+            class="tab-btn"
+            [class.active]="activeTab === stage.key"
+            [attr.data-stage]="stage.key"
+            (click)="activeTab = stage.key">
+            {{ stage.icon }} {{ stage.nameShort }}
+          </button>
+        }
+      </div>
+      <div class="courses-grid">
+        @for (course of getActiveTabCourses(); track course._id) {
+          <a [routerLink]="['/site/course', course._id]" class="course-card">
+            <div class="course-thumb">
+              @if (course.thumbnail) {
+                <img [src]="course.thumbnail" [alt]="course.title">
+              } @else {
+                <div class="thumb-gradient" [attr.data-stage]="course.stage">
+                  <span class="thumb-letter">{{ course.title.charAt(0) }}</span>
+                </div>
+              }
+              @if (course.stage) {
+                <span class="course-badge" [attr.data-stage]="course.stage">{{ getStageName(course.stage) }}</span>
+              }
+              @if (course.grade) {
+                <span class="grade-badge">{{ getGradeName(course.grade) }}</span>
+              }
+            </div>
+            <div class="course-body">
+              <h4>{{ course.title }}</h4>
+              <p class="course-teacher">👨‍🏫 {{ getTeacherName(course) }}</p>
+              <div class="course-meta">
+                <span>📖 {{ course.materials.length || 0 }} درس</span>
+                <span>👥 {{ course.enrollmentCount || 0 }} طالب</span>
+              </div>
+              <div class="course-footer-row">
+                <div class="course-price">
+                  @if (course.isFree || course.price === 0) {
+                    <span class="free-tag">مجاني</span>
+                  } @else {
+                    <span class="price-tag">{{ course.price }} جنيه</span>
+                  }
+                </div>
+                @if (course.rating) {
+                  <div class="course-rating">
+                    <span class="star">⭐</span>
+                    <span>{{ course.rating }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          </a>
+        }
+        @if (getActiveTabCourses().length === 0) {
+          <div class="empty-courses">
+            <span>📭</span>
+            <p>لا توجد كورسات متاحة حالياً لهذه المرحلة</p>
+          </div>
+        }
+      </div>
+      <div class="view-all-btn">
+        <a [routerLink]="['/site/courses', activeTab]" class="btn-secondary">
+          عرض كل كورسات {{ stages[activeTab === 'primary' ? 0 : activeTab === 'preparatory' ? 1 : 2].nameShort }} ←
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FEATURES ═══════════ -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">💡 المميزات</span>
+        <h2>لماذا تختار منصتنا؟</h2>
+        <p>كل ما يحتاجه الطالب في مكان واحد</p>
+      </div>
+      <div class="features-grid">
+        @for (feature of features; track feature.title; let i = $index) {
+          <div class="feature-card" [style.--feature-color]="feature.color" [style.animation-delay]="(i * 0.1) + 's'">
+            <div class="feature-icon-wrap">
+              <span class="feature-icon">{{ feature.icon }}</span>
+            </div>
+            <h4>{{ feature.title }}</h4>
+            <p>{{ feature.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ HOW IT WORKS ═══════════ -->
+  <section class="how-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">🚀 كيف تبدأ</span>
+        <h2>٣ خطوات فقط</h2>
+        <p>ابدأ رحلة التعلم في دقائق</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">١</div>
+          <div class="step-icon">📝</div>
+          <h4>سجّل حساب مجاني</h4>
+          <p>أنشئ حسابك في ثوانٍ وابدأ تصفح الكورسات</p>
+        </div>
+        <div class="step-connector">
+          <span>→</span>
+        </div>
+        <div class="step-card">
+          <div class="step-num">٢</div>
+          <div class="step-icon">📚</div>
+          <h4>اختر مرحلتك وكورسك</h4>
+          <p>تصفح الكورسات حسب مرحلتك الدراسية وسجّل فيها</p>
+        </div>
+        <div class="step-connector">
+          <span>→</span>
+        </div>
+        <div class="step-card">
+          <div class="step-num">٣</div>
+          <div class="step-icon">🎬</div>
+          <h4>شاهد وتعلّم وامتحن</h4>
+          <p>شاهد الفيديوهات، حضر البث المباشر، واجتز الامتحان</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TESTIMONIALS ═══════════ -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">💬 آراء الطلاب</span>
+        <h2>ماذا يقول طلابنا؟</h2>
+        <p>تقييمات حقيقية من طلاب المنصة</p>
+      </div>
+      <div class="testimonials-grid">
+        @for (t of testimonials; track t.name) {
+          <div class="testimonial-card">
+            <div class="testimonial-stars">
+              @for (s of getStars(t.rating); track $index) {
+                <span class="star">⭐</span>
+              }
+            </div>
+            <p class="testimonial-text">"{{ t.text }}"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">{{ t.name.charAt(0) }}</div>
+              <div>
+                <strong>{{ t.name }}</strong>
+                <span>{{ t.stage }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ LIVE STREAM CTA ═══════════ -->
+  <section class="live-cta-section">
+    <div class="container">
+      <div class="live-cta-card">
+        <div class="live-cta-bg"></div>
+        <div class="live-cta-content">
+          <div class="live-cta-icon">🎥</div>
+          <h2>البث المباشر</h2>
+          <p>تابع الحصص المباشرة مع الأستاذ أحمد محمد. اسأل، ناقش، وتعلم في الوقت الحقيقي!</p>
+          <a routerLink="/site/live" class="btn-live-cta">
+            <span class="dot-pulse white"></span>
+            شاهد البث المباشر
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CTA ═══════════ -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>مستعد تبدأ رحلة التفوق؟ 🚀</h2>
+        <p>سجّل الآن مجاناً وابدأ التعلم فوراً. أكثر من ٩ كورسات و٥٠ فيديو بانتظارك!</p>
+        <div class="cta-actions">
+          <a routerLink="/register" class="btn-primary-lg">سجّل الآن مجاناً</a>
+          <a routerLink="/site/courses/primary" class="btn-ghost">تصفح الكورسات</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

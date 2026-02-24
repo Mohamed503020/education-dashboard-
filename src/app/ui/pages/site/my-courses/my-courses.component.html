@@ -1,0 +1,95 @@
+@if (loading) {
+  <div class="loading-state" dir="rtl">
+    <div class="spinner"></div>
+    <p>جاري التحميل...</p>
+  </div>
+} @else {
+  <div class="my-courses-page" dir="rtl">
+    <div class="container">
+      <div class="page-header">
+        <h1>📚 كورساتي</h1>
+        <p>تابع تقدمك في الكورسات المسجل بها</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab" [class.active]="activeTab === 'courses'" (click)="activeTab = 'courses'">
+          📖 كورساتي ({{ enrollments.length }})
+        </button>
+        <button class="tab" [class.active]="activeTab === 'certificates'" (click)="activeTab = 'certificates'">
+          🏆 شهاداتي ({{ certificates.length }})
+        </button>
+      </div>
+
+      <!-- Courses Tab -->
+      @if (activeTab === 'courses') {
+        @if (enrollments.length === 0) {
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <h3>لا توجد كورسات مسجلة</h3>
+            <p>ابدأ بتصفح الكورسات المتاحة وسجل في ما يناسبك</p>
+            <a routerLink="/site" class="btn btn-primary">تصفح الكورسات</a>
+          </div>
+        } @else {
+          <div class="courses-grid">
+            @for (enrollment of enrollments; track enrollment._id) {
+              <div class="course-card">
+                <div class="card-header" [style.border-right-color]="getStageColor(enrollment.course?.stage)">
+                  @if (enrollment.course?.stage) {
+                    <span class="stage-badge" [style.background]="getStageColor(enrollment.course?.stage)">
+                      {{ getStageName(enrollment.course?.stage) }}
+                    </span>
+                  }
+                  <h3 class="course-title">
+                    <a [routerLink]="['/site/course', getCourseId(enrollment)]">{{ getCourseName(enrollment) }}</a>
+                  </h3>
+                </div>
+
+                <div class="card-body">
+                  @if (enrollment.course?.description) {
+                    <p class="course-desc">{{ enrollment.course.description | slice:0:100 }}...</p>
+                  }
+
+                  <div class="card-meta">
+                    <span>📅 تاريخ التسجيل: {{ getFormattedDate(enrollment.enrolledAt || enrollment.createdAt) }}</span>
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <a [routerLink]="['/site/course', getCourseId(enrollment)]" class="btn btn-outline">عرض الكورس</a>
+                  @if (getCertificateForCourse(getCourseId(enrollment)); as cert) {
+                    <a [routerLink]="['/site/certificate', cert._id]" class="btn btn-accent">🏆 الشهادة</a>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      }
+
+      <!-- Certificates Tab -->
+      @if (activeTab === 'certificates') {
+        @if (certificates.length === 0) {
+          <div class="empty-state">
+            <div class="empty-icon">🏆</div>
+            <h3>لا توجد شهادات بعد</h3>
+            <p>أكمل الكورسات واجتز الامتحانات للحصول على شهادات</p>
+          </div>
+        } @else {
+          <div class="certs-grid">
+            @for (cert of certificates; track cert._id) {
+              <div class="cert-card">
+                <div class="cert-icon">🏆</div>
+                <h3>{{ cert.courseName }}</h3>
+                <div class="cert-score">الدرجة: <strong>{{ cert.examScore }}%</strong></div>
+                <div class="cert-date">{{ getFormattedDate(cert.issueDate) }}</div>
+                <div class="cert-number">{{ cert.certificateNumber }}</div>
+                <a [routerLink]="['/site/certificate', cert._id]" class="btn btn-primary btn-sm">عرض الشهادة</a>
+              </div>
+            }
+          </div>
+        }
+      }
+    </div>
+  </div>
+}

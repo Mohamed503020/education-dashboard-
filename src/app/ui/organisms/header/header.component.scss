@@ -98,6 +98,189 @@
       margin-right: $spacing-sm;
     }
   }
+
+  &__user-menu {
+    position: relative;
+  }
+
+  &__user-btn {
+    @include flex-center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+    }
+  }
+
+  &__user-avatar {
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    color: white;
+
+    .material-icons {
+      font-size: 20px;
+    }
+  }
+
+  &__user-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: $text-color;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__user-arrow {
+    font-size: 18px;
+    color: $text-muted;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 280px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    overflow: hidden;
+    animation: dropdownSlide 0.2s ease;
+
+    [dir="rtl"] & {
+      right: auto;
+      left: 0;
+    }
+  }
+
+  &__dropdown-header {
+    @include flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  &__dropdown-avatar {
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+
+    .material-icons {
+      font-size: 28px;
+    }
+  }
+
+  &__dropdown-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__dropdown-name {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__dropdown-email {
+    font-size: 12px;
+    opacity: 0.9;
+  }
+
+  &__dropdown-role {
+    font-size: 11px;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    width: fit-content;
+    margin-top: 4px;
+  }
+
+  &__dropdown-divider {
+    height: 1px;
+    background: #eee;
+    margin: 4px 0;
+  }
+
+  &__dropdown-item {
+    @include flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: $text-color;
+    text-decoration: none;
+    background: none;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+
+    .material-icons {
+      font-size: 20px;
+      color: #666;
+    }
+
+    &--logout {
+      color: #e53935;
+
+      .material-icons {
+        color: #e53935;
+      }
+
+      &:hover {
+        background: #ffebee;
+      }
+    }
+  }
+
+  &__login-btn {
+    @include flex-center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    .material-icons {
+      font-size: 18px;
+    }
+  }
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // Dark theme

@@ -1,0 +1,70 @@
+@if (loading) {
+  <div class="loading-state" dir="rtl">
+    <div class="spinner"></div>
+    <p>جاري تحميل الشهادة...</p>
+  </div>
+} @else if (certificate) {
+  <div class="certificate-page" dir="rtl">
+    <div class="actions-bar">
+      <a routerLink="/site" class="back-btn">← العودة للرئيسية</a>
+      <button class="print-btn" (click)="printCertificate()">🖨️ طباعة الشهادة</button>
+    </div>
+
+    <div class="certificate-frame" id="certificate">
+      <div class="certificate-border">
+        <div class="certificate-inner">
+          <!-- Header -->
+          <div class="cert-header">
+            <div class="cert-logo">🏆</div>
+            <h1 class="cert-title">شهادة إتمام</h1>
+            <div class="cert-subtitle">أستاذ اللغة العربية</div>
+          </div>
+
+          <!-- Body -->
+          <div class="cert-body">
+            <p class="cert-awarded">تشهد هذه الشهادة بأن</p>
+            <h2 class="cert-student-name">{{ certificate.studentName }}</h2>
+            <p class="cert-completed">قد أتم بنجاح دراسة</p>
+            <h3 class="cert-course-name">{{ certificate.courseName }}</h3>
+            <p class="cert-score">بدرجة <strong>{{ certificate.examScore }}%</strong></p>
+          </div>
+
+          <!-- Footer -->
+          <div class="cert-footer">
+            <div class="cert-detail">
+              <span class="cert-label">تاريخ الإصدار</span>
+              <span class="cert-value">{{ getFormattedDate(certificate.issueDate) }}</span>
+            </div>
+            <div class="cert-seal">
+              <div class="seal-icon">✦</div>
+              <div class="seal-text">معتمدة</div>
+            </div>
+            <div class="cert-detail">
+              <span class="cert-label">رقم الشهادة</span>
+              <span class="cert-value cert-number">{{ certificate.certificateNumber }}</span>
+            </div>
+          </div>
+
+          <div class="cert-ornament-top"></div>
+          <div class="cert-ornament-bottom"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-info-card">
+      <h3>تفاصيل الشهادة</h3>
+      <div class="info-row"><span>الطالب</span><span>{{ certificate.studentName }}</span></div>
+      <div class="info-row"><span>الكورس</span><span>{{ certificate.courseName }}</span></div>
+      <div class="info-row"><span>الدرجة</span><span>{{ certificate.examScore }}%</span></div>
+      <div class="info-row"><span>تاريخ الإصدار</span><span>{{ getFormattedDate(certificate.issueDate) }}</span></div>
+      <div class="info-row"><span>رقم الشهادة</span><span>{{ certificate.certificateNumber }}</span></div>
+      <div class="info-row"><span>الحالة</span><span class="status" [class.valid]="certificate.isValid">{{ certificate.isValid ? '✅ سارية' : '❌ غير سارية' }}</span></div>
+    </div>
+  </div>
+} @else {
+  <div class="error-state" dir="rtl">
+    <div class="error-icon">❌</div>
+    <h2>لم يتم العثور على الشهادة</h2>
+    <a routerLink="/site" class="back-link">العودة للرئيسية</a>
+  </div>
+}

@@ -1,0 +1,87 @@
+<div class="stage-page" dir="rtl">
+  <!-- Stage Header -->
+  <section class="stage-header" [style.--color]="currentStageInfo.color">
+    <div class="container">
+      <div class="stage-header-content">
+        <span class="stage-icon">{{ currentStageInfo.icon }}</span>
+        <h1>{{ currentStageInfo.name }}</h1>
+        <p>{{ currentStageInfo.description }}</p>
+        <div class="stage-tabs">
+          <a routerLink="/site/courses/primary" class="tab" [class.active]="stage === 'primary'">ابتدائي</a>
+          <a routerLink="/site/courses/preparatory" class="tab" [class.active]="stage === 'preparatory'">اعدادي</a>
+          <a routerLink="/site/courses/secondary" class="tab" [class.active]="stage === 'secondary'">ثانوي</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search & Content -->
+  <section class="courses-content">
+    <div class="container">
+      <div class="search-bar">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          placeholder="ابحث عن كورس..."
+          class="search-input"
+        >
+        <span class="search-icon">🔍</span>
+      </div>
+
+      <div class="results-info">
+        <span>{{ filteredCourses.length }} كورس متاح</span>
+      </div>
+
+      @if (loading) {
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>جاري تحميل الكورسات...</p>
+        </div>
+      } @else if (filteredCourses.length === 0) {
+        <div class="empty">
+          <span class="empty-icon">📚</span>
+          <h3>لا توجد كورسات متاحة حالياً</h3>
+          <p>سيتم إضافة كورسات جديدة قريباً لهذه المرحلة</p>
+        </div>
+      } @else {
+        <div class="courses-grid">
+          @for (course of filteredCourses; track course._id) {
+            <a [routerLink]="['/site/course', course._id]" class="course-card">
+              <div class="course-thumb">
+                @if (course.thumbnail) {
+                  <img [src]="course.thumbnail" [alt]="course.title">
+                } @else {
+                  <div class="thumb-placeholder">📚</div>
+                }
+                @if (course.grade) {
+                  <span class="grade-badge">{{ getGradeName(course.grade) }}</span>
+                }
+              </div>
+              <div class="course-body">
+                <h3>{{ course.title }}</h3>
+                <p class="course-desc">{{ course.shortDescription || course.description | slice:0:80 }}...</p>
+                <div class="course-teacher">
+                  <span class="teacher-icon">👨‍🏫</span>
+                  <span>{{ getTeacherName(course) }}</span>
+                </div>
+                <div class="course-meta">
+                  <span>📖 {{ course.materials.length || 0 }} درس</span>
+                  <span>👥 {{ course.enrollmentCount || 0 }} طالب</span>
+                </div>
+                <div class="course-footer">
+                  @if (course.isFree || course.price === 0) {
+                    <span class="price free">مجاني</span>
+                  } @else {
+                    <span class="price">{{ course.price }} جنيه</span>
+                  }
+                  <span class="enroll-btn">عرض التفاصيل</span>
+                </div>
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </div>
+  </section>
+</div>

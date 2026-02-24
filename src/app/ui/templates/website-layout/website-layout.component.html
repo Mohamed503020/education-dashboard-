@@ -1,0 +1,81 @@
+<div class="website" dir="rtl">
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <a routerLink="/site" class="logo">
+          <span class="logo-icon">📚</span>
+          <span class="logo-text">أستاذ العربية</span>
+        </a>
+
+        <nav class="main-nav" [class.active]="isMenuOpen">
+          <a routerLink="/site" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">الرئيسية</a>
+          <a routerLink="/site/courses/primary" routerLinkActive="active">المرحلة الابتدائية</a>
+          <a routerLink="/site/courses/preparatory" routerLinkActive="active">المرحلة الاعدادية</a>
+          <a routerLink="/site/courses/secondary" routerLinkActive="active">المرحلة الثانوية</a>
+          <a routerLink="/site/live" routerLinkActive="active">🎥 البث المباشر</a>
+          @if (isLoggedIn) {
+            <a routerLink="/site/my-courses" routerLinkActive="active">كورساتي</a>
+            <a routerLink="/site/certificates" routerLinkActive="active">شهاداتي</a>
+          }
+        </nav>
+
+        <div class="header-actions">
+          @if (isLoggedIn) {
+            <div class="user-menu">
+              <span class="user-name">أهلاً {{ userName }}</span>
+              <button class="btn btn-outline" (click)="logout()">تسجيل خروج</button>
+            </div>
+          } @else {
+            <a routerLink="/login" class="btn btn-outline">تسجيل دخول</a>
+            <a routerLink="/register" class="btn btn-primary">حساب جديد</a>
+          }
+          <button class="mobile-toggle" (click)="toggleMenu()">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="site-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>أستاذ العربية</h3>
+          <p>منصة تعليمية متخصصة في تعليم اللغة العربية لجميع المراحل التعليمية</p>
+        </div>
+        <div class="footer-col">
+          <h4>المراحل التعليمية</h4>
+          <ul>
+            <li><a routerLink="/site/courses/primary">المرحلة الابتدائية</a></li>
+            <li><a routerLink="/site/courses/preparatory">المرحلة الاعدادية</a></li>
+            <li><a routerLink="/site/courses/secondary">المرحلة الثانوية</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>روابط سريعة</h4>
+          <ul>
+            <li><a routerLink="/site">الرئيسية</a></li>
+            <li><a routerLink="/site/live">البث المباشر</a></li>
+            <li><a routerLink="/login">تسجيل الدخول</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>تواصل معنا</h4>
+          <p>📧 info&#64;arabic-teacher.com</p>
+          <p>📱 01234567890</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 أستاذ العربية - جميع الحقوق محفوظة</p>
+      </div>
+    </div>
+  </footer>
+</div>

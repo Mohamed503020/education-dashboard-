@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { CourseService } from '../../../../core/services/course.service';
+import { MaterialService } from '../../../../core/services/material.service';
+import { Course } from '../../../../core/models/course.model';
+import { environment } from '../../../../../environments/environment';
 
 interface Lesson {
   id: number;
@@ -30,24 +34,6 @@ interface PDF {
   lessonId: number;
 }
 
-interface Course {
-  id: number;
-  code: string;
-  name: string;
-  description: string;
-  department: string;
-  professor: string;
-  professorImage: string;
-  credits: number;
-  duration: string;
-  students: number;
-  rating: number;
-  image: string;
-  lessons: Lesson[];
-  videos: Video[];
-  pdfs: PDF[];
-}
-
 @Component({
   selector: 'app-course-details',
   standalone: true,
@@ -58,78 +44,180 @@ interface Course {
 export class CourseDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
+  private courseService = inject(CourseService);
+  private materialService = inject(MaterialService);
   
   courseId: string = '';
   activeTab = signal<'overview' | 'lessons' | 'videos' | 'resources'>('overview');
   expandedLesson = signal<number | null>(null);
+  isLoading = true;
   
   // Media viewer signals
   currentVideo = signal<Video | null>(null);
   currentPdf = signal<PDF | null>(null);
   showVideoPlayer = signal<boolean>(false);
   showPdfViewer = signal<boolean>(false);
-  
-  course: Course = {
-    id: 1,
-    code: 'CS101',
-    name: 'Introduction to Programming',
-    description: 'This comprehensive course covers the fundamentals of programming using Python. Students will learn about variables, data types, control structures, functions, and basic object-oriented programming concepts. The course includes hands-on projects and real-world applications.',
-    department: 'Computer Science',
-    professor: 'Dr. Ahmed Hassan',
-    professorImage: 'assets/images/professor1.jpg',
-    credits: 3,
-    duration: '16 weeks',
-    students: 156,
-    rating: 4.8,
-    image: 'assets/images/course1.jpg',
-    lessons: [],
-    videos: [],
-    pdfs: []
+
+  // Dynamic course data from API
+  courseData: Course | null = null;
+
+  // Mapped display properties
+  course = {
+    name: '',
+    code: '',
+    description: '',
+    department: '',
+    professor: '',
+    credits: 0,
+    duration: '',
+    students: 0,
+    rating: 0,
+    lessons: [] as Lesson[],
+    videos: [] as Video[],
+    pdfs: [] as PDF[]
   };
 
-  lessons: Lesson[] = [
-    { id: 1, title: 'Introduction to Python', description: 'Learn the basics of Python programming language, installation, and setup.', duration: '45 min', order: 1, isCompleted: true },
-    { id: 2, title: 'Variables and Data Types', description: 'Understanding variables, strings, numbers, and boolean data types.', duration: '60 min', order: 2, isCompleted: true },
-    { id: 3, title: 'Control Structures', description: 'If statements, loops, and conditional logic in Python.', duration: '75 min', order: 3, isCompleted: false },
-    { id: 4, title: 'Functions and Modules', description: 'Creating reusable code with functions and organizing code into modules.', duration: '90 min', order: 4, isCompleted: false },
-    { id: 5, title: 'Lists and Dictionaries', description: 'Working with collections of data in Python.', duration: '60 min', order: 5, isCompleted: false },
-    { id: 6, title: 'File Handling', description: 'Reading from and writing to files in Python.', duration: '45 min', order: 6, isCompleted: false },
-    { id: 7, title: 'Object-Oriented Programming', description: 'Introduction to classes, objects, and OOP principles.', duration: '120 min', order: 7, isCompleted: false },
-    { id: 8, title: 'Final Project', description: 'Build a complete application using all learned concepts.', duration: '180 min', order: 8, isCompleted: false }
-  ];
-
-  videos: Video[] = [
-    { id: 1, title: 'Python Setup Tutorial', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'assets/images/video1.jpg', duration: '12:34', lessonId: 1 },
-    { id: 2, title: 'Your First Python Program', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'assets/images/video2.jpg', duration: '18:45', lessonId: 1 },
-    { id: 3, title: 'Understanding Variables', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'assets/images/video3.jpg', duration: '22:10', lessonId: 2 },
-    { id: 4, title: 'Data Types Deep Dive', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'assets/images/video4.jpg', duration: '28:55', lessonId: 2 },
-    { id: 5, title: 'If Statements Explained', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'assets/images/video5.jpg', duration: '15:20', lessonId: 3 },
-    { id: 6, title: 'Loops in Python', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'assets/images/video6.jpg', duration: '25:00', lessonId: 3 },
-    { id: 7, title: 'Creating Functions', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'assets/images/video7.jpg', duration: '32:15', lessonId: 4 },
-    { id: 8, title: 'Working with Lists', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumbnail: 'assets/images/video8.jpg', duration: '20:40', lessonId: 5 }
-  ];
-
-  pdfs: PDF[] = [
-    { id: 1, title: 'Python Basics Cheat Sheet', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', size: '1.2 MB', lessonId: 1 },
-    { id: 2, title: 'Variables Reference Guide', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', size: '856 KB', lessonId: 2 },
-    { id: 3, title: 'Control Structures Workbook', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', size: '2.1 MB', lessonId: 3 },
-    { id: 4, title: 'Functions Handbook', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', size: '1.8 MB', lessonId: 4 },
-    { id: 5, title: 'Data Structures Guide', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', size: '3.2 MB', lessonId: 5 },
-    { id: 6, title: 'File I/O Examples', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', size: '945 KB', lessonId: 6 },
-    { id: 7, title: 'OOP Principles PDF', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', size: '2.5 MB', lessonId: 7 },
-    { id: 8, title: 'Final Project Guidelines', url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', size: '1.1 MB', lessonId: 8 }
-  ];
+  lessons: Lesson[] = [];
+  videos: Video[] = [];
+  pdfs: PDF[] = [];
 
   ngOnInit() {
-    this.courseId = this.route.snapshot.paramMap.get('id') || '1';
+    this.courseId = this.route.snapshot.paramMap.get('id') || '';
     this.loadCourseData();
   }
 
   loadCourseData() {
-    // In real app, fetch from API based on courseId
+    if (!this.courseId) {
+      this.isLoading = false;
+      return;
+    }
+
+    this.courseService.getCourseById(this.courseId).subscribe({
+      next: (data) => {
+        this.courseData = data;
+        
+        // Map API data to display properties
+        const teacherName = typeof data.teacher === 'object' && data.teacher
+          ? (data.teacher as any).firstName + ' ' + (data.teacher as any).lastName
+          : 'Teacher';
+        
+        this.course = {
+          name: data.title,
+          code: data.category || '',
+          description: data.description,
+          department: data.category || 'General',
+          professor: teacherName,
+          credits: 0,
+          duration: data.duration ? data.duration + ' hours' : 'Self-paced',
+          students: data.enrolledStudents.length || data.enrollmentCount || 0,
+          rating: data.rating || 0,
+          lessons: [],
+          videos: [],
+          pdfs: []
+        };
+
+        // Try to map from course.materials first
+        this.mapMaterials(data.materials || []);
+
+        // Also fetch materials separately via MaterialService for reliability
+        this.materialService.getMaterialsByCourse(this.courseId).subscribe({
+          next: (materials) => {
+            if (materials && materials.length > 0) {
+              // Reset and remap from dedicated materials endpoint
+              this.videos = [];
+              this.pdfs = [];
+              this.lessons = [];
+              this.mapMaterials(materials);
+            }
+          }
+        });
+
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private mapMaterials(materials: any[]) {
+    if (!materials || materials.length === 0) {
+      // If no materials, create placeholder content from tags
+      if (this.lessons.length === 0 && this.courseData?.tags && this.courseData.tags.length > 0) {
+        this.courseData.tags.forEach((tag: string, i: number) => {
+          this.lessons.push({
+            id: i + 1,
+            title: 'Module ' + (i + 1) + ': ' + tag.charAt(0).toUpperCase() + tag.slice(1),
+            description: 'Learn about ' + tag,
+            duration: '45 min',
+            order: i + 1,
+            isCompleted: false
+          });
+        });
+      }
+    } else {
+      this.videos = [];
+      this.pdfs = [];
+      this.lessons = [];
+      let lessonOrder = 0;
+
+      materials.forEach((m: any, i: number) => {
+        // Skip if material is just an ObjectId string (not populated)
+        if (typeof m === 'string') return;
+
+        if (m.type === 'video') {
+          this.videos.push({
+            id: i + 1,
+            title: m.title,
+            url: m.fileUrl || '',
+            thumbnail: m.thumbnail || '',
+            duration: m.duration ? this.formatSeconds(m.duration) : '',
+            lessonId: 0
+          });
+        } else if (m.type === 'pdf') {
+          // Prepend backend base URL for relative upload paths
+          let pdfUrl = m.fileUrl || '';
+          if (pdfUrl && pdfUrl.startsWith('/uploads/')) {
+            pdfUrl = environment.wsUrl + pdfUrl;
+          }
+          this.pdfs.push({
+            id: i + 1,
+            title: m.title,
+            url: pdfUrl,
+            size: m.fileSize ? this.formatFileSize(m.fileSize) : '',
+            lessonId: 0
+          });
+        } else {
+          lessonOrder++;
+          this.lessons.push({
+            id: i + 1,
+            title: m.title,
+            description: m.description || '',
+            duration: m.duration ? this.formatSeconds(m.duration) : '',
+            order: lessonOrder,
+            isCompleted: false
+          });
+        }
+      });
+    }
+
     this.course.lessons = this.lessons;
     this.course.videos = this.videos;
     this.course.pdfs = this.pdfs;
+  }
+
+  private formatSeconds(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    if (mins < 60) return `${mins} min`;
+    const hrs = Math.floor(mins / 60);
+    const rem = mins % 60;
+    return `${hrs}h ${rem}m`;
+  }
+
+  private formatFileSize(bytes: number): string {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
   }
 
   setActiveTab(tab: 'overview' | 'lessons' | 'videos' | 'resources') {

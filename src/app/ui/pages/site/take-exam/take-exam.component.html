@@ -1,0 +1,142 @@
+@if (loading) {
+  <div class="loading-state" dir="rtl">
+    <div class="spinner"></div>
+    <p>جاري تحميل الامتحان...</p>
+  </div>
+} @else if (result) {
+  <!-- Result Screen -->
+  <div class="result-screen" dir="rtl">
+    <div class="result-card" [class.passed]="result.passed" [class.failed]="!result.passed">
+      <div class="result-icon">{{ result.passed ? '🎉' : '😔' }}</div>
+      <h1>{{ result.passed ? 'مبروك! نجحت في الامتحان' : 'للأسف، لم تجتز الامتحان' }}</h1>
+      <div class="score-circle">
+        <span class="score-num">{{ result.score }}%</span>
+        <span class="score-label">الدرجة</span>
+      </div>
+      <div class="result-details">
+        <div class="detail"><span>الإجابات الصحيحة</span><span>{{ result.earnedPoints }} / {{ result.totalPoints }}</span></div>
+        <div class="detail"><span>درجة النجاح</span><span>{{ exam?.passingScore }}%</span></div>
+        <div class="detail"><span>الحالة</span><span>{{ result.passed ? '✅ ناجح' : '❌ راسب' }}</span></div>
+      </div>
+      @if (result.passed) {
+        <button class="btn btn-accent btn-lg" (click)="issueCertificate()" [disabled]="issuingCert">
+          {{ issuingCert ? 'جاري إصدار الشهادة...' : '🏆 احصل على الشهادة' }}
+        </button>
+      } @else {
+        <p class="retry-text">يمكنك إعادة المحاولة</p>
+      }
+      <a routerLink="/site" class="back-link">← العودة للرئيسية</a>
+    </div>
+  </div>
+} @else if (exam && !attempt) {
+  <!-- Start Screen -->
+  <div class="start-screen" dir="rtl">
+    <div class="start-card">
+      <div class="start-icon">📝</div>
+      <h1>{{ exam.title }}</h1>
+      @if (exam.description) {
+        <p class="start-desc">{{ exam.description }}</p>
+      }
+      <div class="exam-info">
+        <div class="info-item"><span class="info-icon">📋</span><span>{{ exam.questions.length || 0 }} سؤال</span></div>
+        <div class="info-item"><span class="info-icon">⏱</span><span>{{ exam.timeLimit }} دقيقة</span></div>
+        <div class="info-item"><span class="info-icon">✅</span><span>درجة النجاح: {{ exam.passingScore }}%</span></div>
+        <div class="info-item"><span class="info-icon">🔄</span><span>محاولات متاحة: {{ exam.maxAttempts }}</span></div>
+      </div>
+      <div class="start-rules">
+        <h3>تعليمات الامتحان:</h3>
+        <ul>
+          <li>لديك {{ exam.timeLimit }} دقيقة لإنهاء الامتحان</li>
+          <li>اختر إجابة واحدة لكل سؤال</li>
+          <li>يمكنك التنقل بين الأسئلة بحرية</li>
+          <li>عند انتهاء الوقت يتم تسليم الامتحان تلقائياً</li>
+          <li>تحتاج {{ exam.passingScore }}% للنجاح والحصول على الشهادة</li>
+        </ul>
+      </div>
+      <button class="btn btn-accent btn-lg" (click)="startExam()">ابدأ الامتحان الآن</button>
+    </div>
+  </div>
+} @else if (exam && attempt) {
+  <!-- Exam in Progress -->
+  <div class="exam-page" dir="rtl">
+    <!-- Top Bar -->
+    <div class="exam-topbar">
+      <div class="container">
+        <div class="topbar-content">
+          <span class="exam-title">{{ exam.title }}</span>
+          <div class="timer" [class.warning]="timeRemaining < 300">
+            <span class="timer-icon">⏱</span>
+            <span>{{ formattedTime }}</span>
+          </div>
+          <div class="progress-info">
+            {{ answeredCount }} / {{ totalQuestions }} سؤال
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="exam-layout">
+        <!-- Question -->
+        <div class="question-area">
+          @if (exam.questions && exam.questions[currentQuestion]) {
+            <div class="question-card">
+              <div class="question-header">
+                <span class="question-num">سؤال {{ currentQuestion + 1 }} من {{ totalQuestions }}</span>
+              </div>
+              <h2 class="question-text">{{ exam.questions[currentQuestion].text }}</h2>
+              <div class="options-list">
+                @for (option of exam.questions[currentQuestion].options; track $index) {
+                  <button
+                    class="option-btn"
+                    [class.selected]="isSelected(currentQuestion, $index)"
+                    (click)="selectAnswer(currentQuestion, $index)"
+                  >
+                    <span class="option-letter">{{ ['أ', 'ب', 'ج', 'د'][$index] || $index + 1 }}</span>
+                    <span class="option-text">{{ option }}</span>
+                  </button>
+                }
+              </div>
+            </div>
+
+            <div class="question-nav">
+              <button class="nav-btn" (click)="prevQuestion()" [disabled]="currentQuestion === 0">→ السابق</button>
+              @if (currentQuestion < totalQuestions - 1) {
+                <button class="nav-btn primary" (click)="nextQuestion()">التالي ←</button>
+              } @else {
+                <button class="nav-btn submit" (click)="submitExam()" [disabled]="submitting">
+                  {{ submitting ? 'جاري التسليم...' : 'تسليم الامتحان' }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Navigator -->
+        <div class="question-navigator">
+          <h3>الأسئلة</h3>
+          <div class="nav-grid">
+            @for (q of exam.questions; track $index) {
+              <button
+                class="nav-item"
+                [class.active]="currentQuestion === $index"
+                [class.answered]="answers.has($index)"
+                (click)="goToQuestion($index)"
+              >
+                {{ $index + 1 }}
+              </button>
+            }
+          </div>
+          <div class="nav-legend">
+            <span><span class="dot answered"></span> تم الإجابة</span>
+            <span><span class="dot active"></span> الحالي</span>
+            <span><span class="dot"></span> لم يُجب</span>
+          </div>
+          <button class="btn btn-submit-final" (click)="submitExam()" [disabled]="submitting">
+            {{ submitting ? 'جاري التسليم...' : 'تسليم الامتحان' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

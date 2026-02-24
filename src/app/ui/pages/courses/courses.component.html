@@ -3,13 +3,15 @@
   <div class="courses__hero">
     <div class="courses__hero-content">
       <h1 class="courses__title">{{ 'courses.title' | translate }}</h1>
-      <p class="courses__subtitle">{{ 'courses.subtitle' | translate }}</p>
+      <p class="courses__subtitle">{{ totalCourses }} courses available</p>
     </div>
     <div class="courses__hero-actions">
-      <button class="btn btn--primary btn--glow" routerLink="/courses/add">
-        <span class="material-icons">add</span>
-        {{ 'courses.addNew' | translate }}
-      </button>
+      @if (isTeacher) {
+        <button class="btn btn--primary btn--glow" routerLink="/courses/add">
+          <span class="material-icons">add</span>
+          {{ 'courses.addNew' | translate }}
+        </button>
+      }
     </div>
   </div>
 
@@ -37,23 +39,24 @@
         [placeholder]="'common.search' | translate"
         [ngModel]="searchQuery()"
         (ngModelChange)="searchQuery.set($event)"
+        (keyup.enter)="onSearch()"
       >
     </div>
     <div class="courses__filters">
       <select 
         class="filter-select"
-        [ngModel]="selectedDepartment()"
-        (ngModelChange)="selectedDepartment.set($event)"
+        [ngModel]="selectedCategory()"
+        (ngModelChange)="selectedCategory.set($event); loadCourses()"
       >
-        <option value="">{{ 'courses.allDepartments' | translate }}</option>
-        @for (dept of departments; track dept) {
-          <option [value]="dept">{{ dept }}</option>
+        <option value="">All Categories</option>
+        @for (cat of categories; track cat) {
+          <option [value]="cat">{{ cat }}</option>
         }
       </select>
       <select 
         class="filter-select"
         [ngModel]="selectedLevel()"
-        (ngModelChange)="selectedLevel.set($event)"
+        (ngModelChange)="selectedLevel.set($event); loadCourses()"
       >
         <option value="">All Levels</option>
         @for (level of levels; track level) {
@@ -79,99 +82,106 @@
     </div>
   </div>
 
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="courses__loading">
+      <div class="spinner"></div>
+      <p>Loading courses...</p>
+    </div>
+  }
+
   <!-- Courses Grid/List -->
-  <div class="courses__content" [class.courses__content--list]="viewMode() === 'list'">
-    @for (course of filteredCourses; track course.id) {
-      <div class="course-card" [class.course-card--list]="viewMode() === 'list'" [style.--course-color]="course.color">
-        <!-- Card Image/Header -->
-        <div class="course-card__visual">
-          <div class="course-card__gradient"></div>
-          <div class="course-card__icon">
-            <span class="material-icons">menu_book</span>
-          </div>
-          <span class="course-card__code">{{ course.code }}</span>
-          <span class="status-badge" [class]="getStatusClass(course.status)">
-            {{ course.status === 'active' ? 'Active' : course.status === 'upcoming' ? 'Coming Soon' : 'Inactive' }}
-          </span>
-        </div>
-
-        <!-- Card Body -->
-        <div class="course-card__body">
-          <div class="course-card__header">
-            <span class="level-badge" [class]="getLevelBadgeClass(course.level)">
-              {{ course.level | titlecase }}
+  @if (!isLoading) {
+    <div class="courses__content" [class.courses__content--list]="viewMode() === 'list'">
+      @for (course of filteredCourses; track course._id) {
+        <div class="course-card" [class.course-card--list]="viewMode() === 'list'" [style.--course-color]="getCourseColor(course)">
+          <!-- Card Image/Header -->
+          <div class="course-card__visual">
+            <div class="course-card__gradient"></div>
+            <div class="course-card__icon">
+              <span class="material-icons">menu_book</span>
+            </div>
+            <span class="course-card__code">{{ course.category || 'General' }}</span>
+            <span class="status-badge" [class]="getStatusClass(course.status)">
+              {{ course.status === 'published' ? 'Active' : course.status === 'draft' ? 'Draft' : 'Archived' }}
             </span>
-            @if (course.rating > 0) {
-              <div class="course-card__rating">
-                <span class="material-icons">star</span>
-                <span>{{ course.rating }}</span>
+          </div>
+
+          <!-- Card Body -->
+          <div class="course-card__body">
+            <div class="course-card__header">
+              <span class="level-badge" [class]="getLevelBadgeClass(course.level)">
+                {{ course.level | titlecase }}
+              </span>
+              @if (course.price && course.price > 0) {
+                <div class="course-card__rating">
+                  <span class="material-icons">attach_money</span>
+                  <span>{{ course.price }}</span>
+                </div>
+              } @else {
+                <div class="course-card__rating">
+                  <span style="color: #10b981; font-weight: 600;">Free</span>
+                </div>
+              }
+            </div>
+
+            <h3 class="course-card__title" [routerLink]="['/courses', course._id]">
+              {{ course.title }}
+            </h3>
+
+            <p class="course-card__department">
+              <span class="material-icons">category</span>
+              {{ course.category || 'Uncategorized' }}
+            </p>
+
+            <div class="course-card__meta">
+              <div class="meta-item">
+                <span class="material-icons">people</span>
+                <span>{{ getEnrollmentCount(course) }} Students</span>
               </div>
-            }
-          </div>
-
-          <h3 class="course-card__title" [routerLink]="['/courses', course.id]">
-            {{ course.name }}
-          </h3>
-
-          <p class="course-card__department">
-            <span class="material-icons">apartment</span>
-            {{ course.department }}
-          </p>
-
-          <div class="course-card__meta">
-            <div class="meta-item">
-              <span class="material-icons">play_circle</span>
-              <span>{{ course.lessons }} Lessons</span>
+              <div class="meta-item">
+                <span class="material-icons">event</span>
+                <span>{{ course.createdAt | date:'mediumDate' }}</span>
+              </div>
             </div>
-            <div class="meta-item">
-              <span class="material-icons">schedule</span>
-              <span>{{ course.duration }}</span>
+
+            <div class="course-card__instructor">
+              <div class="instructor-avatar">
+                <span class="material-icons">person</span>
+              </div>
+              <span class="instructor-name">{{ getTeacherName(course) }}</span>
             </div>
           </div>
 
-          <!-- Enrollment Progress -->
-          <div class="course-card__enrollment">
-            <div class="enrollment-bar">
-              <div class="enrollment-bar__fill" [style.width.%]="getEnrollmentPercentage(course)"></div>
+          <!-- Card Footer -->
+          <div class="course-card__footer">
+            <div class="course-card__credits">
+              @if (course.tags && course.tags.length > 0) {
+                <span class="material-icons">label</span>
+                {{ course.tags[0] }}
+              }
             </div>
-            <div class="enrollment-info">
-              <span class="material-icons">people</span>
-              <span>{{ course.students }}/{{ course.maxStudents }} enrolled</span>
+            <div class="course-card__actions">
+              <button class="action-btn action-btn--view" [routerLink]="['/courses', course._id]" title="View Details">
+                <span class="material-icons">visibility</span>
+              </button>
+              @if (isTeacher) {
+                <button class="action-btn action-btn--edit" [routerLink]="['/courses/edit', course._id]" title="Edit Course">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="action-btn action-btn--delete" title="Delete Course" (click)="deleteCourse(course._id)">
+                  <span class="material-icons">delete</span>
+                </button>
+              }
             </div>
-          </div>
-
-          <div class="course-card__instructor">
-            <div class="instructor-avatar">
-              <span class="material-icons">person</span>
-            </div>
-            <span class="instructor-name">{{ course.professor }}</span>
           </div>
         </div>
-
-        <!-- Card Footer -->
-        <div class="course-card__footer">
-          <div class="course-card__credits">
-            <span class="material-icons">school</span>
-            {{ course.credits }} Credits
-          </div>
-          <div class="course-card__actions">
-            <button class="action-btn action-btn--view" [routerLink]="['/courses', course.id]" title="View Details">
-              <span class="material-icons">visibility</span>
-            </button>
-            <button class="action-btn action-btn--edit" [routerLink]="['/courses/edit', course.id]" title="Edit Course">
-              <span class="material-icons">edit</span>
-            </button>
-            <button class="action-btn action-btn--delete" title="Delete Course">
-              <span class="material-icons">delete</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    }
-  </div>
+      }
+    </div>
+  }
 
   <!-- Empty State -->
-  @if (filteredCourses.length === 0) {
+  @if (!isLoading && filteredCourses.length === 0) {
     <div class="courses__empty">
       <span class="material-icons">search_off</span>
       <h3>No courses found</h3>
