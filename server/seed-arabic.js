@@ -12,7 +12,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const MONGODB_URI = 'mongodb://localhost:27017/education_platform';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/education_platform';
 
 // ── Schemas ────────────────────────────────────
 const UserSchema = new mongoose.Schema({
