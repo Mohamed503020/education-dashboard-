@@ -28,4 +28,5 @@ cr.json
 cr2.json
 cr3.json
 *.log
+nul
 npm-debug.log*
