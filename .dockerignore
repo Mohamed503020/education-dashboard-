@@ -1,0 +1,12 @@
+node_modules
+dist
+.angular
+.git
+.vscode
+server/dist
+server/node_modules
+*.log
+.env
+.env.*
+!.env.example
+!.env.production.example
