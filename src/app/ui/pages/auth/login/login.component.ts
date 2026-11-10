@@ -80,6 +80,7 @@ import { AuthService } from '../../../../core/services/auth.service';
           <div class="demo-row">
             <button class="demo-btn student" (click)="fillDemo('student@test.com', 'student123')">🎓 طالب</button>
             <button class="demo-btn teacher" (click)="fillDemo('teacher@test.com', 'teacher123')">👨‍🏫 معلم</button>
+            <button class="demo-btn admin" (click)="fillDemo('admin@test.com', 'admin123')">🛡️ مدير</button>
           </div>
         </div>
       </div>
@@ -236,6 +237,8 @@ import { AuthService } from '../../../../core/services/auth.service';
       &.student:hover { border-color: #1a6b3c; background: #e8f5ed; }
       &.teacher { color: #1565c0; }
       &.teacher:hover { border-color: #1565c0; background: #e3f2fd; }
+      &.admin { color: #7b1fa2; }
+      &.admin:hover { border-color: #7b1fa2; background: #f3e5f5; }
     }
   `]
 })

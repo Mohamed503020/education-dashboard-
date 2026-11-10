@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: '/api',
-  wsUrl: ''  // Same origin in production - backend serves frontend
+  apiUrl: 'https://backend-production-b0ca.up.railway.app/api',
+  wsUrl: 'https://backend-production-b0ca.up.railway.app'
 };
